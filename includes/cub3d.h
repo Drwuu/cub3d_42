@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 17:40:55 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/24 19:22:20 by lwourms          ###   ########lyon.fr   */
+/*   Updated: 2021/02/24 19:40:03 by lwourms          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <stdio.h>
 # include <math.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
+# include "../gnl/libft.h"
 
 typedef	struct	s_window_size
 {
