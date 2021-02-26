@@ -101,9 +101,15 @@ int				get_next_line(const int fd, char **line)
 	static char	*str[OPEN_MAX];
 
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
+	{
+		*line = NULL;
 		return (-1);
+	}
 	if (read_line(&str[fd], fd) > 0)
 		return (build_line(&str[fd], line));
 	else
+	{
+		*line = NULL;
 		return (-1);
+	}
 }

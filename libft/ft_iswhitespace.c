@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parser.c                                       :+:      :+:    :+:   */
+/*   ft_iswhitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/24 17:40:18 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/24 19:33:09 by lwourms          ###   ########lyon.fr   */
+/*   Created: 2020/11/29 19:21:56 by lwourms           #+#    #+#             */
+/*   Updated: 2021/02/26 13:41:16 by lwourms          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-
-t_window_size get_resolution(char *resolution)
+int		ft_iswhitespace(int c)
 {
-	t_window_size window;
-	int i;
-
-	i = 0;
-	while (resolution[i])
-	{
-		
-	}
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	else
+		return (0);
 }

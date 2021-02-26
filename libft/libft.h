@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:21:17 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/15 12:26:02 by lwourms          ###   ########lyon.fr   */
+/*   Updated: 2021/02/26 13:41:38 by lwourms          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int				ft_ischar(const char *s, char c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
 int				ft_isalpha(int c);
+int				ft_iswhitespace(int c);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
 
