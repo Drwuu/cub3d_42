@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 17:40:55 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/26 21:04:22 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/02/27 18:16:43 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ typedef	struct		s_dictionary
 	int				value;
 }					t_dictionary;
 
-int					read_map(const char *file);
-t_dictionary		get_id(const char *line);
+int					parse_map(const char *file);
+t_dictionary		*get_ids(int fd, char *line);
+t_window_size		get_resolution(const char *line, int *i);
 
 void				error_manager(int type);
 

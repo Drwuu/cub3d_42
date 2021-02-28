@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 21:02:26 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/26 21:03:32 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/02/27 15:18:24 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ const char 	*get_enum_name(t_map_value map_val)
 	enum_name[6] = "S";
 	enum_name[7] = "F";
 	enum_name[8] = "C";
-    return enum_name[map_val];
+    return (enum_name[map_val]);
 }

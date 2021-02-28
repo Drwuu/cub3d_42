@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 11:15:26 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/26 11:40:33 by lwourms          ###   ########lyon.fr   */
+/*   Updated: 2021/02/27 18:48:34 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		main()
 {
-	read_map("./map.cub");
+	parse_map("./map.cub");
+	//while(1);
 	return (0);
 }
