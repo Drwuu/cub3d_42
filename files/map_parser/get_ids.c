@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_ids.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 17:40:18 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/27 19:00:07 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/02/28 20:22:01 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int			is_id(t_dictionary *ids, int id_key)
 	return (0);
 }
 
-static int			find_id_one(int i, const char *line)
+static int			find_id_p1(int i, const char *line)
 {
 	int key;
 
@@ -51,7 +51,7 @@ static int			find_id_one(int i, const char *line)
 	return (key);
 }
 
-static int			find_id_two(int i, const char *line, int key)
+static int			find_id_p2(int i, const char *line, int key)
 {
 	if (line[i] == 'E')
 	{
@@ -73,33 +73,34 @@ static t_dictionary	set_id(t_dictionary *ids, char *line, int id_index)
 	i = 0;
 	while (line[i] && ft_iswhitespace(line[i]))
 		i++;
-	id.key = find_id_one(i, line);
-	id.key = find_id_two(i, line, id.key);
+	id.key = find_id_p1(i, line);
+	id.key = find_id_p2(i, line, id.key);
 	if (is_id(ids, id.key))
-		error_manager(2);
+		error_manager(2, g_alloc_lst);
 	return (id);
 }
 
-t_dictionary		*get_ids(int fd, char *line)
+t_dictionary		*get_ids(int fd)
 {
 	t_dictionary	*ids;
+	char			*line;
 	int 			line_nb;
 	int				i;
 
-	ids = ft_calloc(sizeof(*ids), 8);
-	if (!ids)
-		error_manager(-1);
-	ft_bzero(ids, 8);
+	alloc_to_lst((void *)&ids, sizeof(*ids), 9);
 	i = 0;
 	line_nb = 1;
 	while (get_next_line(fd, &line))
 	{
+		alloc_to_lst((void *)&line, 0, 0);
 		ids[i] = set_id(ids, line, i);
 		if (ids[i].key)
-			ids[i++].value = line_nb;
+		{
+			ids[i].value = line_nb;
+			ids[i++].str = line;
+		}
 		line_nb++;
-		free(line);
 	}
-	free(line);
+	alloc_to_lst((void *)&line, 0, 0);
 	return (ids);
 }

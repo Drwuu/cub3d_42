@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/01/09 16:56:59 by lwourms          ###   ########lyon.fr   */
+/*   Updated: 2021/02/28 15:18:35 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# define OPEN_MAX 256 // to remove > just for linux
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif

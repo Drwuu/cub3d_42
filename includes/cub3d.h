@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 17:40:55 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/27 18:16:43 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/02/28 20:21:39 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -49,14 +50,17 @@ typedef	struct		s_dictionary
 {
 	int				key;
 	int				value;
+	char			*str;
 }					t_dictionary;
 
+t_list				*g_alloc_lst;
 int					parse_map(const char *file);
-t_dictionary		*get_ids(int fd, char *line);
+t_dictionary		*get_ids(int fd);
 t_window_size		get_resolution(const char *line, int *i);
 
-void				error_manager(int type);
+void				error_manager(int type, t_list *lst);
 
 const char 			*get_enum_name(t_map_value map_val);
-
+void				alloc_to_lst(void **content, int alloc_size, int size);
+void				check_allocation(void *alloc, t_list *lst_to_free);
 #endif
