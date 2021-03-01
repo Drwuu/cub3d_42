@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 17:40:55 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/28 20:21:39 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/01 01:15:00 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ typedef	struct		s_dictionary
 t_list				*g_alloc_lst;
 int					parse_map(const char *file);
 t_dictionary		*get_ids(int fd);
-t_window_size		get_resolution(const char *line, int *i);
+t_window_size		get_resolution(t_list *lst);
 
 void				error_manager(int type, t_list *lst);
 
 const char 			*get_enum_name(t_map_value map_val);
-void				alloc_to_lst(void **content, int alloc_size, int size);
+t_type 				get_type(t_type type);
+void				alloc_to_lst(void **content, t_type type, int alloc_size, int size);
 void				check_allocation(void *alloc, t_list *lst_to_free);
 #endif

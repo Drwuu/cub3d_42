@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 17:40:18 by lwourms           #+#    #+#             */
-/*   Updated: 2021/02/28 20:22:01 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/01 01:49:59 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ t_dictionary		*get_ids(int fd)
 	int 			line_nb;
 	int				i;
 
-	alloc_to_lst((void *)&ids, sizeof(*ids), 9);
+	alloc_to_lst((void *)&ids, DICT, sizeof(*ids), 9);
 	i = 0;
 	line_nb = 1;
 	while (get_next_line(fd, &line))
 	{
-		alloc_to_lst((void *)&line, 0, 0);
+		alloc_to_lst((void *)&line, CHARS, 0, 0);
 		ids[i] = set_id(ids, line, i);
 		if (ids[i].key)
 		{
@@ -101,6 +101,6 @@ t_dictionary		*get_ids(int fd)
 		}
 		line_nb++;
 	}
-	alloc_to_lst((void *)&line, 0, 0);
+	alloc_to_lst((void *)&line, CHARS, 0, 0);
 	return (ids);
 }
