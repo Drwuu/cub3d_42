@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/26 21:02:26 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/01 00:54:18 by drwuu            ###   ########lyon.fr   */
+/*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
+/*   Updated: 2021/03/04 18:01:49 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-const char 	*get_enum_name(t_map_value map_val)
+const char 	*get_enum_name(t_id_name id)
 {
     const char	*enum_name[9];
 	
@@ -25,40 +25,33 @@ const char 	*get_enum_name(t_map_value map_val)
 	enum_name[6] = "S";
 	enum_name[7] = "F";
 	enum_name[8] = "C";
-    return (enum_name[map_val]);
+    return (enum_name[id]);
 }
 
-t_type 		get_type(t_type type)
+void	error_manager(int type, void *to_free)
 {
-	t_type	a_type[6];
-	
-	a_type[0] = CHAR;
-	a_type[1] = CHARS;
-	a_type[2] = INT;
-	a_type[3] = LONG;
-	a_type[4] = LONG_LONG;
-	a_type[5] = DICT;
-    return (a_type[type]);
+	if (to_free)
+		free(to_free);
+	if (type == -1)
+		printf("Map error of type %d : the size you malloced broke down\n", type);
+	else if (type == 1)
+		printf("Map error of type %d : you should use a correct ID, \
+		please refer to the subject\n", type);
+	else if (type == 2)
+		printf("Map error of type %d : duplicate IDs detected, \
+		please refer to the subject\n", type);
+	else if (type == 20)
+		printf("Map error of type %d : you should use a correct window size, \
+		please refer to the subject\n", type);
+	exit(0);
 }
 
-void		check_allocation(void *alloc, t_list *lst_to_free)
+void	*init_data(void **element, int size_of, int size)
 {
-	if (!alloc)
-		error_manager(-1, lst_to_free);
-}
 
-void		alloc_to_lst(void **content, t_type type, int alloc_size, int size)
-{
-	t_list *element;
-
-	if (size > 0)
-	{
-		*content = ft_calloc(alloc_size, size);
-		ft_bzero(*content, size);
-	}
-	if (!*content)
+	*element = ft_calloc(size_of, size);
+	if (!*element)
 		error_manager(-1, NULL);
-	element = ft_lstnew(*content, type);
-	check_allocation(element, g_alloc_lst);
-	ft_lstadd_back(&g_alloc_lst, element);
+	ft_bzero(*element, size_of);
+	return (*element);
 }
