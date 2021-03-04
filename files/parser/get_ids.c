@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/04 18:09:30 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/04 18:24:24 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ t_ids			*get_ids(int fd, char *line)
 		if (ids[i].id)
 		{
 			ids[i].line_nb = line_nb;
-			ids[i].line = line;
-			i++;
+			ids[i++].line = line;
 		}
 		line_nb++;
 	}
