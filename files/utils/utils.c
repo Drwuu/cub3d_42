@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/04 18:01:49 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/05 01:26:15 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,16 @@ void	*init_data(void **element, int size_of, int size)
 		error_manager(-1, NULL);
 	ft_bzero(*element, size_of);
 	return (*element);
+}
+
+void	free_dbl_array(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
 }

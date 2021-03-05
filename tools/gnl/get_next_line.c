@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 19:01:43 by lwourms           #+#    #+#             */
-/*   Updated: 2021/01/09 16:54:04 by lwourms          ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 00:33:49 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static	int		build_line(char **str, char **line)
 
 int				get_next_line(const int fd, char **line)
 {
-	static char	*str[OPEN_MAX];
+	static char	*str[256];
 
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 	{

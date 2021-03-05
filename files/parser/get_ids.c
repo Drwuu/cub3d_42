@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_ids.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/04 18:24:24 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/05 01:42:41 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static t_ids	set_id(t_ids *ids, char *line)
 	id.id = find_id_one(i, line);
 	id.id = find_id_two(i, line, id.id);
 	if (is_id(ids, id.id))
-		error_manager(2, line);
+		error_manager(2, line); // need to free all lines
 	return (id);
 }
 
@@ -95,9 +95,14 @@ t_ids			*get_ids(int fd, char *line)
 		if (ids[i].id)
 		{
 			ids[i].line_nb = line_nb;
-			ids[i++].line = line;
+			ids[i].line = ft_strdup(line);
+			if (!ids[i].line)
+				error_manager(-1, line); // need to free all lines
+			i++;
 		}
+		free(line);
 		line_nb++;
 	}
+	free(line);
 	return (ids);
 }
