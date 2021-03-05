@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 01:26:15 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 18:37:05 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,42 +28,12 @@ const char 	*get_enum_name(t_id_name id)
     return (enum_name[id]);
 }
 
-void	error_manager(int type, void *to_free)
-{
-	if (to_free)
-		free(to_free);
-	if (type == -1)
-		printf("Map error of type %d : the size you malloced broke down\n", type);
-	else if (type == 1)
-		printf("Map error of type %d : you should use a correct ID, \
-		please refer to the subject\n", type);
-	else if (type == 2)
-		printf("Map error of type %d : duplicate IDs detected, \
-		please refer to the subject\n", type);
-	else if (type == 20)
-		printf("Map error of type %d : you should use a correct window size, \
-		please refer to the subject\n", type);
-	exit(0);
-}
-
-void	*init_data(void **element, int size_of, int size)
+void	*init_data(void *element, t_cub3d *cub, int size_of, int size)
 {
 
-	*element = ft_calloc(size_of, size);
-	if (!*element)
-		error_manager(-1, NULL);
-	ft_bzero(*element, size_of);
-	return (*element);
-}
-
-void	free_dbl_array(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
+	element = ft_calloc(size_of, size);
+	if (!element)
+		error_manager(-1, cub, NULL);
+	ft_bzero(element, size_of);
+	return (element);
 }

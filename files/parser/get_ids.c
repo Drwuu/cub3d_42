@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 01:42:41 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 18:31:00 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int		find_id_two(int i, const char *line, int id)
 	return (id);
 }
 
-static t_ids	set_id(t_ids *ids, char *line)
+static t_ids	set_id(t_ids *ids, char *line, t_cub3d *cub)
 {
 	int		i;
 	t_ids	id;
@@ -76,28 +76,28 @@ static t_ids	set_id(t_ids *ids, char *line)
 	id.id = find_id_one(i, line);
 	id.id = find_id_two(i, line, id.id);
 	if (is_id(ids, id.id))
-		error_manager(2, line); // need to free all lines
+		error_manager(2, cub, NULL);
 	return (id);
 }
 
-t_ids			*get_ids(int fd, char *line)
+t_ids			*get_ids(int fd, char *line, t_cub3d *cub)
 {
 	t_ids	*ids;
 	int 	line_nb;
 	int		i;
 
-	init_data((void *)&ids, sizeof(*ids), 9);
+	ids = init_data(ids, cub, sizeof(*ids), 9);
 	i = 0;
 	line_nb = 1;
 	while (get_next_line(fd, &line))
 	{
-		ids[i] = set_id(ids, line);
+		ids[i] = set_id(ids, line, cub);
 		if (ids[i].id)
 		{
 			ids[i].line_nb = line_nb;
 			ids[i].line = ft_strdup(line);
 			if (!ids[i].line)
-				error_manager(-1, line); // need to free all lines
+				error_manager(-1, cub, NULL);
 			i++;
 		}
 		free(line);

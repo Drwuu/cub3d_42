@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 01:44:18 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 18:31:22 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,24 @@ t_cub3d			*parse_map(char *file)
 	t_cub3d		*cub;
 	char		*line;
 	int			fd;
+	int			i;
 
 	fd = open("map.cub", O_RDONLY);
-	cub = init_data((void *)&cub, sizeof(*cub), 1);
-	cub->ids = get_ids(fd, line);
+	cub = init_data(cub, cub, sizeof(*cub), 1);
+	cub->ids = get_ids(fd, line, cub);
 	cub->ids = sort_ids(cub->ids);
-	cub->window = get_resolution(cub->ids[0].line);
+	cub->window = get_resolution(cub);
+	i = 0;
+	while (++i < 6)
+		cub->tex_path[i - 1] = get_tex_path(cub, i);
 	dprintf(1, "height = %d\n", cub->window.height);
 	dprintf(1, "width = %d\n", cub->window.width);
-	int i = 0;
+	i = 0;
 	while (i < 8)
 	{
 		dprintf(1, "id = %s\n", get_enum_name(cub->ids[i].id));
 		dprintf(1, "id str = %s\n", cub->ids[i++].line);
 	}
+	free_cub(cub);
 	return (cub);
 }
