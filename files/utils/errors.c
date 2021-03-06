@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/05 19:15:16 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/06 15:04:52 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,25 @@
 void	error_manager(int type, t_cub3d *cub, char **dbl_array)
 {
 	if (dbl_array)
-		free_dbl_array(dbl_array);
+		ft_free_dbl_array(dbl_array);
 	free_cub(cub);
+	printf("Error\n");
+	printf("Map error of type %d : ", type);
 	if (type == -1)
-		printf("Map error of type %d : the size you malloced broke down\n", type);
+	{
+		printf("the size you malloced broke down\n");
+		exit(0);
+	}
 	else if (type == 1)
-		printf("Map error of type %d : you should use a correct ID, \
-		please refer to the subject\n", type);
+		printf("you should use a correct ID, ");
 	else if (type == 2)
-		printf("Map error of type %d : duplicate IDs detected, \
-		please refer to the subject\n", type);
+		printf("duplicate IDs detected, ");
 	else if (type == 20)
-		printf("Map error of type %d : you should use a correct window size, \
-		please refer to the subject\n", type);
+		printf("you should use a correct window size, ");
 	else if (type == 30)
-		printf("Map error of type %d : you should use a correct texture path, \
-		please refer to the subject\n", type);
+		printf("you should use a correct texture path, ");
 	else if (type == 40)
-		printf("Map error of type %d : you should use a correct color, \
-		please refer to the subject\n", type);
+		printf("you should use a correct color, ");
+	printf("please refer to the subject\n");
 	exit(0);
 }

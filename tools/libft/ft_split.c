@@ -3,96 +3,120 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/29 18:38:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 16:22:55 by drwuu            ###   ########lyon.fr   */
+/*   Created: 2021/03/06 14:41:28 by lwourms           #+#    #+#             */
+/*   Updated: 2021/03/06 15:40:31 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		**free_malloc_error(char **finalstr)
-{
-	int i;
-
-	i = 0;
-	while (finalstr[i])
-		free(finalstr[i++]);
-	return (NULL);
-}
-
-static int		findstrlen(char const *s, char c, int i)
+static int		is_sep(const char *str, const char *sep, int i)
 {
 	int j;
 
 	j = 0;
-	while (s[i] && s[i++] != c)
+	while (sep[j])
+	{
+		if (str[i] == sep[j])
+			return (1);
 		j++;
-	return (j);
+	}
+	return (0);
 }
 
-static int		countstr(char const *s, char c)
+static int		count_str(const char *str, const char *sep)
 {
-	int	i;
-	int	j;
-	int	new_word;
+	int i;
+	int words;
+	int new_word;
 
 	i = 0;
-	j = 0;
-	new_word = 1;
-	while (s[i])
+	words = 0;
+	new_word = 0;
+	while (str[i])
 	{
-		if (s[i] == c)
-			new_word = 1;
-		if (s[i] != c && new_word)
+		if (!is_sep(str, sep, i))
 		{
-			j++;
-			new_word = 0;
+			if (!new_word)
+			{
+				new_word = 1;
+				words++;
+			}
 		}
+		else
+			new_word = 0;
 		i++;
 	}
-	return (j);
+	return (words);
 }
 
-static char		*buildstr(char const *s, char c, int i)
+static int		char_nbr(const char *str, const char *sep, int i)
 {
-	char	*str;
+	int char_nbr;
+
+	char_nbr = 0;
+	while (str[i])
+	{
+		if (!is_sep(str, sep, i))
+			char_nbr++;
+		else
+			return (char_nbr);
+		i++;
+	}
+	return (char_nbr);
+}
+
+static char	*build_str(const char *str, const char *sep, int i)
+{
+	char	*build_str;
 	int		j;
+	int		k;
+	int		size;
 
+	size = char_nbr(str, sep, i);
 	j = 0;
-	if (!(str = malloc(sizeof(*str) * (findstrlen(s, c, i) + 1))))
+	k = 0;
+	if (!(build_str = malloc(sizeof(*build_str) * (size + 1))))
 		return (NULL);
-	while (s[i] && s[i] != c)
-		str[j++] = s[i++];
-	str[j] = '\0';
-	return (str);
+	while (j < size)
+	{
+		build_str[k] = str[i++];
+		k++;
+		j++;
+	}
+	build_str[k] = '\0';
+	return (build_str);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(const char *s, const char *sep)
 {
-	char	**finalstr;
+	char	**split;
+	int		new_word;
 	int		i;
 	int		j;
-	int		new_word;
 
-	if (!s || !(finalstr = malloc(sizeof(*finalstr) * (countstr(s, c) + 1))))
+	if (!s || !(split = malloc(sizeof(*split) * (count_str(s, sep) + 1))))
 		return (NULL);
 	i = 0;
 	j = 0;
-	new_word = 1;
+	new_word = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
-			new_word = 1;
-		if (s[i] != c && new_word)
+		if (!is_sep(s, sep, i))
 		{
-			if (!(finalstr[j++] = buildstr(s, c, i)))
-				return (free_malloc_error(finalstr));
-			new_word = 0;
+			if (!new_word)
+			{
+				if (!(split[j++] = build_str(s, sep, i)))
+					return (ft_free_dbl_array(split));
+				new_word = 1;
+			}
 		}
+		else
+			new_word = 0;
 		i++;
 	}
-	finalstr[j] = NULL;
-	return (finalstr);
+	split[j] = 0;
+	return (split);
 }

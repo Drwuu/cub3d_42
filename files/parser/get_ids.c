@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_ids.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/06 02:22:36 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/06 13:23:04 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ static int		find_id_one(int i, const char *line)
 	int id;
 
 	id = 0;
-	if (line[i] == 'R')
+	if (line[i] == 'R' && ft_iswhitespace(line[i + 1]))
 		id = R;
 	else if (line[i] == 'N')
 	{
-		if (line[i + 1] && line[i + 1] == 'O')
+		if (line[i + 1] == 'O' && ft_iswhitespace(line[i + 2]))
 			id = NO;
 	}
 	else if (line[i] == 'S')
 	{
-		if (line[i + 1] && line[i + 1] == 'O')
+		if (line[i + 1] == 'O' && ft_iswhitespace(line[i + 2]))
 			id = SO;
-		else
+		else if (ft_iswhitespace(line[i + 1]))
 			id = S;
 	}
 	else if (line[i] == 'W')
-		if (line[i + 1] && line[i + 1] == 'E')
+		if (line[i + 1] == 'E' && ft_iswhitespace(line[i + 2]))
 			id = WE;
 	return (id);
 }
@@ -55,12 +55,12 @@ static int		find_id_two(int i, const char *line, int id)
 {
 	if (line[i] == 'E')
 	{
-		if (line[i + 1] && line[i + 1] == 'A')
+		if (line[i + 1] == 'A' && ft_iswhitespace(line[i + 2]))
 			id = EA;
 	}
-	else if (line[i] == 'F')
+	else if (line[i] == 'F' && ft_iswhitespace(line[i + 1]))
 		id = F;
-	else if (line[i] == 'C')
+	else if (line[i] == 'C' && ft_iswhitespace(line[i + 1]))
 		id = C;
 	return (id);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 19:43:48 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/06 14:58:36 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_color				get_color(t_cub3d *cub, int i);
 void				error_manager(int type, t_cub3d *cub, char **dbl_array);
 void				*init_data(void *element, t_cub3d *cub, int size_of, int size);
 const char 			*get_enum_name(t_id_name id);
-void				free_dbl_array(char **str);
 void				free_cub(t_cub3d *cub);
 
 #endif

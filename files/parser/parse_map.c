@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 22:41:58 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/06 13:18:04 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static t_ids	*sort_ids(t_ids *ids)
+static t_ids	*sort_ids(t_ids *ids, t_cub3d *cub)
 {
 	int			i;
 	int			j;
@@ -35,6 +35,9 @@ static t_ids	*sort_ids(t_ids *ids)
 		}
 		i++;
 	}
+	dprintf(1, "id = %d\n", id);
+	if (id != 9)
+		error_manager(1, cub, NULL);
 	return (ids);
 }
 
@@ -48,7 +51,7 @@ t_cub3d			*parse_map(char *file)
 	fd = open("map.cub", O_RDONLY);
 	cub = init_data(cub, cub, sizeof(*cub), 1);
 	cub->ids = get_ids(fd, line, cub);
-	cub->ids = sort_ids(cub->ids);
+	cub->ids = sort_ids(cub->ids, cub);
 	cub->window = get_resolution(cub);
 	i = 0;
 	while (++i < 6)
