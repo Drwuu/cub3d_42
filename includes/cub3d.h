@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 18:31:29 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 19:43:48 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct		s_cub3d
 {
 	t_ids			*ids;
 	t_window		window;
-	t_color			color;
+	t_color			color[2];
 	char			*tex_path[5];
 }					t_cub3d;
 
@@ -65,7 +65,7 @@ t_cub3d				*parse_map(char *file);
 t_ids				*get_ids(int fd, char *line, t_cub3d *cub);
 t_window			get_resolution(t_cub3d *cub);
 char				*get_tex_path(t_cub3d *cub, int i);
-t_color				get_color(char *line);
+t_color				get_color(t_cub3d *cub, int i);
 
 void				error_manager(int type, t_cub3d *cub, char **dbl_array);
 void				*init_data(void *element, t_cub3d *cub, int size_of, int size);

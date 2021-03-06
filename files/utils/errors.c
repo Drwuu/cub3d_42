@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/05 18:37:01 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 19:15:16 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	error_manager(int type, t_cub3d *cub, char **dbl_array)
 		please refer to the subject\n", type);
 	else if (type == 30)
 		printf("Map error of type %d : you should use a correct texture path, \
+		please refer to the subject\n", type);
+	else if (type == 40)
+		printf("Map error of type %d : you should use a correct color, \
 		please refer to the subject\n", type);
 	exit(0);
 }

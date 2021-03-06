@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 18:31:22 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 22:41:58 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,12 @@ t_cub3d			*parse_map(char *file)
 	i = 0;
 	while (++i < 6)
 		cub->tex_path[i - 1] = get_tex_path(cub, i);
-	dprintf(1, "height = %d\n", cub->window.height);
-	dprintf(1, "width = %d\n", cub->window.width);
+	i = 5;
+	while (++i < 8)
+		cub->color[i - 6] = get_color(cub, i);
+	dprintf(1, "color red f = %d\n", cub->color[0].red);
+	dprintf(1, "color red c = %d\n", cub->color[1].red);
 	i = 0;
-	while (i < 8)
-	{
-		dprintf(1, "id = %s\n", get_enum_name(cub->ids[i].id));
-		dprintf(1, "id str = %s\n", cub->ids[i++].line);
-	}
 	free_cub(cub);
 	return (cub);
 }

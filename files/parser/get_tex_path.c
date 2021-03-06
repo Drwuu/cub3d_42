@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 14:00:44 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/05 18:57:26 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 19:47:07 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*get_tex_path(t_cub3d *cub, int i)
 	char	**s_line;
 
 	s_line = ft_split(cub->ids[i].line, ' ');
+	if (!s_line)
+		error_manager(-1, cub, NULL);
 	tex_path_errors(s_line, cub, cub->ids[i].id);
 	path = ft_strdup(s_line[1]);
 	if (!path)
