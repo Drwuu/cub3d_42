@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 19:13:06 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/07 11:03:11 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 12:02:47 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int static	get_red_color(char **s_lines, t_cub3d *cub, t_id_name id)
 		ft_free_dbl_array(red_lines);
 		error_manager(40, cub, s_lines);
 	}
+	ft_free_dbl_array(red_lines);
 	return (red);
 }
 

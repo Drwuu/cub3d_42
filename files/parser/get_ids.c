@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/06 13:23:04 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 14:25:21 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ static int		is_id(t_ids *ids, int id)
 	i = 0;
 	while (i < 8)
 	{
+		dprintf(1, "goku\n");
 		if (ids[i].id != 0 && ids[i].id == id)
+		{
+			dprintf(1, "id %d = %d\n", i, ids[i].id);
 			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -42,8 +46,9 @@ static int		find_id_one(int i, const char *line)
 	{
 		if (line[i + 1] == 'O' && ft_iswhitespace(line[i + 2]))
 			id = SO;
-		else if (ft_iswhitespace(line[i + 1]))
+		else if (line[i + 1] && ft_iswhitespace(line[i + 1]))
 			id = S;
+		dprintf(1, "line = %c\n", line[i]);
 	}
 	else if (line[i] == 'W')
 		if (line[i + 1] == 'E' && ft_iswhitespace(line[i + 2]))
@@ -75,6 +80,7 @@ static t_ids	set_id(t_ids *ids, char *line, t_cub3d *cub)
 		i++;
 	id.id = find_id_one(i, line);
 	id.id = find_id_two(i, line, id.id);
+	dprintf(1, "vegeta\n");
 	if (is_id(ids, id.id))
 		error_manager(2, cub, NULL);
 	return (id);

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:21:17 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/06 15:36:30 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 11:28:03 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
+typedef enum	e_bool
+{
+	FALSE,
+	TRUE
+}				t_bool;
 
 typedef	struct	s_list
 {

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/06 14:59:22 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 14:33:41 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ static void free_ids(t_cub3d *cub)
 	i = 0;
 	while (i < 8)
 	{
+		dprintf(1, "bulma %d\n", cub->ids[i].id);
 		if (cub->ids[i].id)
+		{
 			if (cub->ids[i].line)
 				free(cub->ids[i].line);
+		}
 		i++;
 	}
 	free(cub->ids);
@@ -42,7 +45,10 @@ static void free_tex_path(t_cub3d *cub)
 
 void		free_cub(t_cub3d *cub)
 {
-	free_ids(cub);
-	free_tex_path(cub);
-	free(cub);
+	if (cub->ids)
+		free_ids(cub);
+	if (cub->tex_path)
+		free_tex_path(cub);
+	if (cub)
+		free(cub);
 }

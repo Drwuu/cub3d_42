@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:29:23 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 09:13:22 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 11:21:09 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_window	get_resolution(t_cub3d *cub)
 	window.width = 0;
 	window.height = 0;
 	s_line = ft_split(cub->ids[0].line, " \t");
-	dprintf(1, "sline = %s\n", s_line[1]);
 	if (!s_line)
 		error_manager(-1, cub, NULL);
 	resolution_errors(s_line, cub);

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/06 13:18:04 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 11:19:37 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static t_ids	*sort_ids(t_ids *ids, t_cub3d *cub)
 		}
 		i++;
 	}
-	dprintf(1, "id = %d\n", id);
 	if (id != 9)
 		error_manager(1, cub, NULL);
 	return (ids);
@@ -59,8 +58,6 @@ t_cub3d			*parse_map(char *file)
 	i = 5;
 	while (++i < 8)
 		cub->color[i - 6] = get_color(cub, i);
-	dprintf(1, "color red f = %d\n", cub->color[0].red);
-	dprintf(1, "color red c = %d\n", cub->color[1].red);
 	i = 0;
 	free_cub(cub);
 	return (cub);

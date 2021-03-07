@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/06 14:58:36 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 12:00:45 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ typedef enum		e_id_name
 	C
 }					t_id_name;
 
-typedef struct		s_ids
+typedef struct		s_vector
 {
-	t_id_name		id;
-	int				line_nb;
-	char			*line;
-}					t_ids;
+	int				x;
+	int				y;
+	int				z;
+}					t_vector;
 
 typedef struct		s_window
 {
@@ -52,6 +52,58 @@ typedef	struct		s_color
 	unsigned char	blue;
 	unsigned char	alpha;
 }					t_color;
+
+typedef struct		s_texture
+{
+	const char		*path;
+}					t_texture;
+
+typedef struct		s_wall
+{
+	t_bool			exist;
+	t_vector		position;
+}					t_wall;
+
+typedef struct		s_player
+{
+	t_bool			exist;
+	t_vector		position;
+	int				speed;
+	int				life;
+}					t_player;
+
+typedef struct		s_sprite
+{
+	t_bool			exist;
+	const char		*path;
+	t_vector		position;
+	int				speed;
+	int				life;
+}					t_sprite;
+
+typedef struct		s_ceiling
+{
+	t_color			color;
+}					t_ceiling;
+
+typedef struct		s_floor
+{
+	t_color			color;
+}					t_floor;
+
+typedef struct		s_map
+{
+	t_wall			wall;
+	t_sprite		sprite;
+	t_player		player;
+}					t_map;
+
+typedef struct		s_ids
+{
+	t_id_name		id;
+	int				line_nb;
+	char			*line;
+}					t_ids;
 
 typedef struct		s_cub3d
 {
