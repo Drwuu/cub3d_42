@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/07 14:27:24 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 18:08:55 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ void	error_manager(int type, t_cub3d *cub, char **dbl_array)
 	else if (type == 40)
 		printf("you should use a correct color, ");
 	printf("please refer to the subject\n");
-	while(1);
 	exit(0);
 }

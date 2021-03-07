@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/05 18:37:05 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/07 18:32:49 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ const char 	*get_enum_name(t_id_name id)
     return (enum_name[id]);
 }
 
-void	*init_data(void *element, t_cub3d *cub, int size_of, int size)
+t_cub3d		*init_cub(t_cub3d *cub, int size)
 {
-
-	element = ft_calloc(size_of, size);
-	if (!element)
+	cub = ft_calloc(sizeof(*cub), size);
+	if (!cub)
 		error_manager(-1, cub, NULL);
-	ft_bzero(element, size_of);
-	return (element);
+	ft_bzero(cub, sizeof(*cub));
+	return (cub);
 }

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:52:48 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 12:09:47 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 18:28:59 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		main()
 {
-	parse_map("../map.cub");
+	parse_map("map.cub");
 	//while(1);
 	return (0);
 }

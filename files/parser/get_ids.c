@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 14:25:21 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 18:26:12 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ static int		is_id(t_ids *ids, int id)
 	i = 0;
 	while (i < 8)
 	{
-		dprintf(1, "goku\n");
 		if (ids[i].id != 0 && ids[i].id == id)
 		{
-			dprintf(1, "id %d = %d\n", i, ids[i].id);
 			return (1);
 		}
 		i++;
@@ -48,7 +46,6 @@ static int		find_id_one(int i, const char *line)
 			id = SO;
 		else if (line[i + 1] && ft_iswhitespace(line[i + 1]))
 			id = S;
-		dprintf(1, "line = %c\n", line[i]);
 	}
 	else if (line[i] == 'W')
 		if (line[i + 1] == 'E' && ft_iswhitespace(line[i + 2]))
@@ -70,7 +67,7 @@ static int		find_id_two(int i, const char *line, int id)
 	return (id);
 }
 
-static t_ids	set_id(t_ids *ids, char *line, t_cub3d *cub)
+static t_ids	set_id(char *line, t_cub3d *cub)
 {
 	int		i;
 	t_ids	id;
@@ -80,35 +77,29 @@ static t_ids	set_id(t_ids *ids, char *line, t_cub3d *cub)
 		i++;
 	id.id = find_id_one(i, line);
 	id.id = find_id_two(i, line, id.id);
-	dprintf(1, "vegeta\n");
-	if (is_id(ids, id.id))
+	if (is_id(cub->ids, id.id))
+	{
+		free_ids(cub->ids);
 		error_manager(2, cub, NULL);
+	}
 	return (id);
 }
 
-t_ids			*get_ids(int fd, char *line, t_cub3d *cub)
+t_ids			get_ids(t_cub3d *cub, char *line, int line_nb, int *i)
 {
-	t_ids	*ids;
-	int 	line_nb;
-	int		i;
+	t_ids ids;
 
-	ids = init_data(ids, cub, sizeof(*ids), 9);
-	i = 0;
-	line_nb = 1;
-	while (get_next_line(fd, &line))
+	ids = set_id(line, cub);
+	if (ids.id)
 	{
-		ids[i] = set_id(ids, line, cub);
-		if (ids[i].id)
+		ids.line_nb = line_nb;
+		ids.line = ft_strdup(line);
+		if (!ids.line)
 		{
-			ids[i].line_nb = line_nb;
-			ids[i].line = ft_strdup(line);
-			if (!ids[i].line)
-				error_manager(-1, cub, NULL);
-			i++;
+			free_ids(cub->ids);
+			error_manager(-1, cub, NULL);
 		}
-		free(line);
-		line_nb++;
+		*i += 1;
 	}
-	free(line);
 	return (ids);
 }

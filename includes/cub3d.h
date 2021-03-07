@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 12:00:45 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 18:26:37 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,21 +107,24 @@ typedef struct		s_ids
 
 typedef struct		s_cub3d
 {
-	t_ids			*ids;
+	//t_ids			*ids;
+	t_ids			ids[8];
 	t_window		window;
 	t_color			color[2];
 	char			*tex_path[5];
 }					t_cub3d;
 
-t_cub3d				*parse_map(char *file);
-t_ids				*get_ids(int fd, char *line, t_cub3d *cub);
+t_cub3d				*parse_map(const char *file);
+t_ids				get_ids(t_cub3d *cub, char *line, int line_nb, int *i);
+int					get_map();
 t_window			get_resolution(t_cub3d *cub);
 char				*get_tex_path(t_cub3d *cub, int i);
 t_color				get_color(t_cub3d *cub, int i);
 
 void				error_manager(int type, t_cub3d *cub, char **dbl_array);
-void				*init_data(void *element, t_cub3d *cub, int size_of, int size);
+t_cub3d				*init_cub(t_cub3d *cub, int size);
 const char 			*get_enum_name(t_id_name id);
 void				free_cub(t_cub3d *cub);
+void				free_ids(t_ids *ids);
 
 #endif
