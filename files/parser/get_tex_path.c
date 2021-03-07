@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 14:00:44 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/06 15:59:00 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 09:13:28 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_tex_path(t_cub3d *cub, int i)
 	char	*path;
 	char	**s_line;
 
-	s_line = ft_split(cub->ids[i].line, " \t\v\r\f");
+	s_line = ft_split(cub->ids[i].line, " \t");
 	if (!s_line)
 		error_manager(-1, cub, NULL);
 	tex_path_errors(s_line, cub);
