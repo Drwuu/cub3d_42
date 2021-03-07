@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 18:26:37 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 18:45:43 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ typedef enum		e_id_name
 	C
 }					t_id_name;
 
+typedef enum		e_face
+{
+	NO,
+	SO,
+	WE,
+	EA,
+}					t_face;
+
 typedef struct		s_vector
 {
 	int				x;
@@ -55,30 +63,31 @@ typedef	struct		s_color
 
 typedef struct		s_texture
 {
-	const char		*path;
+	const char		*file;
 }					t_texture;
 
 typedef struct		s_wall
 {
-	t_bool			exist;
+	t_face			face;
 	t_vector		position;
+	char			*texture;
 }					t_wall;
 
 typedef struct		s_player
 {
-	t_bool			exist;
 	t_vector		position;
 	int				speed;
 	int				life;
+	int				amos;
 }					t_player;
 
 typedef struct		s_sprite
 {
-	t_bool			exist;
-	const char		*path;
+	const char		*file;
 	t_vector		position;
 	int				speed;
 	int				life;
+	int				amos;
 }					t_sprite;
 
 typedef struct		s_ceiling
@@ -93,7 +102,10 @@ typedef struct		s_floor
 
 typedef struct		s_map
 {
+	t_ids			ids[8];
 	t_wall			wall;
+	t_ceiling		ceiling;
+	t_floor			floor;
 	t_sprite		sprite;
 	t_player		player;
 }					t_map;
@@ -107,11 +119,8 @@ typedef struct		s_ids
 
 typedef struct		s_cub3d
 {
-	//t_ids			*ids;
-	t_ids			ids[8];
+	t_map			map;
 	t_window		window;
-	t_color			color[2];
-	char			*tex_path[5];
 }					t_cub3d;
 
 t_cub3d				*parse_map(const char *file);
