@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_ids.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 18:26:12 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/08 02:11:43 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ static t_ids	set_id(char *line, t_cub3d *cub)
 		i++;
 	id.id = find_id_one(i, line);
 	id.id = find_id_two(i, line, id.id);
-	if (is_id(cub->ids, id.id))
+	if (is_id(cub->map.ids, id.id))
 	{
-		free_ids(cub->ids);
+		free_ids(cub->map.ids);
+		free(line);
 		error_manager(2, cub, NULL);
 	}
 	return (id);
@@ -96,7 +97,8 @@ t_ids			get_ids(t_cub3d *cub, char *line, int line_nb, int *i)
 		ids.line = ft_strdup(line);
 		if (!ids.line)
 		{
-			free_ids(cub->ids);
+			free_ids(cub->map.ids);
+			free(line);
 			error_manager(-1, cub, NULL);
 		}
 		*i += 1;

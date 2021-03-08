@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_colors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 19:13:06 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/07 12:02:47 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/08 01:28:47 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,15 @@ t_color		get_color(t_cub3d *cub, int i)
 	t_color		color;
 	char		**s_lines;
 
-	s_lines = ft_split(cub->ids[i].line, ",");
+	s_lines = ft_split(cub->map.ids[i].line, ",");
 	if (!s_lines)
 		error_manager(-1, cub, NULL);
 	color_errors(s_lines, NULL, cub);
 	color.alpha = 255;
-	color.red = get_red_color(s_lines, cub, cub->ids[i].id);
+	color.red = get_red_color(s_lines, cub, cub->map.ids[i].id);
 	color.green = get_size(cub, s_lines, 1);
 	color.blue = get_size(cub, s_lines, 2);
+	dprintf(1, "color = %d\n", color.red);
 	ft_free_dbl_array(s_lines);
 	return (color);
 }

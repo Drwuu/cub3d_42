@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_resolution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:29:23 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 11:21:09 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/07 21:08:43 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,17 @@ static int	get_size(t_cub3d *cub, char **s_line, int index)
 	return (size);
 }
 
-t_window	get_resolution(t_cub3d *cub)
+void		get_resolution(t_cub3d *cub)
 {
-	t_window	window;
 	char		**s_line;
 
-	window.width = 0;
-	window.height = 0;
-	s_line = ft_split(cub->ids[0].line, " \t");
+	s_line = ft_split(cub->map.ids[0].line, " \t");
 	if (!s_line)
 		error_manager(-1, cub, NULL);
 	resolution_errors(s_line, cub);
-	window.width = get_size(cub, s_line, 1);
-	window.height = get_size(cub, s_line, 2);
+	cub->window.width = get_size(cub, s_line, 1);
+	cub->window.height = get_size(cub, s_line, 2);
 	ft_free_dbl_array(s_line);
-	if (!window.width || !window.height)
+	if (!cub->window.width || !cub->window.height)
 		error_manager(20, cub, NULL);
-	return (window);
 }

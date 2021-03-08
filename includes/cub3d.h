@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 18:45:43 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/08 01:41:54 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef enum		e_id_name
 
 typedef enum		e_face
 {
-	NO,
-	SO,
-	WE,
-	EA,
+	WALL_NO,
+	WALL_SO,
+	WALL_WE,
+	WALL_EA
 }					t_face;
 
 typedef struct		s_vector
@@ -61,11 +61,6 @@ typedef	struct		s_color
 	unsigned char	alpha;
 }					t_color;
 
-typedef struct		s_texture
-{
-	const char		*file;
-}					t_texture;
-
 typedef struct		s_wall
 {
 	t_face			face;
@@ -81,14 +76,14 @@ typedef struct		s_player
 	int				amos;
 }					t_player;
 
-typedef struct		s_sprite
+typedef struct		s_enemy
 {
-	const char		*file;
 	t_vector		position;
+	char			*texture;
 	int				speed;
 	int				life;
 	int				amos;
-}					t_sprite;
+}					t_enemy;
 
 typedef struct		s_ceiling
 {
@@ -100,16 +95,6 @@ typedef struct		s_floor
 	t_color			color;
 }					t_floor;
 
-typedef struct		s_map
-{
-	t_ids			ids[8];
-	t_wall			wall;
-	t_ceiling		ceiling;
-	t_floor			floor;
-	t_sprite		sprite;
-	t_player		player;
-}					t_map;
-
 typedef struct		s_ids
 {
 	t_id_name		id;
@@ -117,17 +102,27 @@ typedef struct		s_ids
 	char			*line;
 }					t_ids;
 
+typedef struct		s_map
+{
+	t_ids			ids[8];
+	t_wall			wall[4];
+	t_ceiling		ceiling;
+	t_floor			floor;
+	t_enemy			enemy;
+}					t_map;
+
 typedef struct		s_cub3d
 {
 	t_map			map;
+	t_player		player;
 	t_window		window;
 }					t_cub3d;
 
 t_cub3d				*parse_map(const char *file);
 t_ids				get_ids(t_cub3d *cub, char *line, int line_nb, int *i);
 int					get_map();
-t_window			get_resolution(t_cub3d *cub);
-char				*get_tex_path(t_cub3d *cub, int i);
+void				get_resolution(t_cub3d *cub);
+char				*get_tex_path(t_cub3d *cub);
 t_color				get_color(t_cub3d *cub, int i);
 
 void				error_manager(int type, t_cub3d *cub, char **dbl_array);

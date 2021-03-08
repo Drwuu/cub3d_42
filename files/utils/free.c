@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/07 18:07:47 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/08 01:28:01 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+// check free with new structures
 
 static void free_tex_path(t_cub3d *cub)
 {
@@ -19,10 +21,15 @@ static void free_tex_path(t_cub3d *cub)
 	i = 0;
 	while (i < 5)
 	{
-		if (cub->tex_path[i])
+		if (cub->map.wall[i].texture)
 		{
-			free(cub->tex_path[i]);
-			cub->tex_path[i] = NULL;
+			free(cub->map.wall[i].texture);
+			cub->map.wall[i].texture = NULL;
+		}
+		if (cub->map.enemy.texture)
+		{
+			free(cub->map.enemy.texture);
+			cub->map.enemy.texture = NULL;
 		}
 		i++;
 	}
@@ -49,7 +56,7 @@ void free_ids(t_ids *ids)
 
 void		free_cub(t_cub3d *cub)
 {
-	free_ids(cub->ids);
+	free_ids(cub->map.ids);
 	free_tex_path(cub);
 	if (cub)
 		free(cub);
