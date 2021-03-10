@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/08 01:41:54 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/10 13:57:37 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 
 typedef enum		e_id_name
 {
-	R = 1,
-	NO,
-	SO,
-	WE,
-	EA,
-	S,
-	F,
-	C
+	ID_R = 1,
+	ID_NO,
+	ID_SO,
+	ID_WE,
+	ID_EA,
+	ID_S,
+	ID_F,
+	ID_C
 }					t_id_name;
 
 typedef enum		e_face
@@ -109,6 +109,8 @@ typedef struct		s_map
 	t_ceiling		ceiling;
 	t_floor			floor;
 	t_enemy			enemy;
+	t_list			*map_lines;
+	
 }					t_map;
 
 typedef struct		s_cub3d
@@ -120,14 +122,14 @@ typedef struct		s_cub3d
 
 t_cub3d				*parse_map(const char *file);
 t_ids				get_ids(t_cub3d *cub, char *line, int line_nb, int *i);
-int					get_map();
+int					is_valid_mapline(char *line);
 void				get_resolution(t_cub3d *cub);
-char				*get_tex_path(t_cub3d *cub);
+void				get_tex_path(t_cub3d *cub);
 t_color				get_color(t_cub3d *cub, int i);
 
 void				error_manager(int type, t_cub3d *cub, char **dbl_array);
 t_cub3d				*init_cub(t_cub3d *cub, int size);
-const char 			*get_enum_name(t_id_name id);
+const char 			*get_id_enum_name(t_id_name id);
 void				free_cub(t_cub3d *cub);
 void				free_ids(t_ids *ids);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tex_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 14:00:44 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/08 01:25:38 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 15:34:03 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void static	tex_path_errors(char **s_line, t_cub3d *cub)
 		error_manager(30, cub, s_line);
 }
 
-char	*get_tex_path(t_cub3d *cub)
+void		get_tex_path(t_cub3d *cub)
 {
 	int		i;
 	char	**s_line;

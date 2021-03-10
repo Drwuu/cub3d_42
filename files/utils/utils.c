@@ -6,13 +6,13 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 18:32:49 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/10 15:26:16 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-const char 	*get_enum_name(t_id_name id)
+const char 	*get_id_enum_name(t_id_name id)
 {
     const char	*enum_name[9];
 	

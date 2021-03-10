@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/08 01:24:38 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 15:56:25 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	error_manager(int type, t_cub3d *cub, char **dbl_array)
 		printf("you should use a correct ID, ");
 	else if (type == 2)
 		printf("duplicate IDs detected, ");
+	else if (type == 3)
+		printf("wrong IDs format, ");
 	else if (type == 20)
 		printf("you should use a correct window size, ");
 	else if (type == 30)

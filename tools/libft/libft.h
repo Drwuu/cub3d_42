@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:21:17 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/07 11:28:03 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/10 13:42:12 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ typedef enum	e_bool
 	TRUE
 }				t_bool;
 
+typedef	struct	s_dictionary
+{
+	int 			key;
+	void			*value;
+}				t_dictionary;
+
 typedef	struct	s_list
 {
 	void			*content;
@@ -30,7 +36,7 @@ typedef	struct	s_list
 
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
-int				ft_ischar(const char *s, char c);
+int				ft_ischar(const char *s, const char *c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
 int				ft_isalpha(int c);
