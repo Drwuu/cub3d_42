@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/10 17:59:50 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/10 23:40:00 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,14 @@ static void free_tex_path(t_cub3d *cub)
 
 static void free_map_lines(t_list *map_lines)
 {
-	t_dictionary	*lines;
+	t_dictionary	*mapline;
 	t_list			*save;
 
 	save = map_lines;
 	while (map_lines)
 	{
-		lines = map_lines->content;
-		dprintf(1, "map line in free = %s\n", lines->value);
-		free(lines->value);
+		mapline = map_lines->content;
+		free(mapline->value);
 		map_lines = map_lines->next;
 	}
 	ft_lstclear(&save, free);

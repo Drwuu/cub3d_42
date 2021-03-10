@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/10 19:15:04 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/10 23:51:53 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void		get_map_lines(t_cub3d *cub, char *line, int line_nb)
 		}
 		ft_lstadd_back(&cub->map.map_lines, new_el);
 	}
+	else
+		free(mapline);
 }
 
 static void		treat_lines(const char *file, t_cub3d *cub)
@@ -62,7 +64,7 @@ static void		treat_lines(const char *file, t_cub3d *cub)
 		line_nb++;
 		free(line);
 	}
-	get_map_lines(cub, line, line_nb); // still root leaks with get map lines
+	get_map_lines(cub, line, line_nb);
 	free(line);
 	close(fd);
 }
@@ -106,6 +108,13 @@ t_cub3d			*parse_map(const char *file)
 	i = 6;
 	while (i < 8)
 		cub->map.floor.color = get_color(cub, i++);
+	t_list *save = cub->map.map_lines;
+	while (cub->map.map_lines)
+	{
+		dprintf(1, "map line = %s\n", ((t_dictionary *)cub->map.map_lines->content)->value);
+		cub->map.map_lines = cub->map.map_lines->next;
+	}
+	cub->map.map_lines = save;
 	free_cub(cub);
 	return (cub);
 }
