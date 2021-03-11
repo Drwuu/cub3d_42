@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/08 15:56:25 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/11 02:27:17 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	error_manager(int type, t_cub3d *cub, char **dbl_array)
 		printf("you should use a correct texture path, ");
 	else if (type == 40)
 		printf("you should use a correct color, ");
+	else if (type == 50)
+		printf("your map is not well formated, ");
 	printf("please refer to the subject\n");
 	exit(0);
 }

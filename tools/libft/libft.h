@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:21:17 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 01:03:52 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 01:32:04 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void			ft_putnbr_fd(int n, int fd);
 t_list			*ft_lstnew(void *content);
 t_list			*ft_lstnew_addback(t_list **alst, void *content);
 t_list			*ft_lstlast(t_list *lst);
+t_list			*ft_lstfirst(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 				void (*del)(void *));
 void			ft_lstadd_front(t_list **alst, t_list *new);

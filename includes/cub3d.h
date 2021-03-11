@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/10 13:57:37 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/11 02:52:10 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int					is_valid_mapline(char *line);
 void				get_resolution(t_cub3d *cub);
 void				get_tex_path(t_cub3d *cub);
 t_color				get_color(t_cub3d *cub, int i);
+void				get_map(t_cub3d *cub);
 
 void				error_manager(int type, t_cub3d *cub, char **dbl_array);
 t_cub3d				*init_cub(t_cub3d *cub, int size);
