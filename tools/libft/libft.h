@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:21:17 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 01:32:04 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 14:42:29 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef	struct	s_list
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
 int				ft_ischar(const char *s, const char *c);
+int				ft_char_ischars(char c, const char *chars);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
 int				ft_isalpha(int c);

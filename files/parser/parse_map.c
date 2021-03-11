@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 02:42:30 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 15:59:00 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ t_cub3d			*parse_map(const char *file)
 	sort_ids(cub);
 	get_resolution(cub);
 	get_tex_path(cub);
-	get_map(cub);
 	i = 6;
 	while (i < 8)
 		cub->map.floor.color = get_color(cub, i++);
+	get_map(cub);
 	free_cub(cub);
 	return (cub);
 }

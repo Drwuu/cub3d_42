@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 02:52:10 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 22:39:23 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct		s_wall
 typedef struct		s_player
 {
 	t_vector		position;
+	int				fov;
 	int				speed;
 	int				life;
 	int				amos;
@@ -123,9 +124,11 @@ typedef struct		s_cub3d
 t_cub3d				*parse_map(const char *file);
 t_ids				get_ids(t_cub3d *cub, char *line, int line_nb, int *i);
 int					is_valid_mapline(char *line);
+int					is_valid_next(char *line, int i);
 void				get_resolution(t_cub3d *cub);
 void				get_tex_path(t_cub3d *cub);
 t_color				get_color(t_cub3d *cub, int i);
+void				get_map_info(t_cub3d *cub, t_list *mapline);
 void				get_map(t_cub3d *cub);
 
 void				error_manager(int type, t_cub3d *cub, char **dbl_array);

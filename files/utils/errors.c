@@ -6,13 +6,45 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/11 02:27:17 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 16:37:37 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	error_manager(int type, t_cub3d *cub, char **dbl_array)
+static void		window_errors(int type)
+{	
+	if (type == 20)
+		printf("you should use a correct window size, ");
+}
+
+static void		texture_errors(int type)
+{	
+	if (type == 30)
+		printf("you should use a correct texture path, ");
+	else if (type == 40)
+		printf("you should use a correct color, ");
+}
+
+static void		ids_errors(int type)
+{	
+	if (type == 1)
+		printf("you should use a correct ID, ");
+	else if (type == 2)
+		printf("duplicate IDs detected, ");
+	else if (type == 3)
+		printf("wrong IDs format, ");
+}
+
+static void		map_errors(int type)
+{	
+	if (type == 50)
+		printf("your map is not well formated, ");
+	else if (type == 51)
+		printf("your map has an issue in a line, ");
+}
+
+void			error_manager(int type, t_cub3d *cub, char **dbl_array)
 {
 	if (dbl_array)
 		ft_free_dbl_array(dbl_array);
@@ -24,20 +56,10 @@ void	error_manager(int type, t_cub3d *cub, char **dbl_array)
 		printf("the size you malloced broke down\n");
 		exit(0);
 	}
-	else if (type == 1)
-		printf("you should use a correct ID, ");
-	else if (type == 2)
-		printf("duplicate IDs detected, ");
-	else if (type == 3)
-		printf("wrong IDs format, ");
-	else if (type == 20)
-		printf("you should use a correct window size, ");
-	else if (type == 30)
-		printf("you should use a correct texture path, ");
-	else if (type == 40)
-		printf("you should use a correct color, ");
-	else if (type == 50)
-		printf("your map is not well formated, ");
+	ids_errors(type);
+	window_errors(type);
+	texture_errors(type);
+	map_errors(type);
 	printf("please refer to the subject\n");
 	exit(0);
 }

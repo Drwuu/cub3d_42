@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 19:13:06 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/08 01:28:47 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 21:14:44 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ t_color		get_color(t_cub3d *cub, int i)
 	color.red = get_red_color(s_lines, cub, cub->map.ids[i].id);
 	color.green = get_size(cub, s_lines, 1);
 	color.blue = get_size(cub, s_lines, 2);
-	dprintf(1, "color = %d\n", color.red);
 	ft_free_dbl_array(s_lines);
 	return (color);
 }

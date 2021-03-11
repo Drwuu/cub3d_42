@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/10 15:26:16 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/11 17:36:29 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ const char 	*get_id_enum_name(t_id_name id)
 	enum_name[7] = "F";
 	enum_name[8] = "C";
     return (enum_name[id]);
+}
+
+int				is_valid_mapline(char *line)
+{
+	int i;
+
+	i = 0;
+	if (!ft_ischar(line, " 102NSOE"))
+		return (0);
+	return (1);
+}
+
+int				is_valid_next(char *line, int i)
+{
+	if (!line[i - 1] || !line[i + 1])
+		return (0);
+	if (ft_char_ischars(line[i - 1], " ") || \
+	ft_char_ischars(line[i + 1], " "))
+		return (0);
+	else
+		return (1);
 }
 
 t_cub3d		*init_cub(t_cub3d *cub, int size)

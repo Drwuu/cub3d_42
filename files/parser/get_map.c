@@ -6,13 +6,13 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 03:25:41 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 22:00:57 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static t_list	*get_valid_map(t_list *maplines)
+static t_list	*get_valid_map_block(t_list *maplines)
 {
 	char			*str;
 	int				i;
@@ -21,7 +21,6 @@ static t_list	*get_valid_map(t_list *maplines)
 	while (maplines)
 	{
 		str = ((t_dictionary *)maplines->content)->value;
-		dprintf(1, "str = %s\n", str);
 		if (is_valid_mapline(str))
 		{
 			((t_dictionary *)maplines->content)->key = i++;
@@ -36,7 +35,6 @@ static t_list	*get_valid_map(t_list *maplines)
 			break ;
 		}
 	}
-	dprintf(1, "first str = %s\n", ((t_dictionary *)maplines->content)->value);
 	return (maplines);
 }
 
@@ -79,20 +77,13 @@ static t_list	*get_end_of_map(t_list *maplines)
 	return (last);
 }
 
-int				is_valid_mapline(char *line)
-{
-	int i;
-
-	i = 0;
-	if (!ft_ischar(line, " 102NSOE"))
-		return (0);
-	return (1);
-}
-
 void			get_map(t_cub3d *cub)
 {
 	cub->map.map_lines = get_end_of_map(cub->map.map_lines);
 	get_map_error(cub->map.map_lines, cub);
-	cub->map.map_lines = get_valid_map(cub->map.map_lines);
+	cub->map.map_lines = get_valid_map_block(cub->map.map_lines);
+	get_map_info(cub, cub->map.map_lines);
+
+
 	cub->map.map_lines = ft_lstfirst(cub->map.map_lines);
 }
