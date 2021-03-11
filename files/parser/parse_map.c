@@ -6,7 +6,7 @@
 /*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/10 23:51:53 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 01:18:12 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,17 @@ t_cub3d			*parse_map(const char *file)
 	sort_ids(cub);
 	get_resolution(cub);
 	get_tex_path(cub);
-	get_map(cub);
+	//get_map(cub);
 	i = 6;
 	while (i < 8)
 		cub->map.floor.color = get_color(cub, i++);
 	t_list *save = cub->map.map_lines;
+	cub->map.map_lines = ft_lstlast(cub->map.map_lines);
 	while (cub->map.map_lines)
 	{
-		dprintf(1, "map line = %s\n", ((t_dictionary *)cub->map.map_lines->content)->value);
-		cub->map.map_lines = cub->map.map_lines->next;
+		dprintf(1, "map line previous = %s\n", ((t_dictionary *)cub->map.map_lines->content)->value);
+		//dprintf(1, "map line = %s\n", ((t_dictionary *)cub->map.map_lines->content)->value);
+		cub->map.map_lines = cub->map.map_lines->previous;
 	}
 	cub->map.map_lines = save;
 	free_cub(cub);

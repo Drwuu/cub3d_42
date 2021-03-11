@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/10 19:26:52 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/11 00:48:14 by drwuu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,11 @@
 void	get_valid_map(t_list *maplines)
 {
 	t_dictionary	*line;
-	t_list			*save;
+	t_list			*last;
+	char			*str;
+	int				index;
 
-	save = maplines;
-	while(maplines)
-	{
-		line = maplines->content;
-		if (!line->value)
-		{
-			free(line->value);
-			free(line);
-		}
-		maplines = maplines->next;
-	}
-	maplines = save;
+	last = ft_lstlast(maplines);
 }
 
 int		is_valid_mapline(char *line)
@@ -43,6 +34,5 @@ int		is_valid_mapline(char *line)
 
 void	get_map(t_cub3d *cub)
 {
-
-
+	get_valid_map(cub->map.map_lines);
 }
