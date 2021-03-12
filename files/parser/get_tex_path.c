@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 14:00:44 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/08 15:34:03 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/12 22:17:36 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,26 @@ void static	tex_path_errors(char **s_line, t_cub3d *cub)
 		error_manager(30, cub, s_line);
 }
 
+void static	get_enemies(char **s_line, t_cub3d *cub)
+{
+	t_enemy		*enemy;
+	int			j;
+
+	j = 0;
+	enemy = ft_calloc(sizeof(*enemy), cub->map.enemy_nb);
+	if (!enemy)
+		error_manager(-1, cub, s_line);
+	ft_bzero(enemy, sizeof(*enemy));
+	while (j < cub->map.enemy_nb)
+	{
+		enemy[j].texture = ft_strdup(s_line[1]);
+		if (!enemy[j].texture)
+			error_manager(-1, cub, s_line);
+		j++;
+	}
+	cub->map.enemy = enemy;
+}
+
 void		get_tex_path(t_cub3d *cub)
 {
 	int		i;
@@ -26,7 +46,6 @@ void		get_tex_path(t_cub3d *cub)
 	i = -1;
 	while (++i < 5)
 	{
-		cub->map.wall[i].face = i;
 		s_line = ft_split(cub->map.ids[i + 1].line, " \t");
 		if (!s_line)
 			error_manager(-1, cub, NULL);
@@ -38,11 +57,7 @@ void		get_tex_path(t_cub3d *cub)
 				error_manager(-1, cub, s_line);
 		}
 		else
-		{
-			cub->map.enemy.texture = ft_strdup(s_line[1]);
-			if (!cub->map.enemy.texture)
-				error_manager(-1, cub, s_line);
-		}
+			get_enemies(s_line, cub);
 		ft_free_dbl_array(s_line);
 	}
 }

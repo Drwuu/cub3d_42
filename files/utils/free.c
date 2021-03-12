@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/10 23:40:00 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/12 22:17:26 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,22 @@ static void free_tex_path(t_cub3d *cub)
 	int i;
 
 	i = 0;
-	while (i < 5)
+	while (i < 4)
 	{
 		if (cub->map.wall[i].texture)
 		{
 			free(cub->map.wall[i].texture);
 			cub->map.wall[i].texture = NULL;
 		}
-		if (cub->map.enemy.texture)
+		i++;
+	}
+	i = 0;
+	while (i < cub->map.enemy_nb)
+	{
+		if (cub->map.enemy[i].texture)
 		{
-			free(cub->map.enemy.texture);
-			cub->map.enemy.texture = NULL;
+			free(cub->map.enemy[i].texture);
+			cub->map.enemy[i].texture = NULL;
 		}
 		i++;
 	}

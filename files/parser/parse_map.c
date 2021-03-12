@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 15:59:00 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/12 22:24:55 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		get_map_lines(t_cub3d *cub, char *line, int line_nb)
 		error_manager(-1, cub, NULL);
 	}
 	ft_bzero(mapline, sizeof(*mapline));
-	if (is_valid_mapline(line) || !*line)
+	if (is_valid_mapline(line) || !*line) // problem here with end of file without \n ??
 	{
 		mapline->key = line_nb;
 		mapline->value = ft_strdup(line);
@@ -50,7 +50,7 @@ static void		treat_lines(const char *file, t_cub3d *cub)
 	fd = open(file, O_RDONLY);
 	i = 0;
 	line_nb = 1;
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line)) // check -1
 	{
 		if (i < 8)
 			cub->map.ids[i] = get_ids(cub, line, line_nb, &i);
@@ -102,12 +102,15 @@ t_cub3d			*parse_map(const char *file)
 	cub = init_cub(cub, 1);
 	treat_lines(file, cub);
 	sort_ids(cub);
+	get_map(cub);
 	get_resolution(cub);
 	get_tex_path(cub);
 	i = 6;
 	while (i < 8)
 		cub->map.floor.color = get_color(cub, i++);
-	get_map(cub);
+	dprintf(1, "enemy = %s\n", cub->map.enemy[0].texture);
+	dprintf(1, "enemy = %s\n", cub->map.enemy[1].texture);
+	dprintf(1, "player = %d\n", cub->player.direction);
 	free_cub(cub);
 	return (cub);
 }

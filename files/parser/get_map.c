@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 22:00:57 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/12 20:43:09 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ static t_list	*get_valid_map_block(t_list *maplines)
 
 static void		get_map_error(t_list *maplines, t_cub3d *cub)
 {
-	char			*str;
+	char	*str;
+	int		i;
 
 	while (maplines)
 	{
 		str = ((t_dictionary *)maplines->content)->value;
-		if (is_valid_mapline(str) || *str == '\0')
+		if (is_valid_mapline(str) || *str == '\0') // *str == \0 ??
 		{
 			if (maplines->previous)
 				maplines = maplines->previous;
@@ -83,7 +84,7 @@ void			get_map(t_cub3d *cub)
 	get_map_error(cub->map.map_lines, cub);
 	cub->map.map_lines = get_valid_map_block(cub->map.map_lines);
 	get_map_info(cub, cub->map.map_lines);
-
+	dprintf(1, "map size = x%d y%d\n", cub->map.size.x, cub->map.size.y);
 
 	cub->map.map_lines = ft_lstfirst(cub->map.map_lines);
 }

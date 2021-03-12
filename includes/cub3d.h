@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/11 22:39:23 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/12 22:21:25 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ typedef enum		e_id_name
 	ID_C
 }					t_id_name;
 
-typedef enum		e_face
+typedef enum		e_direction
 {
-	WALL_NO,
-	WALL_SO,
-	WALL_WE,
-	WALL_EA
-}					t_face;
+	DIR_NO = 1,
+	DIR_SO,
+	DIR_WE,
+	DIR_EA
+}					t_direction;
 
-typedef struct		s_vector
+typedef struct		s_vec3
 {
 	int				x;
 	int				y;
 	int				z;
-}					t_vector;
+}					t_vec3;
 
 typedef struct		s_window
 {
@@ -63,14 +63,15 @@ typedef	struct		s_color
 
 typedef struct		s_wall
 {
-	t_face			face;
-	t_vector		position;
+	t_direction		face;
+	t_vec3			position;
 	char			*texture;
 }					t_wall;
 
 typedef struct		s_player
 {
-	t_vector		position;
+	t_vec3		position;
+	t_direction		direction;
 	int				fov;
 	int				speed;
 	int				life;
@@ -79,11 +80,11 @@ typedef struct		s_player
 
 typedef struct		s_enemy
 {
-	t_vector		position;
-	char			*texture;
+	t_vec3			position;
 	int				speed;
 	int				life;
 	int				amos;
+	char			*texture;
 }					t_enemy;
 
 typedef struct		s_ceiling
@@ -105,11 +106,13 @@ typedef struct		s_ids
 
 typedef struct		s_map
 {
+	t_vec3			size;
 	t_ids			ids[8];
 	t_wall			wall[4];
 	t_ceiling		ceiling;
 	t_floor			floor;
-	t_enemy			enemy;
+	t_enemy			*enemy;
+	int				enemy_nb;
 	t_list			*map_lines;
 	
 }					t_map;
