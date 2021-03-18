@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:41:28 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/06 15:40:31 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/18 17:43:32 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	**ft_split(const char *s, const char *sep)
 			if (!new_word)
 			{
 				if (!(split[j++] = build_str(s, sep, i)))
-					return (ft_free_dbl_array(split));
+					return ((char **)ft_free_dbl_array((void **)split, 0));
 				new_word = 1;
 			}
 		}

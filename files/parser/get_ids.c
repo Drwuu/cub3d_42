@@ -6,108 +6,84 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/10 13:57:02 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/18 15:03:11 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int		is_in_ids(t_ids *ids, int id)
+static void		get_ids_info(t_cub3d *cub, char *line, int ret)
+{
+	if (ret == 1)
+		get_resolution(cub, line);
+	if (ret == 2)
+		cub->map.floor.color =  get_color(cub, line);
+	if (ret == 3)
+		cub->map.ceiling.color = get_color(cub, line);
+	if (ret == 4)
+		cub->map.sprite_tex = get_tex_path(cub, line);
+	if (ret == 5)
+		cub->map.wall_tex[0] = get_tex_path(cub, line);
+	if (ret == 6)
+		cub->map.wall_tex[1] = get_tex_path(cub, line);
+	if (ret == 7)
+		cub->map.wall_tex[2] = get_tex_path(cub, line);
+	if (ret == 8)
+		cub->map.wall_tex[3] = get_tex_path(cub, line);
+}
+
+int		is_id(const char *line)
 {
 	int i;
 
 	i = 0;
-	while (i < 8)
-	{
-		if (ids[i].id != 0 && ids[i].id == id)
-		{
-			return (1);
-		}
+	while (line[i] && ft_iswhitespace(line[i]))
 		i++;
+	if (line[i + 2] && ft_iswhitespace(line[i + 2]))
+	{
+		if (line[i] == 'N' && line[i + 1] == 'O' )
+			return (5);
+		if (line[i] == 'S' && line[i + 1] == 'O')
+			return (6);
+		if (line[i] == 'E' && line[i + 1] == 'A')
+			return (7);
+		if (line[i] == 'W' && line[i + 1] == 'E')
+			return (8);
 	}
+	if (line[i + 1] && line[i] == 'R' && ft_iswhitespace(line[i + 1]))
+		return (1);
+	if (line[i + 1] && line[i] == 'F' && ft_iswhitespace(line[i + 1])) 
+		return (2);
+	if (line[i + 1] && line[i] == 'C' && ft_iswhitespace(line[i + 1])) 
+		return (3);
+	if (line[i + 1] && line[i] == 'S' && ft_iswhitespace(line[i + 1])) 
+		return (4);
 	return (0);
 }
 
-static int		find_id_one(int i, const char *line)
+void		check_id_lines(t_cub3d *cub, t_list *id_lines)
 {
-	int id;
+	int		id;
+	int		ret;
+	char	*line;
 
 	id = 0;
-	if (line[i] == 'R' && ft_iswhitespace(line[i + 1]))
-		id = ID_R;
-	else if (line[i] == 'N')
+	while (id_lines)
 	{
-		if (line[i + 1] == 'O' && ft_iswhitespace(line[i + 2]))
-			id = ID_NO;
-	}
-	else if (line[i] == 'S')
-	{
-		if (line[i + 1] == 'O' && ft_iswhitespace(line[i + 2]))
-			id = ID_SO;
-		else if (line[i + 1] && ft_iswhitespace(line[i + 1]))
-			id = ID_S;
-	}
-	else if (line[i] == 'W')
-		if (line[i + 1] == 'E' && ft_iswhitespace(line[i + 2]))
-			id = ID_WE;
-	return (id);
-}
-
-static int		find_id_two(int i, const char *line, int id)
-{
-	if (line[i] == 'E')
-	{
-		if (line[i + 1] == 'A' && ft_iswhitespace(line[i + 2]))
-			id = ID_EA;
-	}
-	else if (line[i] == 'F' && ft_iswhitespace(line[i + 1]))
-		id = ID_F;
-	else if (line[i] == 'C' && ft_iswhitespace(line[i + 1]))
-		id = ID_C;
-	return (id);
-}
-
-static t_ids	set_id(char *line, t_cub3d *cub)
-{
-	int		i;
-	t_ids	id;
-	
-	i = 0;
-	id.id = 0;
-	while (line[i] && ft_iswhitespace(line[i]))
-		i++;
-	id.id = find_id_one(i, line);
-	id.id = find_id_two(i, line, id.id);
-	if ((line[i] && !id.id) || is_in_ids(cub->map.ids, id.id))
-	{
-		free(line);
-		free_ids(cub->map.ids);
-		if (!id.id)
+		line = id_lines->content;
+		if (!line[0])
 		{
-			dprintf(1, "line = %s\n", line);
-			error_manager(3, cub, NULL);
+			id_lines = id_lines->next;
+			continue ;
 		}
-		error_manager(2, cub, NULL);
-	}
-	return (id);
-}
-
-t_ids			get_ids(t_cub3d *cub, char *line, int line_nb, int *i)
-{
-	t_ids ids;
-
-	ids = set_id(line, cub);
-	if (ids.id)
-	{
-		ids.line_nb = line_nb;
-		ids.line = ft_strdup(line);
-		if (!ids.line)
+		ret = is_id(line);
+		if (ret)
 		{
-			free(line);
-			free_ids(cub->map.ids);
-			error_manager(-1, cub, NULL);
+			get_ids_info(cub, line, ret);
+			id++;
 		}
-		*i += 1;
+		id_lines = id_lines->next;
 	}
-	return (ids);
+	if (id > 8)
+		error_manager(2, cub, NULL, NULL);
 }

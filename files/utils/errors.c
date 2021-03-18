@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drwuu <drwuu@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/11 16:37:37 by drwuu            ###   ########lyon.fr   */
+/*   Updated: 2021/03/18 16:48:47 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void		window_errors(int type)
 {	
 	if (type == 20)
 		printf("you should use a correct window size, ");
+	else if (type == 21)
+		printf("your window size is too big, ");
 }
 
 static void		texture_errors(int type)
@@ -42,15 +44,19 @@ static void		map_errors(int type)
 		printf("your map is not well formated, ");
 	else if (type == 51)
 		printf("your map has an issue in a line, ");
+	else if (type == 52)
+		printf("you have too much players in the scene, ");
 }
 
-void			error_manager(int type, t_cub3d *cub, char **dbl_array)
+void			error_manager(int type, t_cub3d *cub, void *data, \
+				void **data2)
 {
-	if (dbl_array)
-		ft_free_dbl_array(dbl_array);
+	if (data2)
+		ft_free_dbl_array(data2, 0);
+	if (data)
+		free(data);
 	free_cub(cub);
 	printf("Error\n");
-	printf("Map error of type %d : ", type);
 	if (type == -1)
 	{
 		printf("the size you malloced broke down\n");
@@ -61,5 +67,6 @@ void			error_manager(int type, t_cub3d *cub, char **dbl_array)
 	texture_errors(type);
 	map_errors(type);
 	printf("please refer to the subject\n");
+	//while(1);
 	exit(0);
 }

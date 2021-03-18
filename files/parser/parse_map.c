@@ -6,111 +6,111 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/12 22:24:55 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/18 15:23:26 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void		get_map_lines(t_cub3d *cub, char *line, int line_nb)
+static void		get_map_lines(t_cub3d *cub, char **line, int fd)
 {
-	t_dictionary	*mapline;
-	t_list			*new_el;
+	t_list		*new;
+	int			ret;
 
-	mapline = ft_calloc(sizeof(*mapline), 1);
-	if (!mapline)
+	new = ft_lstnew(*line, STRING);
+	if (!new)
+		error_manager(-1, cub, *line, NULL);
+	ft_lstadd_back(&cub->map.garbage_maplines, new);
+	ret = 1;
+	while (ret)
 	{
-		free(line);
-		error_manager(-1, cub, NULL);
-	}
-	ft_bzero(mapline, sizeof(*mapline));
-	if (is_valid_mapline(line) || !*line) // problem here with end of file without \n ??
-	{
-		mapline->key = line_nb;
-		mapline->value = ft_strdup(line);
-		new_el = ft_lstnew(mapline);
-		if (!mapline->value || !new_el)
+		ret = get_next_line(fd, line);
+		if (ret == -1)
+			error_manager(-1, cub, *line, NULL);
+		if (**line && !is_valid_mapline(*line))
+			error_manager(50, cub, *line, NULL);
+		if (!**line)
 		{
-			free(line);
-			error_manager(-1, cub, NULL);
+			free(*line);
+			break ;
 		}
-		ft_lstadd_back(&cub->map.map_lines, new_el);
+		new = ft_lstnew(*line, STRING);
+		if (!new)
+			error_manager(-1, cub, *line, NULL);
+		ft_lstadd_back(&cub->map.garbage_maplines, new);
 	}
+}
+
+static void		get_lines_to_parse(t_cub3d *cub, char **line, int fd)
+{
+	t_list		*new;
+	int			ret;
+
+	ret = 1;
+	while (ret)
+	{
+		ret = get_next_line(fd, line);
+		new = ft_lstnew(*line, STRING);
+		if (!new || ret == -1)
+			error_manager(-1, cub, *line, NULL);
+		ft_lstadd_back(&cub->map.garbage_idlines, new);
+		if (**line && !is_id(*line))
+		{
+			if (new->previous)
+			{
+				new->previous->next = NULL;
+				free(new);
+			}
+			break ;
+		}
+	}
+	if (**line && is_valid_mapline(*line))
+		get_map_lines(cub, line, fd);
 	else
-		free(mapline);
-}
-
-static void		treat_lines(const char *file, t_cub3d *cub)
-{
-	char		*line;
-	int 		line_nb;
-	int			fd;
-	int			i;
-
-	fd = open(file, O_RDONLY);
-	i = 0;
-	line_nb = 1;
-	while (get_next_line(fd, &line)) // check -1
-	{
-		if (i < 8)
-			cub->map.ids[i] = get_ids(cub, line, line_nb, &i);
-		if ((i - 1) >= 7 && cub->map.ids[7].id != 0)
-			get_map_lines(cub, line, line_nb);
-		else if ((i - 1) >= 7)
-		{
-			free(line);
-			error_manager(1, cub, NULL);
-		}
-		line_nb++;
-		free(line);
-	}
-	get_map_lines(cub, line, line_nb);
-	free(line);
-	close(fd);
-}
-
-static void		sort_ids(t_cub3d *cub)
-{
-	int			i;
-	int			j;
-	int			id;
-	t_ids		save;
-
-	i = 0;
-	j = 0;
-	id = 1;
-	while (i < 8)
-	{
-		if (cub->map.ids[i].id == id)
-		{
-			save = cub->map.ids[j];
-			cub->map.ids[j++] = cub->map.ids[i];
-			cub->map.ids[i] = save;
-			id++;
-			i = 0;
-			continue ;
-		}
-		i++;
-	}
+		error_manager(3, cub, NULL, NULL);
 }
 
 t_cub3d			*parse_map(const char *file)
 {
 	t_cub3d		*cub;
-	int			i;
+	char		*line;
+	t_list		*first_id;
+	t_list		*first_map;
+	int			fd;
 
 	cub = init_cub(cub, 1);
-	treat_lines(file, cub);
-	sort_ids(cub);
-	get_map(cub);
-	get_resolution(cub);
-	get_tex_path(cub);
-	i = 6;
-	while (i < 8)
-		cub->map.floor.color = get_color(cub, i++);
-	dprintf(1, "enemy = %s\n", cub->map.enemy[0].texture);
-	dprintf(1, "enemy = %s\n", cub->map.enemy[1].texture);
-	dprintf(1, "player = %d\n", cub->player.direction);
+	fd = open(file, O_RDONLY);
+	get_lines_to_parse(cub, &line, fd);
+	get_map_info(cub);
+	check_id_lines(cub, cub->map.garbage_idlines);
+	first_id = cub->map.garbage_idlines;
+	first_map = cub->map.garbage_maplines;
+	while (cub->map.garbage_idlines)
+	{
+		dprintf(1, "id line = %s\n", cub->map.garbage_idlines->content);
+		cub->map.garbage_idlines = cub->map.garbage_idlines->next;
+	}
+	while (cub->map.garbage_maplines)
+	{
+		dprintf(1, "map line = %s\n", cub->map.garbage_maplines->content);
+		cub->map.garbage_maplines = cub->map.garbage_maplines->next;
+	}
+	cub->map.garbage_idlines = first_id;
+	cub->map.garbage_maplines = first_map;
+	dprintf(1, "floor red color = %d\n", cub->map.floor.color.red);
+	dprintf(1, "ceiling red color = %d\n", cub->map.ceiling.color.red);
+	dprintf(1, "NO wall texture = %s\n", cub->map.wall_tex[0]);
+	dprintf(1, "SO wall texture = %s\n", cub->map.wall_tex[1]);
+	dprintf(1, "EA wall texture = %s\n", cub->map.wall_tex[2]);
+	dprintf(1, "WE wall texture = %s\n", cub->map.wall_tex[3]);
+	dprintf(1, "sprite texture = %s\n", cub->map.sprite_tex);
+	dprintf(1, "size x = %d\n", cub->map.size.x);
+	dprintf(1, "size y = %d\n", cub->map.size.y);
+	dprintf(1, "player x pos = %d\n", cub->player.position.x);
+	dprintf(1, "player y pos = %d\n", cub->player.position.y);
+	dprintf(1, "player direction = %d\n", cub->player.direction);
+	dprintf(1, "enemies = %d\n", cub->map.enemy_nb);
 	free_cub(cub);
+	close(fd);
 	return (cub);
 }
