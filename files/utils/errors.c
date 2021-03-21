@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/18 16:48:47 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/20 15:54:41 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		ids_errors(int type)
 	if (type == 1)
 		printf("you should use a correct ID, ");
 	else if (type == 2)
-		printf("duplicate IDs detected, ");
+		printf("wrong number of IDs, ");
 	else if (type == 3)
 		printf("wrong IDs format, ");
 }
@@ -67,6 +67,5 @@ void			error_manager(int type, t_cub3d *cub, void *data, \
 	texture_errors(type);
 	map_errors(type);
 	printf("please refer to the subject\n");
-	//while(1);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 19:13:06 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/18 16:47:14 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/19 18:38:19 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ t_color		get_color(t_cub3d *cub, char *line)
 	if (!s_lines)
 		error_manager(-1, cub, NULL, NULL);
 	color_errors(s_lines, NULL, cub);
-	color.alpha = 255;
-	color.red = get_red_color(s_lines, cub);
-	color.green = get_size(cub, s_lines, 1);
-	color.blue = get_size(cub, s_lines, 2);
+	color.a = 255;
+	color.r = get_red_color(s_lines, cub);
+	color.g = get_size(cub, s_lines, 1);
+	color.b = get_size(cub, s_lines, 2);
 	ft_free_dbl_array((void **)s_lines, 0);
 	return (color);
 }

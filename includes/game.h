@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/04 10:52:48 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/21 12:44:35 by lwourms          ###   ########.fr       */
+/*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
+/*   Updated: 2021/03/21 18:58:34 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#ifndef GAME_H
+# define GAME_H
 
-static t_settings set_settings(t_cub3d *cub)
+typedef struct s_engine
 {
-	t_settings	settings;
+	t_ray	rays;
+}	t_engine;
 
-	settings.FOV = 60;
-	return (settings);
-}
-
-int		main()
+typedef struct s_ray
 {
-	t_cub3d		*cub;
+	const t_vec3	ray_coord;
+}	t_ray;
 
-	cub = parse_map("map.cub");
-	cub->settings = set_settings(cub);
-	launch_game(cub);
-	free_cub(cub);
-	return (0);
-}
+typedef struct s_plane
+{
+	float	A;
+	float	B;
+	float	C;
+	float	D;
+}	t_plane;
+
+typedef struct s_settings
+{
+	int	FOV;
+}	t_settings;
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/18 15:58:02 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/21 17:08:37 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <stdio.h>
 # include <fcntl.h>
-# include <math.h>
+# include "event.h"
+# include "game.h"
 # include "../tools/libft/libft.h"
 # include "../tools/gnl/get_next_line.h"
 # include "../tools/minilibx/mlx.h"
@@ -28,11 +29,20 @@ typedef enum		e_direction
 	DIR_EA
 }					t_direction;
 
+typedef struct		s_frame
+{
+	void			*frame;
+	char			*addr;
+	int				bits_per_pixel;
+	int				line_size;
+	int				endian;
+}					t_frame;
+
 typedef struct		s_vec3
 {
-	int				x;
-	int				y;
-	int				z;
+	float			x;
+	float			y;
+	float			z;
 }					t_vec3;
 
 typedef struct		s_window
@@ -41,13 +51,20 @@ typedef struct		s_window
 	int				height;
 }					t_window;
 
-typedef	struct		s_color
+typedef struct		s_color
 {
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-	unsigned char	alpha;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	unsigned char	a;
 }					t_color;
+
+typedef union		t_union
+{
+	t_color			color;
+	unsigned int	c_color;
+}					e_union;
+
 
 typedef struct		s_player
 {
@@ -93,10 +110,14 @@ typedef struct		s_map
 
 typedef struct		s_cub3d
 {
+	t_engine		engine;
+	t_settings		settings;
 	t_map			map;
 	t_player		player;
 	t_window		window;
 	t_enemy			*enemy;
+	void			*mlx;
+	void			*win;
 }					t_cub3d;
 
 t_cub3d				*parse_map(const char *file);
@@ -108,6 +129,9 @@ void				get_resolution(t_cub3d *cub, char *line);
 char				*get_tex_path(t_cub3d *cub, char *line);
 t_color				get_color(t_cub3d *cub, char *line);
 void				get_map_info(t_cub3d *cub);
+
+void				launch_game(t_cub3d *cub);
+void				create_frame(t_cub3d *cub);
 
 void				error_manager(int type, t_cub3d *cub, \
 					void *data, void **dbl_str);

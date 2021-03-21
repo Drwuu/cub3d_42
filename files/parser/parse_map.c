@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/18 15:23:26 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/20 15:56:41 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ t_cub3d			*parse_map(const char *file)
 	cub = init_cub(cub, 1);
 	fd = open(file, O_RDONLY);
 	get_lines_to_parse(cub, &line, fd);
+	close(fd);
 	get_map_info(cub);
 	check_id_lines(cub, cub->map.garbage_idlines);
-	first_id = cub->map.garbage_idlines;
+	/* first_id = cub->map.garbage_idlines;
 	first_map = cub->map.garbage_maplines;
 	while (cub->map.garbage_idlines)
 	{
@@ -109,8 +110,6 @@ t_cub3d			*parse_map(const char *file)
 	dprintf(1, "player x pos = %d\n", cub->player.position.x);
 	dprintf(1, "player y pos = %d\n", cub->player.position.y);
 	dprintf(1, "player direction = %d\n", cub->player.direction);
-	dprintf(1, "enemies = %d\n", cub->map.enemy_nb);
-	free_cub(cub);
-	close(fd);
+	dprintf(1, "enemies = %d\n", cub->map.enemy_nb); */
 	return (cub);
 }

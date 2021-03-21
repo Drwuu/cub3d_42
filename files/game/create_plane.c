@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   create_plane.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/04 10:52:48 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/21 12:44:35 by lwourms          ###   ########.fr       */
+/*   Created: 2021/03/19 16:08:59 by lwourms           #+#    #+#             */
+/*   Updated: 2021/03/20 19:42:36 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-static t_settings set_settings(t_cub3d *cub)
+float	find_T(t_plane plane, t_vec3 origin, float vector)
 {
-	t_settings	settings;
+	float	T;
+	float	eq1;
+	float	eq2;
 
-	settings.FOV = 60;
-	return (settings);
+	eq1 = (plane.A * origin.x) + (plane.B * origin.y) + (plane.C * origin.z) + \
+	plane.D;
+//	eq2 = (plane.A * vector) + 
 }
 
-int		main()
+t_plane	create_plane(int points[4])
 {
-	t_cub3d		*cub;
+	t_plane	plane;
 
-	cub = parse_map("map.cub");
-	cub->settings = set_settings(cub);
-	launch_game(cub);
-	free_cub(cub);
-	return (0);
+	plane.A = points[0];
+	plane.B = points[1];
+	plane.C = points[2];
+	plane.D = points[3];
 }

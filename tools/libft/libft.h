@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:21:17 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/18 16:43:56 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/21 13:34:23 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <math.h>
 
 typedef enum	e_bool
 {
@@ -50,6 +51,8 @@ typedef	struct	s_list
 	struct s_list	*previous;
 	struct s_list	*next;
 }				t_list;
+
+float			ft_radian(float angle);
 
 int				ft_isalnum(int c);
 int				ft_isascii(int c);

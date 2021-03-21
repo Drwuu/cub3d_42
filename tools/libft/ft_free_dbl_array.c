@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:22:19 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/18 16:46:18 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/21 16:00:53 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ void	**ft_free_dbl_array(void **datas, int size)
 	i = 0;
 	if (size)
 		while (i < size)
-			free(datas[i++]);
+		{
+			if (datas[i])
+				free(datas[i]);
+			i++;
+		}
 	else
 		while (datas[i])
 			free(datas[i++]);

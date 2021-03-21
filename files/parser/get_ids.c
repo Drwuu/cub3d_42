@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/18 15:03:11 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/20 15:54:06 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ void		check_id_lines(t_cub3d *cub, t_list *id_lines)
 		}
 		id_lines = id_lines->next;
 	}
-	if (id > 8)
+	if (id != 8)
 		error_manager(2, cub, NULL, NULL);
 }
