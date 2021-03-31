@@ -1,0 +1,18 @@
+{
+	"files.associations": {
+		"__cxx_version": "cpp",
+		"__hash_table": "cpp",
+		"functional": "cpp",
+		"type_traits": "cpp",
+		"bitset": "cpp",
+		"cstdio": "cpp",
+		"string": "cpp",
+		"string_view": "cpp",
+		"__node_handle": "cpp",
+		"unordered_map": "cpp",
+		"vector": "cpp",
+		"iterator": "c",
+		"cub3d.h": "c",
+		"ratio": "c"
+	}
+}

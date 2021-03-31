@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/26 14:51:25 by lwourms          ###   ########.fr       */
+/*   Created: 2021/03/26 11:48:32 by lwourms           #+#    #+#             */
+/*   Updated: 2021/03/26 18:58:20 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int				is_valid_mapline(char *line)
+t_player	init_player(int life, int amos, int speed)
 {
-	int i;
+	t_player player;
 
-	i = 0;
-	if (!ft_ischar(line, " 102NSWE"))
-		return (0);
-	return (1);
-}
-
-int				is_valid_next(char *line, int i)
-{
-	if (!line[i - 1] || !line[i + 1])
-		return (0);
-	if (ft_char_ischars(line[i - 1], " ") || \
-	ft_char_ischars(line[i + 1], " "))
-		return (0);
-	else
-		return (1);
+	player.pos.x = 0;
+	player.pos.y = 0;
+	player.pos.z = 0.5f;
+	player.yaw = -1;
+	player.speed = speed;
+	player.life = life;
+	player.amos = amos;
+	return (player);
 }

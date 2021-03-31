@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/20 15:54:41 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/26 15:07:46 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void		map_errors(int type)
 		printf("your map has an issue in a line, ");
 	else if (type == 52)
 		printf("you have too much players in the scene, ");
+	else if (type == 53)
+		printf("you must have a player in the scene, ");
 }
 
 void			error_manager(int type, t_cub3d *cub, void *data, \

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/22 17:03:11 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/28 15:35:05 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void		free_rays(t_cub3d *cub)
 	i = -1;
 	if (cub->rays.vector)
 	{
-		while (++i < cub->window.height)
+		while (++i < cub->settings.window.height)
 			if (cub->rays.vector[i])
-				free(cub->map.wall_tex[i]);
-		free (cub->rays.vector);
+				free(cub->rays.vector[i]);
+		free(cub->rays.vector);
 	}
 }
 
@@ -40,11 +40,13 @@ static void		free_textures(t_cub3d *cub)
 
 void		free_cub(t_cub3d *cub)
 {
-	ft_lstclear(&cub->map.garbage_idlines, free);
-	ft_lstclear(&cub->map.garbage_maplines, free);
+	ft_lstclear(&cub->map.idlines, free);
+	ft_lstclear(&cub->map.maplines, free);
 	free_textures(cub);
 	free_rays(cub);
 	if (cub->map.map)
 		ft_free_dbl_array((void **)cub->map.map, cub->map.size.y);
+	if (cub->planes)
+		ft_free_dbl_array((void **)cub->planes, 4);
 	free(cub);
 }

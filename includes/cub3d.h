@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/22 16:38:16 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/28 16:28:39 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,14 @@
 # include "../tools/gnl/get_next_line.h"
 # include "../tools/minilibx/mlx.h"
 
-typedef enum	e_direction
+typedef struct	s_image
 {
-	DIR_NO = 1,
-	DIR_SO,
-	DIR_WE,
-	DIR_EA
-}	t_direction;
-
-typedef struct	s_frame
-{
-	void	*frame;
+	void	*image;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_size;
 	int		endian;
-}	t_frame;
+}	t_image;
 
 typedef struct	s_window
 {
@@ -51,11 +43,11 @@ typedef struct	s_color
 	unsigned char	a;
 }	t_color;
 
-typedef union	t_union
+typedef union	u_union
 {
 	t_color			color;
 	unsigned int	c_color;
-}	e_union;
+}	t_union;
 
 typedef struct	s_vec3
 {
@@ -66,21 +58,20 @@ typedef struct	s_vec3
 
 typedef struct	s_player
 {
-	t_vec3			position;
-	t_direction		direction;
-	int				fov;
-	int				speed;
-	int				life;
-	int				amos;
+	t_vec3	pos;
+	float	yaw;
+	int		speed;
+	int		life;
+	int		amos;
 }	t_player;
 
-typedef struct		s_enemy
+typedef struct	s_enemy
 {
-	t_vec3			position;
-	int				speed;
-	int				life;
-	int				amos;
-}					t_enemy;
+	t_vec3	position;
+	int		speed;
+	int		life;
+	int		amos;
+}	t_enemy;
 
 typedef struct	s_ceiling
 {
@@ -102,43 +93,45 @@ typedef struct	s_map
 	int			enemy_nb;
 	char		*wall_tex[4];
 	char		*sprite_tex;
-	t_list		*garbage_maplines;
-	t_list		*garbage_idlines;
+	t_list		*maplines;
+	t_list		*idlines;
 }	t_map;
 
 
 typedef struct	s_rays
 {
 	t_vec3	**vector;
-	float	ray_ratio[2];
+	float	ray_interval[2];
 }	t_rays;
 
 typedef struct	s_plane
 {
-	float	A;
-	float	B;
-	float	C;
-	float	D;
+	int	A;
+	int	B;
+	int	C;
+	int	D;
 }	t_plane;
 
 typedef struct	s_settings
 {
-	int	FOV;
+	t_window	window;
+	int			fov;
 }	t_settings;
 
 typedef struct	s_cub3d
 {
 	t_settings	settings;
-	t_rays		rays;
-	t_map		map;
 	t_player	player;
-	t_window	window;
+	t_map		map;
+	t_image		image;
+	t_rays		rays;
+	t_plane		**planes;
 	t_enemy		*enemy;
 	void		*mlx;
 	void		*win;
 }	t_cub3d;
 
-t_cub3d		*parse_map(const char *file);
+void		parse_map(const char *file, t_cub3d *cub);
 int			is_valid_mapline(char *line);
 int			is_valid_next(char *line, int i);
 void		check_id_lines(t_cub3d *cub, t_list *id_lines);
@@ -147,13 +140,19 @@ void		get_resolution(t_cub3d *cub, char *line);
 char		*get_tex_path(t_cub3d *cub, char *line);
 t_color		get_color(t_cub3d *cub, char *line);
 void		get_map_info(t_cub3d *cub);
+t_plane		**init_planes(t_cub3d *cub);
+void		get_planes(t_cub3d *cub, t_plane ***planes, int **map, int i);
 
+void		init_rays(t_cub3d **cub);
+t_player	init_player(int life, int amos, int speed);
 void		launch_game(t_cub3d *cub);
+t_vec3		rotate_x(t_vec3 vector, float angle_rad);
+t_vec3		rotate_z(t_vec3 vector, float angle_rad);
 void		draw(t_cub3d *cub);
+t_image		init_image(t_cub3d *cub);
 
 void		error_manager(int type, t_cub3d *cub, \
 			void *data, void **dbl_str);
-t_cub3d		*init_cub(t_cub3d *cub, int size);
 void		free_cub(t_cub3d *cub);
 
 #endif

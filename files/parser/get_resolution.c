@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:29:23 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/18 16:47:20 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/26 16:00:16 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void		get_resolution(t_cub3d *cub, char *line)
 	if (!s_line)
 		error_manager(-1, cub, NULL, NULL);
 	resolution_errors(s_line, cub);
-	cub->window.width = get_size(cub, s_line, 1);
-	cub->window.height = get_size(cub, s_line, 2);
+	cub->settings.window.width = get_size(cub, s_line, 1);
+	cub->settings.window.height = get_size(cub, s_line, 2);
 	ft_free_dbl_array((void **)s_line, 0);
-	if (!cub->window.width || !cub->window.height)
+	if (!cub->settings.window.width || !cub->settings.window.height)
 		error_manager(20, cub, NULL, NULL);
 }

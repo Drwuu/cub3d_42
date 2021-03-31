@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/21 12:05:00 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/03/28 15:18:51 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	*fill_map(t_cub3d *cub, char *line)
 	int *map;
 	int i;
 	
-	map = ft_calloc(sizeof(*map), ft_strlen(line));
+	map = ft_calloc(sizeof(*map), cub->map.size.x);
 	if (!map)
 		return (NULL);
 	i = 0;
@@ -35,6 +35,7 @@ static int	*fill_map(t_cub3d *cub, char *line)
 static void	get_map(t_cub3d *cub, t_list *maplines)
 {
 	int		i;
+	char	*lines[3];
 
 	cub->map.map = ft_calloc(sizeof(*cub->map.map), cub->map.size.y);
 	if (!cub->map.map)
@@ -42,7 +43,12 @@ static void	get_map(t_cub3d *cub, t_list *maplines)
 	i = 0;
 	while (maplines)
 	{
-		cub->map.map[i] = fill_map(cub, maplines->content);
+		if (maplines->previous)
+			lines[0] = maplines->previous->content;
+		if (maplines->next)
+			lines[2] = maplines->next->content;
+		lines[1] = maplines->content;
+		cub->map.map[i] = fill_map(cub, lines[1]);
 		if (!cub->map.map[i])
 			error_manager(-1, cub, NULL, NULL);
 		maplines = maplines->next;
@@ -54,21 +60,21 @@ static void	get_info(int i, char c, t_cub3d *cub)
 {
 	if (i >= cub->map.size.x) 
 		cub->map.size.x = i + 1;
-	if (cub->player.direction)
+	if (cub->player.yaw >= 0)
 		if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			error_manager(52, cub, NULL, NULL);
-	if (!cub->player.direction)
+	if (cub->player.yaw == -1)
 	{
 		if (c == 'N')
-			cub->player.direction = DIR_NO;
+			cub->player.yaw = 0;
 		else if (c == 'S')
-			cub->player.direction = DIR_SO;
+			cub->player.yaw = M_PI;
 		else if (c == 'E')
-			cub->player.direction = DIR_EA;
+			cub->player.yaw = M_PI_2;
 		else if (c == 'W')
-			cub->player.direction = DIR_WE;
-		cub->player.position.x = i;
-		cub->player.position.y = cub->map.size.y;
+			cub->player.yaw = -M_PI_2;
+		cub->player.pos.x = i;
+		cub->player.pos.y = cub->map.size.y;
 	}
 	if (c == '2')
 		cub->map.enemy_nb++;
@@ -104,8 +110,9 @@ void		get_map_info(t_cub3d *cub)
 {
 	t_list	*maplines;
 	char	*lines[3];
+	int		i;
 
-	maplines = cub->map.garbage_maplines;
+	maplines = cub->map.maplines;
 	cub->map.size.y = 0;
 	while (maplines)
 	{
@@ -119,5 +126,11 @@ void		get_map_info(t_cub3d *cub)
 		cub->map.size.y++;
 		maplines = maplines->next;
 	}
-	get_map(cub, cub->map.garbage_maplines);
+	if (cub->player.yaw == -1)
+		error_manager(53, cub, NULL, NULL);
+	get_map(cub, cub->map.maplines);
+	i = -1;
+	cub->planes = init_planes(cub);
+	while (++i < cub->map.size.y)
+		get_planes(cub, &cub->planes, cub->map.map, i);
 }
