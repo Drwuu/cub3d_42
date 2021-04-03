@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 18:46:54 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/31 14:47:18 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/03 18:30:12 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static float	get_ray_interval(t_cub3d *cub, int is_interval)
 
 	rad = ft_radian(cub->settings.fov);
 	interval[0] = (2 * tanf(rad / 2)) / cub->settings.window.width;
-	interval[1] = (interval[0] * cub->settings.window.height) \
-	/ cub->settings.window.width;
+	interval[1] = (2 * tanf(rad * cub->settings.window.height / \
+	cub->settings.window.width / 2)) / cub->settings.window.height;
 	if (!is_interval)
 		return (interval[0]);
 	else

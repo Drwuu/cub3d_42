@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/28 16:28:39 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/03 20:11:36 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,18 @@ typedef struct	s_map
 
 typedef struct	s_rays
 {
-	t_vec3	**vector;
-	float	ray_interval[2];
+	t_vec3			**vector;
+	t_vec3			inters;
+	float			dist_save;
+	float			ray_interval[2];
 }	t_rays;
 
 typedef struct	s_plane
 {
-	int	A;
-	int	B;
-	int	C;
-	int	D;
+	float	A;
+	float	B;
+	float	C;
+	float	D;
 }	t_plane;
 
 typedef struct	s_settings
@@ -143,13 +145,19 @@ void		get_map_info(t_cub3d *cub);
 t_plane		**init_planes(t_cub3d *cub);
 void		get_planes(t_cub3d *cub, t_plane ***planes, int **map, int i);
 
+void		init_user_mlx_image(t_cub3d *cub);
+
 void		init_rays(t_cub3d **cub);
 t_player	init_player(int life, int amos, int speed);
 void		launch_game(t_cub3d *cub);
 t_vec3		rotate_x(t_vec3 vector, float angle_rad);
 t_vec3		rotate_z(t_vec3 vector, float angle_rad);
+void		trace_north_ray(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
+void		trace_south_ray(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
+void		trace_east_ray(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
+void		trace_west_ray(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
 void		draw(t_cub3d *cub);
-t_image		init_image(t_cub3d *cub);
+void		draw_pixel(t_cub3d *cub, int i, int j, unsigned int wall_color);
 
 void		error_manager(int type, t_cub3d *cub, \
 			void *data, void **dbl_str);

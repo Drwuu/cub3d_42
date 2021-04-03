@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 12:40:08 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/31 21:14:18 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/03 11:05:05 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ t_plane	**init_planes(t_cub3d *cub)
 	t_plane	**planes;
 	
 	planes = ft_calloc(sizeof(*planes), 4);
-	planes[0] = ft_calloc(sizeof(**planes), cub->settings.window.height + 1);
-	planes[1] = ft_calloc(sizeof(**planes), cub->settings.window.height + 1);
-	planes[2] = ft_calloc(sizeof(**planes), cub->settings.window.width + 1);
-	planes[3] = ft_calloc(sizeof(**planes), cub->settings.window.width + 1);
+	planes[0] = ft_calloc(sizeof(**planes), cub->map.size.y + 1);
+	planes[1] = ft_calloc(sizeof(**planes), cub->map.size.y + 1);
+	planes[2] = ft_calloc(sizeof(**planes), cub->map.size.x + 1);
+	planes[3] = ft_calloc(sizeof(**planes), cub->map.size.x + 1);
 	if (!planes[0] || !planes[1] || !planes[2] || !planes[3])
 	{
 		if (planes[0])
@@ -79,14 +79,14 @@ t_plane	**init_planes(t_cub3d *cub)
 
 static void	get_extra_planes(t_cub3d *cub, t_plane	***planes, int j, int i)
 {
-	if (i == cub->map.size.y)
-		(*planes)[0][i] = fill_plane(0, 1, 0, i);
+	if (i + 1 == cub->map.size.y)
+		(*planes)[0][i + 1] = fill_plane(0, 1, 0, i + 1);
 	else if (i == 0)
 		(*planes)[1][0] = fill_plane(0, 1, 0, 0);
 	if (j == 0 && (*planes)[2][0].A < 0)
 		(*planes)[2][0] = fill_plane(1, 0, 0, 0);
-	else if (j == cub->map.size.x && (*planes)[3][j].A < 0)
-		(*planes)[3][j] = fill_plane(1, 0, 0, j);
+	else if (j + 1 == cub->map.size.x && (*planes)[3][j + 1].A < 0)
+		(*planes)[3][j + 1] = fill_plane(1, 0, 0, j + 1);
 }
 
 void	get_planes(t_cub3d *cub, t_plane ***planes, int **map, int i)
@@ -109,8 +109,8 @@ void	get_planes(t_cub3d *cub, t_plane ***planes, int **map, int i)
 				if ((*planes)[3][j].A < 0)
 					(*planes)[3][j] = fill_plane(1, 0, 0, j);
 			if (j < cub->map.size.x - 1 && map[i][j + 1] == 1)
-				if ((*planes)[2][j].A < 0)
-					(*planes)[2][j] = fill_plane(1, 0, 0, j);
+				if ((*planes)[2][j + 1].A < 0)
+					(*planes)[2][j + 1] = fill_plane(1, 0, 0, j + 1);
 		}
 	}
 }

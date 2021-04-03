@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 12:54:14 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/31 20:46:02 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/03 20:21:58 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,86 +21,159 @@ static void	put_pixel(t_image image, int x, int y, unsigned int color)
 	((unsigned int *)pixel)[0] = color;
 }
 
-t_image	init_image(t_cub3d *cub)
+void	init_user_mlx_image(t_cub3d *cub)
 {
-	t_image	image;
-
-	image.image = mlx_new_image(cub->mlx, cub->settings.window.width, \
+	cub->image.image = mlx_new_image(cub->mlx, cub->settings.window.width, \
 	cub->settings.window.height);
-	if (!image.image)
+	if (!cub->image.image)
 		error_manager(-1, cub, NULL, NULL);
-	image.addr = mlx_get_data_addr(image.image, &image.bits_per_pixel, \
-	&image.line_size, &image.endian);
-	if (!image.addr)
+	cub->image.addr = mlx_get_data_addr(cub->image.image, \
+	&cub->image.bits_per_pixel, &cub->image.line_size, &cub->image.endian);
+	if (!cub->image.addr)
 		error_manager(-1, cub, NULL, NULL);
-	return (image);
 }
 
-static void draw_wall(t_cub3d *cub)
+void	draw_pixel(t_cub3d *cub, int i, int j, unsigned int wall_color)
 {
-	
+	if (cub->rays.inters.z > 1)
+		put_pixel(cub->image, j, i, 0x0000AA);
+	else if (cub->rays.inters.z < 0)
+		put_pixel(cub->image, j, i, 0x8800AA);
+	else
+		put_pixel(cub->image, j, i, wall_color);
 }
 
 void	draw(t_cub3d *cub)
 {
-	t_plane		plane[4];
-	plane[0] = (t_plane){0, 1, 0, 1};
-	plane[1] = (t_plane){0, 1, 0, -1};
-	plane[2] = (t_plane){1, 0, 0, 1};
-	plane[3] = (t_plane){1, 0, 0, -1};
-	t_vec3 		intersect;
-	t_vec3		ray;
 	int		i;
 	int		j;
-	int 	k;
-	float	tut[4];
-	float	t;
-	float	de;
-	float	angle_rad;
+	t_vec3	ray_origin;
 
 	i = -1;
-	float save;
-	save = 0;
 	while (++i < cub->settings.window.height)
 	{
 		j = -1;
 		while (++j < cub->settings.window.width)
 		{
-			put_pixel(cub->image, j, i, 0x00FF00);
-			ray = cub->rays.vector[i][j];
-			ray = rotate_z(ray, cub->player.yaw);
-			int x;
-			int y;
+			ray_origin = rotate_z(cub->rays.vector[i][j], cub->player.yaw);
+			cub->rays.dist_save = INFINITY;
+			if (ray_origin.y < 0)
+				trace_north_ray(cub, ray_origin, i, j);
+			else
+				trace_south_ray(cub, ray_origin, i, j);
+			if (ray_origin.x > 0)
+				trace_east_ray(cub, ray_origin, i, j);
+			else
+				trace_west_ray(cub, ray_origin, i, j);
+		}
+	}
+}
+
+void	old_draw(t_cub3d *cub)
+{
+	t_vec3 	intersect;
+	t_vec3	ray;
+	int		i;
+	int		j;
+	float	t;
+	float	save;
+	int x;
+	int y;
+	
+	i = -1;
+	while (++i < cub->settings.window.height)
+	{
+		j = -1;
+		while (++j < cub->settings.window.width)
+		{
+			ray = rotate_z(cub->rays.vector[i][j], cub->player.yaw);
 			x = cub->player.pos.x;
 			y = cub->player.pos.y;
+			save = INFINITY;
+			if (ray.y < 0) // verif quand c'est egal à zero
+			{
+				while (y > 0)
+				{
+					if (cub->planes[0][y].D != -1)
+					{
+						t = -(cub->player.pos.y - cub->planes[0][y].D) / ray.y;
+						if (t >= 0)
+						{
+							intersect.x = cub->player.pos.x + (ray.x * t);
+							intersect.y = cub->player.pos.y + (ray.y * t);
+							intersect.z = cub->player.pos.z + (ray.z * t);
+							if (intersect.y > 0 && intersect.y <= cub->map.size.y && \
+							intersect.x >= 0 && intersect.x < cub->map.size.x - 1)
+							{
+								if (cub->map.map[(int)(intersect.y + .0001f) - 1][(int)(intersect.x + .0001f)] == 1 && t < save)
+								{
+									save = t;
+									if (intersect.z > 1)
+										put_pixel(cub->image, j, i, 0x0000AA);
+									else if (intersect.z < 0)
+										put_pixel(cub->image, j, i, 0x8800AA);
+									else
+										put_pixel(cub->image, j, i, 0xFFFF00);
+								}
+							}
+						}
+					}
+					y--;
+				}
+			}
+			else
+			{
+				while (y < cub->map.size.y)
+				{
+					if (cub->planes[1][y].D != -1)
+					{
+						t = -(cub->player.pos.y - cub->planes[1][y].D) / ray.y;
+						if (t >= 0)
+						{
+							intersect.x = cub->player.pos.x + (ray.x * t);
+							intersect.y = cub->player.pos.y + (ray.y * t);
+							intersect.z = cub->player.pos.z + (ray.z * t);
+							if (intersect.y >= cub->player.pos.y && intersect.y < cub->map.size.y && intersect.x > 0 && intersect.x < cub->map.size.x - 1)
+							{
+								if (cub->map.map[(int)(intersect.y + .0001f)][(int)(intersect.x + .0001f)] == 1 && t < save)
+								{
+									save = t;
+									if (intersect.z > 1)
+										put_pixel(cub->image, j, i, 0x0000AA);
+									else if (intersect.z < 0)
+										put_pixel(cub->image, j, i, 0x8800AA);
+									else
+										put_pixel(cub->image, j, i, 0xFFFFFF);
+								}
+							}
+						}
+					}
+					y++;
+				}
+			}
 			if (ray.x > 0)
 			{
-				//dprintf(1, "ray x = %f\n", ray.x);
-				//dprintf(1, "ray y = %f\n", ray.y);
 				while (x < cub->map.size.x)
 				{
-					if (cub->planes[2][x + 1].D != -1)
+					if (cub->planes[2][x].D != -1)
 					{
-						//dprintf(1, "East Plane in %d\n", cub->planes[2][x + 1].D);
-						if (!save)
-							save = -(cub->player.pos.x - cub->planes[2][x + 1].D) / ray.x; // egal = + x ? pas besoin de plan.D ?
-						t = -(cub->player.pos.x - cub->planes[2][x + 1].D) / ray.x;
-						if (t > 0)
+						t = -(cub->player.pos.x - cub->planes[2][x].D) / ray.x;
+						if (t >= 0)
 						{
-							save = t;
-							intersect.x = cub->player.pos.x + (ray.x * save);
-							intersect.y = cub->player.pos.y + (ray.y * save);
-							intersect.z = cub->player.pos.z + (ray.z * save);
-							if ((int)intersect.y > 0 && (int)intersect.y < cub->map.size.y && \
-							intersect.z >= 0 && intersect.z <= 1)
+							intersect.x = cub->player.pos.x + (ray.x * t);
+							intersect.y = cub->player.pos.y + (ray.y * t);
+							intersect.z = cub->player.pos.z + (ray.z * t);
+							if (intersect.x >= cub->player.pos.x && intersect.x < cub->map.size.x && intersect.y > 0 && intersect.y < cub->map.size.y  - 1)
 							{
-								if (cub->map.map[(int)intersect.y][(int)intersect.x] == 1)
+								if (cub->map.map[(int)(intersect.y + .0001f)][(int)(intersect.x + .0001f)] == 1 && t < save)
 								{
-									if (intersect.z >= 0 && intersect.z <= 1)
-									{
-										//dprintf(1, "HIT in y = %d x = %d z = %f\n", (int)intersect.y, (int)intersect.x, intersect.z);
-										put_pixel(cub->image, j, i, 0xFFFFFF);
-									}
+									save = t;
+									if (intersect.z > 1)
+										put_pixel(cub->image, j, i, 0x0000AA);
+									else if (intersect.z < 0)
+										put_pixel(cub->image, j, i, 0x8800AA);
+									else
+										put_pixel(cub->image, j, i, 0x00FFFF);
 								}
 							}
 						}
@@ -114,26 +187,23 @@ void	draw(t_cub3d *cub)
 				{
 					if (cub->planes[3][x].D != -1)
 					{
-						//dprintf(1, "West Plane at %d in %d\n", y, cub->planes[3][x].D);
-						if (!save)
-							save = -(cub->player.pos.x - cub->planes[3][x].D) / ray.x; // egal = + x ? pas besoin de plan.D ?
 						t = -(cub->player.pos.x - cub->planes[3][x].D) / ray.x;
-						if (t > 0)
+						if (t >= 0)
 						{
-							save = t;
-							intersect.x = cub->player.pos.x + (ray.x * save);
-							intersect.y = cub->player.pos.y + (ray.y * save);
-							intersect.z = cub->player.pos.z + (ray.z * save);
-							if ((int)intersect.y > 0 && (int)intersect.y < cub->map.size.y && \
-							intersect.z >= 0 && intersect.z <= 1)
+							intersect.x = cub->player.pos.x + (ray.x * t);
+							intersect.y = cub->player.pos.y + (ray.y * t);
+							intersect.z = cub->player.pos.z + (ray.z * t);
+							if (intersect.x > 0 && intersect.x <= cub->player.pos.x && intersect.y > 0 && intersect.y < cub->map.size.y)
 							{
-								if (cub->map.map[(int)intersect.y][(int)intersect.x] == 1)
+								if (cub->map.map[(int)(intersect.y + .0001f)][(int)(intersect.x + .0001f) - 1] == 1 && t < save)
 								{
-									if (intersect.z >= 0 && intersect.z <= 1)
-									{
-										//dprintf(1, "HIT in y = %d x = %d z = %f\n", (int)intersect.y, (int)intersect.x, intersect.z);
-										put_pixel(cub->image, j, i, 0xFFFFFF);
-									}
+									save = t;
+									if (intersect.z > 1)
+										put_pixel(cub->image, j, i, 0x0000AA);
+									else if (intersect.z < 0)
+										put_pixel(cub->image, j, i, 0x8800AA);
+									else
+										put_pixel(cub->image, j, i, 0xFF00FF);
 								}
 							}
 						}
@@ -141,97 +211,6 @@ void	draw(t_cub3d *cub)
 					x--;
 				}
 			}
-			if (ray.y < 0)
-			{
-				// dprintf(1, "ray x = %f\n", ray.x);
-				// dprintf(1, "ray y = %f\n", ray.y);
-				while (y >= 0)
-				{
-					if (cub->planes[0][(int)y].D != -1)
-					{
-						if (!save)
-							save = -(cub->player.pos.y - cub->planes[0][(int)y].D) / ray.y; // egal = + x ? pas besoin de plan.D ?
-						t = -(cub->player.pos.y - cub->planes[0][(int)y].D) / ray.y;
-						if (t > 0)
-						{
-							//if (cub->planes[0][(int)y - 1].D == 0)
-								//dprintf(1, "intersect in y = %f\n", intersect.y);
-							save = t;
-							intersect.x = cub->player.pos.x + (ray.x * save);
-							intersect.y = cub->player.pos.y + (ray.y * save);
-							intersect.z = cub->player.pos.z + (ray.z * save);
-							if ((int)intersect.x > 0 && (int)intersect.x < cub->map.size.x && \
-							intersect.z >= 0 && intersect.z <= 1)
-							{
-								if (cub->map.map[(int)intersect.y][(int)intersect.x] == 1)
-								{
-									if (intersect.z >= 0 && intersect.z <= 1)
-									{
-										//dprintf(1, "HIT in y = %d x = %d z = %f\n", (int)intersect.y, (int)intersect.x, intersect.z);
-										put_pixel(cub->image, j, i, 0xFFFFFF);
-									}
-								}
-							}
-						}
-					}
-					y--;
-				}
-			}
-			else
-			{
-				// dprintf(1, "ray x = %f\n", ray.x);
-				// dprintf(1, "ray y = %f\n", ray.y);
-				while (y < cub->map.size.y)
-				{
-					if (cub->planes[1][(int)y + 1].D != -1)
-					{
-						//dprintf(1, "East Plane in %d\n", cub->planes[2][x + 1].D);
-						if (!save)
-							save = -(cub->player.pos.y - cub->planes[1][(int)y + 1].D) / ray.y; // egal = + x ? pas besoin de plan.D ?
-						t = -(cub->player.pos.y - cub->planes[1][(int)y + 1].D) / ray.y;
-						if (t > 0)
-						{
-							save = t;
-							intersect.x = cub->player.pos.x + (ray.x * save);
-							intersect.y = cub->player.pos.y + (ray.y * save);
-							intersect.z = cub->player.pos.z + (ray.z * save);
-							if ((int)intersect.x > 0 && (int)intersect.x < cub->map.size.x && \
-							intersect.z >= 0 && intersect.z <= 1)
-							{
-								if (cub->map.map[(int)intersect.y][(int)intersect.x] == 1)
-								{
-									if (intersect.z >= 0 && intersect.z <= 1)
-									{
-										//dprintf(1, "HIT in y = %d x = %d z = %f\n", (int)intersect.y, (int)intersect.x, intersect.z);
-										put_pixel(cub->image, j, i, 0xFFFFFF);
-									}
-								}
-							}
-						}
-					}
-					y++;
-				}
-			}
-			// k = -1;
-			// while (++k < 4)
-			// {
-			// 	de = plane[k].A * rays.x + plane[k].B * rays.y + plane[k].C * rays.z;
-			// 	tut[k] = -(plane[k].A *cub->player.pos.x + plane[k].B *cub->player.pos.y + plane[k].C *cub->player.pos.z + plane[k].D) / de;
-			// 		intersect.x = cub->player.pos.x + (rays.x * tut[k]);
-			// 		intersect.y =cub->player.pos.y + (rays.y * tut[k]);
-			// 		intersect.z =cub->player.pos.z + (rays.z * tut[k]);
-				
-			// 		if (tut[k] > 0)
-			// 		{
-			// 			//if (intersect.z > 0)
-			// 			if (intersect.z >= 0 && intersect.z <= 1)
-			// 				put_pixel(cub->image, j, i, 0xFFFFFF);
-			// 			//if (intersect.z < 0)
-			// 				//put_pixel(cub->image, j, i, 0xFF0000);
-			// 			dprintf(1, "west = %f %f %f at pixel j = %d i = %d\n", intersect.x, intersect.y, intersect.z, j, i);
-			// 			dprintf(1, "A %d B %d C %d D %d\n", plane[k].A, plane[k].B, plane[k].C, plane[k].D);
-			// 		}
-			// }
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:52:48 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/31 20:22:50 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/03 10:31:57 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ int		main()
 	// dprintf(1, "player yaw = %f\n", cub->player.yaw);
 	// dprintf(1, "enemies = %d\n", cub->map.enemy_nb);
 	int i = 0;
-	while (i < cub->map.size.y)
+	while (i <= cub->map.size.y)
 	{
-		dprintf(1, "north plane in %d = %d, %d, %d, %d\n", i, cub->planes[0][i].A, cub->planes[0][i].B, cub->planes[0][i].C, cub->planes[0][i].D);
-		dprintf(1, "south plane in %d = %d, %d, %d, %d\n", i, cub->planes[1][i].A, cub->planes[1][i].B, cub->planes[1][i].C, cub->planes[1][i].D);
+		dprintf(1, "north plane in %d = %f, %f, %f, %f\n", i, cub->planes[0][i].A, cub->planes[0][i].B, cub->planes[0][i].C, cub->planes[0][i].D);
+		dprintf(1, "south plane in %d = %f, %f, %f, %f\n", i, cub->planes[1][i].A, cub->planes[1][i].B, cub->planes[1][i].C, cub->planes[1][i].D);
 		i++;
 	}
 	i = 0;
-	while (i < cub->map.size.x)
+	while (i <= cub->map.size.x)
 	{
-		dprintf(1, "east plane in %d = %d, %d, %d, %d\n", i, cub->planes[2][i].A, cub->planes[2][i].B,cub->planes[2][i].C, cub->planes[2][i].D);
-		dprintf(1, "west plane in %d = %d, %d, %d, %d\n", i, cub->planes[3][i].A, cub->planes[3][i].B, cub->planes[3][i].C, cub->planes[3][i].D);
+		dprintf(1, "east plane in %d = %f, %f, %f, %f\n", i, cub->planes[2][i].A, cub->planes[2][i].B,cub->planes[2][i].C, cub->planes[2][i].D);
+		dprintf(1, "west plane in %d = %f, %f, %f, %f\n", i, cub->planes[3][i].A, cub->planes[3][i].B, cub->planes[3][i].C, cub->planes[3][i].D);
 		i++;
 	}
 	launch_game(cub);

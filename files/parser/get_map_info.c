@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/28 15:18:51 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/01 17:04:58 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static void	get_info(int i, char c, t_cub3d *cub)
 			cub->player.yaw = M_PI_2;
 		else if (c == 'W')
 			cub->player.yaw = -M_PI_2;
-		cub->player.pos.x = i;
-		cub->player.pos.y = cub->map.size.y;
+		cub->player.pos.x = i + 0.5f;
+		cub->player.pos.y = cub->map.size.y + 0.5f;
 	}
 	if (c == '2')
 		cub->map.enemy_nb++;
