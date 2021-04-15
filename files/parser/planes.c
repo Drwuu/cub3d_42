@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 12:40:08 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/03 11:05:05 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/07 13:28:29 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	fill_planes_with_zeros(t_plane ***planes, int width, int height)
 	{
 		j = -1;
 		if (i < 2)
-			while (++j < height)
+			while (++j < height + 1)
 			{
 				(*planes)[i][j].A = -1;
 				(*planes)[i][j].B = -1;
@@ -41,7 +41,7 @@ static void	fill_planes_with_zeros(t_plane ***planes, int width, int height)
 				(*planes)[i][j].D = -1;
 			}
 		else
-			while (++j < width)
+			while (++j < width + 1)
 			{
 				(*planes)[i][j].A = -1;
 				(*planes)[i][j].B = -1;
@@ -72,8 +72,8 @@ t_plane	**init_planes(t_cub3d *cub)
 			free(planes[3]);
 		error_manager(-1, cub, NULL, NULL);
 	}
-	fill_planes_with_zeros(&planes, cub->settings.window.width, \
-	cub->settings.window.height);
+	fill_planes_with_zeros(&planes, cub->map.size.x, \
+	cub->map.size.y);
 	return (planes);
 }
 

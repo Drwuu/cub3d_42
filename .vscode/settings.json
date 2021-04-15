@@ -14,6 +14,20 @@
 		"iterator": "c",
 		"cub3d.h": "c",
 		"ratio": "c",
-		"chrono": "c"
+		"chrono": "c",
+		"__locale": "c",
+		"locale": "c",
+		"__functional_base": "c",
+		"__functional_base_03": "c",
+		"__tuple": "c",
+		"array": "c",
+		"limits": "c",
+		"memory": "c",
+		"tuple": "c",
+		"utility": "c",
+		"__bit_reference": "c",
+		"__split_buffer": "c",
+		"initializer_list": "c",
+		"ios": "c"
 	}
 }

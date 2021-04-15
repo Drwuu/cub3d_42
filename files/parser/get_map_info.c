@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/01 17:04:58 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/08 15:41:38 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static void	get_info(int i, char c, t_cub3d *cub)
 			cub->player.yaw = M_PI_2;
 		else if (c == 'W')
 			cub->player.yaw = -M_PI_2;
+		cub->player.cos_yaw = cosf(cub->player.yaw);
+		cub->player.sin_yaw = sinf(cub->player.yaw);
 		cub->player.pos.x = i + 0.5f;
 		cub->player.pos.y = cub->map.size.y + 0.5f;
 	}
@@ -106,7 +108,7 @@ static int	check_maplines(char *lines[3], t_cub3d *cub)
 	return (1);
 }
 
-void		get_map_info(t_cub3d *cub)
+void	get_map_info(t_cub3d *cub)
 {
 	t_list	*maplines;
 	char	*lines[3];
@@ -130,7 +132,7 @@ void		get_map_info(t_cub3d *cub)
 		error_manager(53, cub, NULL, NULL);
 	get_map(cub, cub->map.maplines);
 	i = -1;
-	cub->planes = init_planes(cub);
+	cub->engine.planes = init_planes(cub);
 	while (++i < cub->map.size.y)
-		get_planes(cub, &cub->planes, cub->map.map, i);
+		get_planes(cub, &cub->engine.planes, cub->map.map, i);
 }

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/27 19:34:20 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/11 11:15:02 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,16 @@ static void		get_lines_to_parse(t_cub3d *cub, char **line, int fd)
 void	parse_map(const char *file, t_cub3d *cub)
 {
 	char	*line;
+	char	*join;
 	int		fd;
 	
-	fd = open(file, O_RDONLY);
+	join = ft_strjoin("./maps/", file);
+	if (!join)
+		error_manager(1, cub, NULL, NULL);
+	fd = open(join, O_RDONLY);
+	free(join);
+	if (fd == -1)
+		error_manager(-3, cub, NULL, NULL);
 	get_lines_to_parse(cub, &line, fd);
 	close(fd);
 	check_id_lines(cub, cub->map.idlines);
