@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/11 10:55:29 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/24 18:30:28 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <time.h>
 # include <pthread.h>
 # include "event.h"
-# include "../tools/libft/libft.h"
-# include "../tools/gnl/get_next_line.h"
-# include "../tools/minilibx/mlx.h"
+# include "../libft/libft.h"
+# include "../libft/gnl/get_next_line.h"
+# include "../minilibx/mlx.h"
 
 typedef struct	s_image
 {
@@ -53,15 +53,17 @@ typedef union	u_union
 	unsigned int	c_color;
 }	t_union;
 
-typedef struct	s_vec3
+typedef struct	s_plane
 {
-	float	x;
-	float	y;
-	float	z;
-}	t_vec3;
+	float	A;
+	float	B;
+	float	C;
+	float	D;
+}	t_plane;
 
 typedef struct	s_player
 {
+	t_vec3	start_pos;
 	t_vec3	pos;
 	float	yaw;
 	float	cos_yaw;
@@ -71,13 +73,13 @@ typedef struct	s_player
 	int		amos;
 }	t_player;
 
-typedef struct	s_enemy
+typedef struct	s_sprite
 {
-	t_vec3	position;
-	int		speed;
-	int		life;
-	int		amos;
-}	t_enemy;
+	t_plane	plane;
+	t_vec3	pos;
+	t_vec3	v;
+	t_image	texture;
+}	t_sprite;
 
 typedef struct	s_ceiling
 {
@@ -95,8 +97,8 @@ typedef struct	s_map
 	t_vec3		size;
 	t_ceiling	ceiling;
 	t_floor		floor;
-	t_enemy		*enemy;
-	int			enemy_nb;
+	t_sprite	*sprites;
+	int			sprites_nb;
 	char		*wall_tex[4];
 	char		*sprite_tex;
 	t_list		*maplines;
@@ -112,13 +114,6 @@ typedef struct	s_rays
 	float	ratio[2];
 }	t_rays;
 
-typedef struct	s_plane
-{
-	float	A;
-	float	B;
-	float	C;
-	float	D;
-}	t_plane;
 
 typedef struct	s_settings
 {
@@ -137,6 +132,7 @@ typedef struct	s_fps
 	time_t		start;
 	time_t		current;
 }	t_fps;
+
 typedef struct	s_engine
 {
 	t_image		game_image;
@@ -153,7 +149,7 @@ typedef struct	s_cub3d
 	t_player	player;
 	t_map		map;
 	t_engine	engine;
-	t_enemy		*enemy;
+	t_sprite	*sprite;
 	void		*mlx;
 	void		*win;
 }	t_cub3d;
@@ -176,41 +172,45 @@ t_color			get_color(t_cub3d *cub, char *line);
 void			get_map_info(t_cub3d *cub);
 t_plane			**init_planes(t_cub3d *cub);
 void			get_planes(t_cub3d *cub, t_plane ***planes, int **map, int i);
-
+t_sprite		get_sprite_info(t_cub3d *cub);
 t_image			get_texture(t_cub3d *cub, char *text_path);
+t_sprite		*set_sprites(t_cub3d *cub);
 
 void			init_rays(t_cub3d **cub);
-t_bool			is_intersect_north(t_cub3d *cub, t_vec3 origin, float distance, \
-				int index);
-t_bool			is_intersect_south(t_cub3d *cub, t_vec3 origin, float distance, \
-				int index);
-t_bool			is_intersect_east(t_cub3d *cub, t_vec3 origin, float distance, \
-				int index);
-t_bool			is_intersect_west(t_cub3d *cub, t_vec3 origin, float distance, \
-				int index);
+t_vec3			get_intersect(t_cub3d *cub, t_vec3 origin, float distance);
+t_bool			is_intersect_north(t_cub3d *cub, t_vec3 intersect, int y);
+t_bool			is_intersect_south(t_cub3d *cub, t_vec3 intersect, int y);
+t_bool			is_intersect_east(t_cub3d *cub, t_vec3 intersect, int x);
+t_bool			is_intersect_west(t_cub3d *cub, t_vec3 intersect, int x);
 t_vec3			rotate_x(t_player player, t_vec3 vector);
 t_vec3			rotate_z(t_player player, t_vec3 vector);
 t_vec3			move_player_x(t_player player, int direction);
 t_vec3			move_player_y(t_player player, int direction);
 
 void			start(t_cub3d *cub);
-int				get_input(t_cub3d *cub);
-int				key_pressed(int key, t_cub3d *cub);
-int				key_released(int key, t_cub3d *cub);
+void			update_sprite(t_cub3d *cub);
+float			get_sprite_ratio(t_vec3 intrsct, t_sprite sprite, \
+				t_player player);
+unsigned int	get_sprt_pixel(t_cub3d *cub, t_image texture, \
+				t_vec3 intersect, float ratio);
+t_bool			is_sprt_intrsct(t_cub3d *cub, t_sprite sprt, t_vec3 intrsct);
 
 void			draw(t_cub3d *cub);
 void			*draw_thread(void *datas);
-void			draw_pixel(t_image game_image, int i, int j, unsigned int color);
+void			draw_pixel(t_image game_image, int i, int j, \
+				unsigned int color);
 void			draw_north(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
 void			draw_south(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
 void			draw_east(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
 void			draw_west(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
-unsigned int	get_pixel_color(t_cub3d *cub, t_image texture, \
-				t_vec3 intersect, int is_depth);
+void			draw_sprites(t_cub3d *cub, t_vec3 ray_origin, int i, int j);
+unsigned int	get_pixel_color(t_image texture, t_vec3 intersect, \
+				int is_depth);
 
 void			show_fps(t_cub3d *cub);
 
-void			error_manager(int type, t_cub3d *cub, void *data, void **dbl_str);
+void			error_manager(int type, t_cub3d *cub, void *data, \
+				void **dbl_str);
 void			global_errors(int type);
 void			free_cub(t_cub3d *cub);
 

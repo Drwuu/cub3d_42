@@ -1,44 +1,54 @@
 NAME		= Cub3D
 
-SRCS		= cub3d.c \
-$(addprefix ./files/game/, input.c) \
+SRCS		= \
+$(addprefix ./files/game/, input.c input_2.c) \
+$(addprefix ./files/, cub3d.c) \
 $(addprefix ./files/game/engine/, calculations.c draw.c engine.c \
-texture.c check_intersections.c draw_walls.c rays.c) \
+texture.c check_intersections.c draw_walls.c rays.c multi_thread.c sprites.c \
+sprites_2.c) \
 $(addprefix ./files/game/utils/, fps.c) \
-$(addprefix ./files/parser/, get_colors.c get_ids.c get_map_info.c \
+$(addprefix ./files/parser/, get_colors.c get_ids.c get_map_infos.c \
 get_resolution.c get_tex_path.c parse_map.c planes.c) \
 $(addprefix ./files/utils/, errors_2.c errors.c free.c utils.c) \
-$(addprefix ./tools/gnl/, get_next_line.c get_next_line_utils.c)
+$(addprefix ./libft/gnl/, get_next_line.c get_next_line_utils.c)
 
 FLAGS		= -Wall -Wextra -Werror
-MLX			= -L ./tools/minilibx -lmlx
+MLX			= -L ./minilibx/ -lmlx
 OPT			= -O3 -ffast-math -march=native
 INCLUDES	= ./includes
-LIBFT_PATH	= ./tools/libft
-GNL_PATH	= ./tools/gnl
+LIBFT		= -L ./libft -lft
+LIBFT_PATH	= ./libft
+MLX_PATH	= ./minilibx
+GNL_PATH	= ./libft/gnl
+OBJS_FOLDER	= ./objects
 OBJS		= $(SRCS:.c=.o)
 
-all:		libs $(NAME)
+all:				libs $(NAME)
 
 libs:		
-				make -C ./tools/libft
+						@make -C ./libft
 
-$(NAME):	$(OBJS)
-				cp $(LIBFT_PATH)/libft.a $(NAME)
+$(NAME):			$(OBJS)
+						@echo "\033[33m[Compiling Cub3D...]"
+						@gcc $(FLAGS) $(MLX) $(LIBFT) $^ -o $@
+						@echo "\033[32m[Cub3D compiled !]"
 
-%.o:		%.c $(INCLUDES)/cub3d.h $(INCLUDES)/event.h \
-			$(GNL_PATH)/get_next_line.h $(LIBFT_PATH)/libft.a
-				@echo "\033[33m[Compiling Cub3D...]"
-				gcc $(MLX) -I$(INCLUDES) -I$(LIBFT_PATH) -I$(GNL_PATH) -c $< -o $@
-				@echo "\033[32m[Done !]"
+%.o:				%.c $(MLX_PATH)/mlx.h $(INCLUDES)/cub3d.h \
+					$(INCLUDES)/event.h $(INCLUDES)/inputs.h \
+					$(GNL_PATH)/get_next_line.h $(LIBFT_PATH)/libft.a
+						@gcc $(OPT) -I$(INCLUDES) -I$(LIBFT_PATH) -I$(GNL_PATH) \
+						-I$(MLX_PATH) -c $< -o $@
+
 clean:
-				rm -f $(OBJS)
-				make -C $(LIBFT_PATH) clean
+						@echo "\033[33m[Cleaning Cub3D...]"
+						@rm -f $(OBJS)
+						@echo "\033[33m[Cleaning Libft...]"
+						@make -C $(LIBFT_PATH) clean
 
-fclean:		clean
-				rm -f $(NAME)
-				make -C $(LIBFT_PATH) fclean 
+fclean:				clean
+						@rm -f $(NAME)
+						@make -C $(LIBFT_PATH) fclean 
 
-re:			fclean all
+re:					fclean all
 
-.PHONY:		all clean fclean re libs
+.PHONY:				all clean fclean re libs

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/04/11 10:48:29 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/23 13:09:02 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void		free_cub(t_cub3d *cub)
 	if (cub->engine.planes)
 		ft_free_dbl_array((void **)cub->engine.planes, 4);
 	if (cub->engine.fps.join)
-		free (cub->engine.fps.join);
+		free(cub->engine.fps.join);
+	if (cub->sprite)
+		free(cub->sprite);
 	// if (cub->win)
 	// {
 	// 	dprintf(1, "win ptr = %p\n", cub->win);

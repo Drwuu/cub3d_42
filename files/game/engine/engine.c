@@ -6,11 +6,12 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 16:14:46 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/11 11:26:12 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/24 15:43:28 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d.h"
+#include "../../../includes/inputs.h"
 # define THREAD_NB 8
 
 static void	multi_threading(t_cub3d *cub)
@@ -80,6 +81,7 @@ void	start(t_cub3d *cub)
 		error_manager(-1, cub, NULL, NULL);
 	init_rays(&cub);
 	init_user_mlx_image(cub);
+	update_sprite(cub);
 	mlx_hook(cub->win, KEY_PRESS, KEYPRESSMASK, key_pressed, cub);
 	mlx_hook(cub->win, KEY_RELEASE, KEYRELEASEMASK, key_released, cub);
 	mlx_loop_hook(cub->mlx, update, cub);

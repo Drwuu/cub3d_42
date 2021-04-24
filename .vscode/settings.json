@@ -28,6 +28,12 @@
 		"__bit_reference": "c",
 		"__split_buffer": "c",
 		"initializer_list": "c",
-		"ios": "c"
+		"ios": "c",
+		"__config": "c",
+		"__debug": "c",
+		"typeinfo": "c",
+		"algorithm": "c",
+		"complex": "c",
+		"new": "c"
 	}
 }
