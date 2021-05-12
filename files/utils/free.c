@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/04/23 13:09:02 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/06 15:13:05 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ static void		free_textures_path(t_cub3d *cub)
 	int i;
 
 	i = -1;
-	while (++i < 4)
-		if (cub->map.wall_tex[i])
-			free(cub->map.wall_tex[i]);
-	if (cub->map.sprite_tex)
-		free(cub->map.sprite_tex);
+	while (++i < TEXTURE_NB)
+		if (cub->map.texture[i])
+			free(cub->map.texture[i]);
 }
 
 void		free_cub(t_cub3d *cub)
@@ -60,19 +58,4 @@ void		free_cub(t_cub3d *cub)
 		free(cub->engine.fps.join);
 	if (cub->sprite)
 		free(cub->sprite);
-	// if (cub->win)
-	// {
-	// 	dprintf(1, "win ptr = %p\n", cub->win);
-	// 	mlx_destroy_window(cub->mlx, cub->win);
-	// }
-	// if (cub->engine.game_image.image)
-	// {
-	// 	dprintf(1, "img ptr = %p\n", cub->engine.game_image.image);
-	// 	mlx_destroy_image(cub->mlx, cub->engine.game_image.image);
-	// }
-	// if (cub->engine.texture[0].image)
-	// {
-	// 	dprintf(1, "texture ptr = %p\n", cub->engine.texture[0].image);
-	// 	mlx_destroy_image(cub->mlx, cub->engine.texture[0].image);
-	// }
 }

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/24 15:33:33 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/05 15:05:14 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ static void	get_info(int i, char c, t_cub3d *cub)
 			cub->player.yaw = -M_PI_2;
 		cub->player.cos_yaw = cosf(cub->player.yaw);
 		cub->player.sin_yaw = sinf(cub->player.yaw);
+		cub->player.cos_pitch = cosf(cub->player.pitch);
+		cub->player.sin_pitch = sinf(cub->player.pitch);
 		cub->player.pos.x = i + 0.5f;
 		cub->player.pos.y = cub->map.size.y + 0.5f;
 		cub->player.start_pos = cub->player.pos;

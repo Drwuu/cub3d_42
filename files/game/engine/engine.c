@@ -6,13 +6,13 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 16:14:46 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/24 15:43:28 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 18:41:31 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d.h"
 #include "../../../includes/inputs.h"
-# define THREAD_NB 8
+#include "../../../includes/tools.h"
 
 static void	multi_threading(t_cub3d *cub)
 {
@@ -48,10 +48,12 @@ static void	init_user_mlx_image(t_cub3d *cub)
 	cub->settings.window.width, cub->settings.window.height);
 	if (!cub->engine.game_image.image)
 		error_manager(-1, cub, NULL, NULL);
+	cub->engine.game_image.height = cub->settings.window.height;
+	cub->engine.game_image.width = cub->settings.window.width;
 	cub->engine.game_image.addr = \
-	(unsigned int *)mlx_get_data_addr(cub->engine.game_image.image, \
-	&cub->engine.game_image.bits_per_pixel, \
-	&cub->engine.game_image.line_size, &cub->engine.game_image.endian);
+		mlx_get_data_addr(cub->engine.game_image.image, \
+		&cub->engine.game_image.bits_per_pixel, \
+		&cub->engine.game_image.line_size, &cub->engine.game_image.endian);
 	if (!cub->engine.game_image.addr)
 		error_manager(-1, cub, NULL, NULL);
 }
@@ -60,15 +62,18 @@ static int	update(t_cub3d *cub)
 {
 	cub->engine.fps.frame++;
 	time(&cub->engine.fps.current);
+	cub->engine.time.end = ft_get_time();
 	get_input(cub);
-	if (cub->settings.multi_thread)
-		multi_threading(cub);
-	else
-		draw(cub);
+	multi_threading(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, \
 	cub->engine.game_image.image, 0, 0);
 	show_fps(cub);
 	mlx_do_sync(cub->mlx);
+	if (cub->settings.screen_shot)
+	{
+		take_screenshot(cub, "screenshot.bmp");
+		cub->settings.screen_shot = FALSE;
+	}
 	return (0);
 }
 
@@ -82,8 +87,10 @@ void	start(t_cub3d *cub)
 	init_rays(&cub);
 	init_user_mlx_image(cub);
 	update_sprite(cub);
-	mlx_hook(cub->win, KEY_PRESS, KEYPRESSMASK, key_pressed, cub);
-	mlx_hook(cub->win, KEY_RELEASE, KEYRELEASEMASK, key_released, cub);
+	mlx_hook(cub->win, KEY_PRESS, KEY_PRESS_MASK, key_pressed, cub);
+	mlx_hook(cub->win, KEY_RELEASE, KEY_RELEASE_MASK, key_released, cub);
+	mlx_hook(cub->win, DESTROY_NOTIFY, KEY_PRESS_MASK, leave_window, cub);
+	mlx_do_key_autorepeatoff(cub->mlx);
 	mlx_loop_hook(cub->mlx, update, cub);
 	mlx_loop(cub->mlx);
 }

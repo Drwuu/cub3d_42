@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/04/11 11:01:38 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/29 15:40:16 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		texture_errors(int type)
 		printf("you should use a correct texture path, ");
 	if (type == 31)
 	{
-		printf("there was a problem loading the texture");
+		printf("there was a problem loading the texture\n");
 		exit(0);
 	}
 	else if (type == 40)
@@ -64,7 +64,7 @@ void			error_manager(int type, t_cub3d *cub, void *data, \
 		free(data);
 	if (cub)
 		free_cub(cub);
-	printf("Error\n");
+	printf("Error of type %d \n", type);
 	global_errors(type);
 	ids_errors(type);
 	window_errors(type);

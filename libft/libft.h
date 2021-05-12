@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 15:21:17 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/24 17:10:04 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 17:19:38 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
+# include <sys/time.h>
 
 typedef struct	s_vec3
 {
@@ -23,6 +24,14 @@ typedef struct	s_vec3
 	float	y;
 	float	z;
 }	t_vec3;
+
+typedef struct	s_color
+{
+	unsigned char	a;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}	t_color;
 
 typedef enum	e_bool
 {
@@ -126,5 +135,9 @@ int				ft_lstsize(t_list *lst);
 t_vec3			ft_vec3_create(float x, float y, float z);
 t_vec3			ft_vec3_sub(t_vec3 vec_1, t_vec3 vec_2);
 t_vec3			ft_vec3_normalize(t_vec3 vector);
+
+t_color			ft_create_color(unsigned char a, unsigned char r, unsigned char g, \
+				unsigned char b);
+long long		ft_get_time(void);
 
 #endif

@@ -12,7 +12,9 @@ ft_strtrim.c ft_chr_index.c ft_char_to_str.c ft_lstnew.c ft_lstadd_front.c \
 ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstclear.c ft_lstdelone.c \
 ft_lstiter.c ft_lstmap.c ft_lstnew_addback.c \
 ./math/ft_math.c ./math/ft_vec3_sub.c ./math/ft_vec3_create.c \
-./math/ft_vec3_normalize.c
+./math/ft_vec3_normalize.c \
+./graphic/color.c \
+./time/ft_get_time.c
 
 OBJS		= $(SRCS:.c=.o)
 

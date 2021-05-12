@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:45:32 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/24 18:29:44 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/02 17:38:42 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ float	get_sprite_ratio(t_vec3 intrsct, t_sprite sprite, t_player player)
 	return ((u.x * v2.x) + (u.y * v2.y) + 0.5);
 }
 
-unsigned int	get_sprt_pixel(t_cub3d *cub, t_image texture, \
-t_vec3 intersect, float ratio)
+t_color	get_sprt_pixel_color(t_image texture, t_vec3 intersect, float ratio)
 {
-	float	percent;
-
-	if (intersect.z > 1)
-		return (0x0000AA);
-	else if (intersect.z < 0)
-		return (0x8800AA);
-	percent = 1 - ratio;
-	return (texture.addr[(int)(percent * texture.width) \
-		+ (int)(intersect.z * texture.height) * texture.width]);
+	int				x;
+	int				y;
+	unsigned char	*pos;
+	t_color			color;
+	
+	x = (1 - ratio) * texture.width;
+	y = (1 - intersect.z) * texture.height;
+	pos = ((unsigned char *)texture.addr) + x * 4 + y * texture.line_size;
+	color = ft_create_color(pos[3], pos[2], pos[1], pos[0]);
+	return (color);
 }
 
 t_bool	is_sprt_intrsct(t_cub3d *cub, t_sprite sprt, t_vec3 intrsct)

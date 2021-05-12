@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 19:13:06 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/19 18:38:19 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/04/29 15:47:55 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	get_size(t_cub3d *cub, char **s_lines, int index)
 	return (size);
 }
 
-t_color		get_color(t_cub3d *cub, char *line)
+t_color	get_color(t_cub3d *cub, char *line)
 {
 	t_color		color;
 	char		**s_lines;
@@ -86,7 +86,7 @@ t_color		get_color(t_cub3d *cub, char *line)
 	if (!s_lines)
 		error_manager(-1, cub, NULL, NULL);
 	color_errors(s_lines, NULL, cub);
-	color.a = 255;
+	color.a = 0;
 	color.r = get_red_color(s_lines, cub);
 	color.g = get_size(cub, s_lines, 1);
 	color.b = get_size(cub, s_lines, 2);

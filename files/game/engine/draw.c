@@ -6,64 +6,65 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 12:54:14 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/24 18:21:19 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 18:53:43 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d.h"
+#include "../../../includes/tools.h"
 
-unsigned int	get_pixel_color(t_image texture, \
-t_vec3 intersect, int is_depth)
+t_color	get_cf_color(t_image texture, t_vec3 intersect)
 {
-	float	depth_percent;
-	float	w_percent;
+	unsigned char	*pos;
+	int				x;
+	int				y;
 
-	if (intersect.z > 1)
-		return (0x0000AA);
-	else if (intersect.z < 0)
-		return (0x8800AA);
-	depth_percent = intersect.y - (int)intersect.y;
-	w_percent = intersect.x - (int)intersect.x;
-	if (is_depth && depth_percent > 0 && depth_percent < 1)
-		return (texture.addr[(int)(depth_percent * texture.width) \
-			+ (int)(intersect.z * texture.height) * texture.width]);
-	else if (w_percent > 0 && w_percent < 1)
-		return (texture.addr[(int)(w_percent * texture.width) \
-			+ (int)(intersect.z * texture.height) * texture.width]);
-	return (0);
+	x = (intersect.x - (int)intersect.x) * texture.width;
+	y = (intersect.y - (int)intersect.y) * texture.height;
+	pos = (unsigned char *)texture.addr + y * texture.line_size + x * 4;
+	if (x >= 0 && x < texture.width && y >= 0 && y < texture.height)
+		return (ft_create_color(pos[3], pos[2], pos[1], pos[0]));
+	return (ft_create_color(0, 0, 0, 0));
 }
 
-void	draw_pixel(t_image game_image, int i, int j, unsigned int color)
+t_color	generic_get_color(t_image *texture, int x, int y)
 {
-	char	*dst;
-
-	dst = (char *)game_image.addr + (i * game_image.line_size + j * \
-	(game_image.bits_per_pixel / 8));
-	((unsigned int *)dst)[0] = color;
+	unsigned char	*pos;
+	
+	if (x < 0 || x >= texture->width || y < 0 || y >= texture->height)
+		return (ft_create_color(0, 0, 0, 0));
+	pos = (unsigned char *)texture->addr + y * texture->line_size + x * 4;
+	return (ft_create_color(pos[3], pos[2], pos[1], pos[0]));
 }
 
-void	draw(t_cub3d *cub)
+t_color	get_pixel_color(t_image texture, t_vec3 intersect, \
+int is_depth)
 {
-	t_vec3	ray_origin;
-	int		y;
-	int		x;
+	unsigned char	*pos;
+	int				x;
+	int				y;
 
-	y = -1;
-	while (++y < cub->settings.window.height)
-	{
-		x = -1;
-		while (++x < cub->settings.window.width)
-		{
-			cub->engine.rays.dist_save[y][x] = INFINITY;
-			ray_origin = rotate_z(cub->player, cub->engine.rays.vector[y][x]);
-			if (ray_origin.y < 0)
-				draw_north(cub, ray_origin, y, x);
-			else
-				draw_south(cub, ray_origin, y, x);
-			if (ray_origin.x > 0)
-				draw_east(cub, ray_origin, y, x);
-			else
-				draw_west(cub, ray_origin, y, x);
-		}
-	}
+	if (is_depth)
+		x = (intersect.y - (int)intersect.y) * texture.width;
+	else
+		x = (intersect.x - (int)intersect.x) * texture.width;
+	y = (1 - intersect.z) * texture.height;
+	pos = (unsigned char *)texture.addr + y * texture.line_size + x * 4;
+	if (x >= 0 && x < texture.width && y >= 0 && y < texture.height)
+		return (ft_create_color(pos[3], pos[2], pos[1], pos[0]));
+	return (ft_create_color(0, 0, 0, 0));
+}
+
+t_bool	draw_pixel(t_image image, int y, int x, t_color color)
+{
+	unsigned char	*pos;
+
+	if (color.a == 255)
+		return (FALSE);
+	pos = (unsigned char *)image.addr + y * image.line_size + x * 4;
+	pos[3] = color.a;
+	pos[2] = color.r;
+	pos[1] = color.g;
+	pos[0] = color.b;
+	return (TRUE);
 }
