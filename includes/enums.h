@@ -6,10 +6,9 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/11 15:52:31 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/16 16:35:34 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef ENUMS_H
 # define ENUMS_H
@@ -18,7 +17,7 @@
 
 # include "cub3d.h"
 
-typedef enum	e_texture
+typedef enum e_texture
 {
 	T_NORTH,
 	T_SOUTH,

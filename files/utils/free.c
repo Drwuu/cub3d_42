@@ -6,15 +6,15 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:35:05 by drwuu             #+#    #+#             */
-/*   Updated: 2021/05/06 15:13:05 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:55:04 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void		free_rays(t_cub3d *cub)
+static void	free_rays(t_cub3d *cub)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (cub->engine.rays.vector)
@@ -34,9 +34,9 @@ static void		free_rays(t_cub3d *cub)
 	}
 }
 
-static void		free_textures_path(t_cub3d *cub)
+static void	free_textures_path(t_cub3d *cub)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < TEXTURE_NB)
@@ -44,7 +44,7 @@ static void		free_textures_path(t_cub3d *cub)
 			free(cub->map.texture[i]);
 }
 
-void		free_cub(t_cub3d *cub)
+void	free_cub(t_cub3d *cub)
 {
 	ft_lstclear(&cub->map.idlines, free);
 	ft_lstclear(&cub->map.maplines, free);

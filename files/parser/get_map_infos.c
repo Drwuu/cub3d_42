@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 11:11:00 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/05 15:05:14 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:41:22 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	*fill_map(t_cub3d *cub, char *line)
 {
-	int *map;
-	int i;
-	
+	int	*map;
+	int	i;
+
 	map = ft_calloc(sizeof(*map), cub->map.size.x);
 	if (!map)
 		return (NULL);
@@ -60,7 +60,7 @@ static void	get_map(t_cub3d *cub, t_list *maplines)
 
 static void	get_info(int i, char c, t_cub3d *cub)
 {
-	if (i >= cub->map.size.x) 
+	if (i >= cub->map.size.x)
 		cub->map.size.x = i + 1;
 	if (cub->player.yaw >= 0)
 		if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -89,7 +89,7 @@ static void	get_info(int i, char c, t_cub3d *cub)
 
 static void	check_maplines(char *lines[3], t_cub3d *cub)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (lines[1][++i])

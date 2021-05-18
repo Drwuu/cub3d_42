@@ -1,17 +1,16 @@
   R	1600   	   900
-NO ./textures/Texture_North.xpm
-WE ./textures/Texture_West.xpm
+NO ./textures/cub_texture_north.xpm
+WE ./textures/cub_texture_west.xpm
+EA ./textures/cub_texture_east.xpm
+SO  ./textures/cub_texture_south.xpm
+   S ./sprites/sprite1.xpm
+F     ./textures/jade.xpm
+C      ./textures/crystal.xpm
 
-EA ./textures/Texture_East.xpm
-SO  ./textures/Texture_South.xpm
-   S ./path_to_the_sprite_texture
-C      225,30,150
-F      255,30,150
-
-11111111111111111111111111111
-10000000001100000000000000001
-10110000011100000020000010001
-10010000000000200000000010001
+11111111111111111111111111111 1111111
+10000000001100000000000000001 1110001
+10110000011100000020000010001 1000001
+10010000000000200000000010001 1111111
 10110000011100000200000010011
 10000000001100000111011110001
 11110111111111011100000010001

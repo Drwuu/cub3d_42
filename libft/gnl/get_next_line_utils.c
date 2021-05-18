@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:13:17 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/04/08 12:52:11 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/16 20:30:08 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
@@ -27,7 +27,8 @@ char	*ft_strdup(const char *s1)
 	char	*str;
 	int		i;
 
-	if (!(str = malloc(sizeof(*str) * ((int)ft_strlen(s1) + 1))))
+	str = malloc(sizeof(*str) * ((int)ft_strlen(s1) + 1));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (s1[i])
@@ -47,7 +48,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (!(str = malloc(sizeof(*str) * (len + 1))))
+	str = malloc(sizeof(*str) * (len + 1));
+	if (!str)
 		return (NULL);
 	if ((size_t)start >= ft_strlen((char *)s))
 	{
@@ -70,8 +72,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	if (!(str = malloc((sizeof(*str) * (ft_strlen((char *)s1) 	\
-			+ ft_strlen((char *)s2)) + 1))))
+	str = malloc((sizeof(*str) * (ft_strlen((char *)s1) \
+		+ ft_strlen((char *)s2)) + 1));
+	if (!str)
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -84,7 +87,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-int		free_str_error(char *str, char *buf)
+int	free_str_error(char *str, char *buf)
 {
 	if (buf)
 		free(buf);

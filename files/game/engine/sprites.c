@@ -6,39 +6,11 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:45:32 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 18:52:50 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:35:53 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d.h"
-
-t_sprite	*set_sprites(t_cub3d *cub)
-{
-	t_sprite	*sprite;
-	int			i;
-	int			j;
-	int			k;
-	
-	sprite = ft_calloc(sizeof(*sprite), cub->map.sprites_nb);
-	if (!sprite)
-		error_manager(-1, cub, NULL, NULL);
-	k = 0;
-	i = -1;
-	while (++i < cub->map.size.y)
-	{
-		j = -1;
-		while (++j < cub->map.size.x)
-			if (cub->map.map[i][j] == 2)
-			{
-				sprite[k].pos.x = j + 0.5f;
-				sprite[k].pos.y = i + 0.5f;
-				sprite[k].pos.z = 0;
-				sprite[k].plane.C = 0;
-				sprite[k++].plane.D = 0;
-			}	
-	}
-	return (sprite);
-}
 
 void	update_sprite(t_cub3d *cub)
 {
@@ -68,10 +40,15 @@ static float	get_sprite_dist(t_cub3d *cub, float div, int k)
 	return (dist);
 }
 
-void	draw_sprites(t_cub3d *cub, t_vec3 ray_origin, int i, int j) // 4 lines too much
+static float	get_div(t_cub3d *cub, t_vec3 ray_origin, int k)
+{
+	return (cub->sprite[k].plane.A * ray_origin.x \
+		+ cub->sprite[k].plane.B * ray_origin.y);
+}
+
+void	draw_sprites(t_cub3d *cub, t_vec3 ray_origin, int i, int j)
 {
 	t_vec3	intersect;
-	float	div;
 	float	dist;
 	float	ratio;
 	int		k;
@@ -79,24 +56,20 @@ void	draw_sprites(t_cub3d *cub, t_vec3 ray_origin, int i, int j) // 4 lines too 
 	k = -1;
 	while (++k < cub->map.sprites_nb)
 	{
-		div = cub->sprite[k].plane.A * ray_origin.x \
-			+ cub->sprite[k].plane.B * ray_origin.y;
-		if (div == 0)
-			continue ;
-		dist = get_sprite_dist(cub, div, k);
+		dist = get_sprite_dist(cub, get_div(cub, ray_origin, k), k);
 		if (dist < 0 || dist > cub->engine.rays.dist_save[i][j])
 			continue ;
 		intersect = get_intersect(cub, ray_origin, dist);
 		if (intersect.z > 1 || intersect.z < 0)
-			continue;
+			continue ;
 		if (is_sprt_intrsct(cub, cub->sprite[k], intersect))
 		{
 			ratio = get_sprite_ratio(intersect, cub->sprite[k], cub->player);
 			if (ratio < 0 || ratio > 1)
 				continue ;
 			if (draw_pixel(cub->engine.game_image, i, j, get_sprt_pixel_color(
-				cub->engine.texture[T_SPRITE1], intersect, ratio)))
-					cub->engine.rays.dist_save[i][j] = dist;
+						cub->engine.texture[T_SPRITE1], intersect, ratio)))
+				cub->engine.rays.dist_save[i][j] = dist;
 		}
 	}
 }

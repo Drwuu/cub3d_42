@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 18:54:39 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/16 18:21:10 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <pthread.h>
 # include "event.h"
 # include "enums.h"
-# include "../libft/libft.h"
+# include "../libft/includes/libft.h"
 # include "../libft/gnl/get_next_line.h"
 # include "../minilibx/mlx.h"
 
-typedef struct	s_image
+typedef struct s_image
 {
 	void	*image;
 	char	*addr;
@@ -34,19 +34,19 @@ typedef struct	s_image
 	int		height;
 }	t_image;
 
-typedef struct	s_window
+typedef struct s_window
 {
 	int	width;
 	int	height;
 }	t_window;
 
-typedef union	u_union
+typedef union u_union
 {
 	t_color			color;
 	unsigned int	c_color;
 }	t_union;
 
-typedef struct	s_plane
+typedef struct s_plane
 {
 	float	A;
 	float	B;
@@ -54,7 +54,7 @@ typedef struct	s_plane
 	float	D;
 }	t_plane;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	t_vec3	start_pos;
 	t_vec3	pos;
@@ -69,24 +69,24 @@ typedef struct	s_player
 	int		amos;
 }	t_player;
 
-typedef struct	s_sprite
+typedef struct s_sprite
 {
 	t_plane	plane;
 	t_vec3	pos;
 	t_vec3	v;
 }	t_sprite;
 
-typedef struct	s_ceiling
+typedef struct s_ceiling
 {
 	t_color	color;
 }	t_ceiling;
 
-typedef struct	s_floor
+typedef struct s_floor
 {
 	t_color	color;
 }	t_floor;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	int			**map;
 	t_vec3		size;
@@ -99,8 +99,7 @@ typedef struct	s_map
 	t_list		*idlines;
 }	t_map;
 
-
-typedef struct	s_rays
+typedef struct s_rays
 {
 	t_vec3	**vector;
 	t_vec3	inters;
@@ -108,8 +107,7 @@ typedef struct	s_rays
 	float	ratio[2];
 }	t_rays;
 
-
-typedef struct	s_settings
+typedef struct s_settings
 {
 	t_window	user_screen_size;
 	t_window	window;
@@ -121,7 +119,7 @@ typedef struct	s_settings
 	int			key[KEY_USED_NB];
 }	t_settings;
 
-typedef struct	s_fps
+typedef struct s_fps
 {
 	float		frame;
 	char		*fps;
@@ -130,13 +128,13 @@ typedef struct	s_fps
 	time_t		current;
 }	t_fps;
 
-typedef struct	s_time
+typedef struct s_time
 {
 	long long	start;
 	long long	end;
 }	t_time;
 
-typedef struct	s_engine
+typedef struct s_engine
 {
 	t_image		game_image;
 	t_image		texture[TEXTURE_NB];
@@ -148,8 +146,7 @@ typedef struct	s_engine
 	t_time		time;
 }	t_engine;
 
-
-typedef struct	s_cub3d
+typedef struct s_cub3d
 {
 	t_settings	settings;
 	t_player	player;
@@ -160,7 +157,7 @@ typedef struct	s_cub3d
 	void		*win;
 }	t_cub3d;
 
-typedef struct	s_thread
+typedef struct s_thread
 {
 	t_cub3d		*cub;
 	int			start;

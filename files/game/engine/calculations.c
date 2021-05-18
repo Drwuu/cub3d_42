@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 19:42:53 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 18:58:08 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:09:14 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_vec3	rotate_vector_x(t_player player, t_vec3 vector)
 
 	new_vector.x = vector.x;
 	new_vector.y = vector.y * player.cos_pitch - vector.z * player.sin_pitch;
-	new_vector.z = vector.y * player.sin_pitch +  vector.z * player.cos_pitch;
+	new_vector.z = vector.y * player.sin_pitch + vector.z * player.cos_pitch;
 	return (new_vector);
 }
 
@@ -63,7 +63,7 @@ t_vec3	move_player_x(t_cub3d *cub, t_player player, int direction)
 	y = new_pos.y;
 	if (cub->settings.collide && y >= 0 && y < cub->map.size.y && x >= 0 && \
 		x < cub->map.size.x)
-			if (cub->map.map[y][x] == 1 || cub->map.map[y][x] == 2)
+		if (cub->map.map[y][x] == 1 || cub->map.map[y][x] == 2)
 			return (player.pos);
 	return (new_pos);
 }
@@ -89,7 +89,7 @@ t_vec3	move_player_y(t_cub3d *cub, t_player player, int direction)
 	y = new_player_pos.y;
 	if (cub->settings.collide && y >= 0 && y < cub->map.size.y && x >= 0 && \
 		x < cub->map.size.x)
-			if (cub->map.map[y][x] == 1 || cub->map.map[y][x] == 2)
-				return (player.pos);
+		if (cub->map.map[y][x] == 1 || cub->map.map[y][x] == 2)
+			return (player.pos);
 	return (new_player_pos);
 }

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 18:46:54 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/02 15:07:33 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:16:07 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	init_rays_2(t_cub3d *cub, t_rays *ray, int width, int height)
 {
 	int		x;
 	int		y;
-	
+
 	ray->dist_save = ft_calloc(sizeof(*ray->dist_save), height);
 	ray->vector = ft_calloc(sizeof(*ray->vector), height);
 	if (!ray->dist_save || !ray->vector)
@@ -57,7 +57,7 @@ static void	init_rays_2(t_cub3d *cub, t_rays *ray, int width, int height)
 		while (++x < width)
 		{
 			ray->vector[y][x] = get_ray(cub, ray->ratio, x, y);
-			ray->dist_save[y][x] = INFINITY;	
+			ray->dist_save[y][x] = INFINITY;
 		}
 	}
 }

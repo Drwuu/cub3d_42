@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 13:51:20 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/11 17:14:37 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:39:20 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,13 @@ static void	write_color_bmp(t_image *image, int fd)
 	int				x;
 	int				y;
 
-	// puts("write_color_bmp - a");
-	// dprintf(1, "Image height: %d | Image width: %d\n", image->height, image->width);
 	y = image->height;
 	while (y > 0)
 	{
-		// puts("write_color_bmp - b");
 		x = 0;
 		while (x < image->width)
 		{
 			color = generic_get_color(image, x, y);
-			// dprintf(1, "a: %d, r: %d, g: %d, b: %d\n", color.a, color.r, color.g, color.b);
 			buffer[0] = (unsigned char)(color.b);
 			buffer[1] = (unsigned char)(color.g);
 			buffer[2] = (unsigned char)(color.r);

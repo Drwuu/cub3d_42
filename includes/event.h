@@ -6,19 +6,15 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 17:39:53 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/16 16:38:10 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EVENT_H
 # define EVENT_H
-
-# define KEY_PRESS_MASK 1L<<0
-# define KEY_RELEASE_MASK 1L<<1
-# define LEAVE_WINDOW_MASK 1L<<5
 # define KEY_USED_NB 12
 
-typedef enum	e_key_pressed
+typedef enum e_key_pressed
 {
 	KP_UP,
 	KP_DOWN,
@@ -34,7 +30,7 @@ typedef enum	e_key_pressed
 	KP_PLUS,
 }	t_key_pressed;
 
-typedef enum	e_key
+typedef enum e_key
 {
 	KEY_A = 0,
 	KEY_B = 11,
@@ -87,7 +83,7 @@ typedef enum	e_key
 	KEY_SPACE = 49,
 }	t_key;
 
-typedef enum	e_x11event
+typedef enum e_x11event
 {
 	KEY_PRESS = 2,
 	KEY_RELEASE = 3,

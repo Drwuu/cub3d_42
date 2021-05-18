@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 12:54:14 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 18:54:32 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:15:42 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	*draw_thread(void *datas)
 		while (++x < thread->cub->settings.window.width)
 		{
 			thread->cub->engine.rays.dist_save[y][x] = INFINITY;
-			ray_origin = rotate_vector_x(thread->cub->player, thread->cub->engine.rays.vector[y][x]);
+			ray_origin = rotate_vector_x(thread->cub->player, \
+				thread->cub->engine.rays.vector[y][x]);
 			ray_origin = rotate_vector_z(thread->cub->player, ray_origin);
 			draw_process(thread->cub, ray_origin, x, y);
 		}

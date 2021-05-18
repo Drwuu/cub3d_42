@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 12:54:14 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 18:53:43 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:09:37 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_color	get_cf_color(t_image texture, t_vec3 intersect)
 t_color	generic_get_color(t_image *texture, int x, int y)
 {
 	unsigned char	*pos;
-	
+
 	if (x < 0 || x >= texture->width || y < 0 || y >= texture->height)
 		return (ft_create_color(0, 0, 0, 0));
 	pos = (unsigned char *)texture->addr + y * texture->line_size + x * 4;

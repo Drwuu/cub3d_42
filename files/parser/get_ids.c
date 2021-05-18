@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:37:57 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/29 15:55:42 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/18 16:58:31 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@ static int	is_color_info(char *line)
 	return (0);
 }
 
-static void		get_ids_info_2(t_cub3d *cub, char *line, int ret)
+static void	get_ids_info_2(t_cub3d *cub, char *line, int ret)
 {
-	if (ret == 4)
+	if (ret == 4 && !cub->map.texture[T_SPRITE1])
 		cub->map.texture[T_SPRITE1] = get_tex_path(cub, line);
-	if (ret == 5)
+	if (ret == 5 && !cub->map.texture[T_NORTH])
 		cub->map.texture[T_NORTH] = get_tex_path(cub, line);
-	if (ret == 6)
+	if (ret == 6 && !cub->map.texture[T_SOUTH])
 		cub->map.texture[T_SOUTH] = get_tex_path(cub, line);
-	if (ret == 7)
+	if (ret == 7 && !cub->map.texture[T_EAST])
 		cub->map.texture[T_EAST] = get_tex_path(cub, line);
-	if (ret == 8)
+	if (ret == 8 && !cub->map.texture[T_WEST])
 		cub->map.texture[T_WEST] = get_tex_path(cub, line);
 }
 
-static void		get_ids_info(t_cub3d *cub, char *line, int ret)
+static void	get_ids_info(t_cub3d *cub, char *line, int ret)
 {
 	if (ret == 1)
 		get_resolution(cub, line);
@@ -49,22 +49,22 @@ static void		get_ids_info(t_cub3d *cub, char *line, int ret)
 	{
 		if (is_color_info(line))
 			cub->map.floor.color = get_color(cub, line);
-		else
+		else if (!cub->map.texture[T_FLOOR])
 			cub->map.texture[T_FLOOR] = get_tex_path(cub, line);
 	}
 	if (ret == 3)
 	{
 		if (is_color_info(line))
 			cub->map.ceiling.color = get_color(cub, line);
-		else
+		else if (!cub->map.texture[T_CEIL])
 			cub->map.texture[T_CEIL] = get_tex_path(cub, line);
 	}
 	get_ids_info_2(cub, line, ret);
 }
 
-int		is_id(const char *line)
+int	is_id(const char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] && ft_iswhitespace(line[i]))
@@ -82,16 +82,16 @@ int		is_id(const char *line)
 	}
 	if (line[i + 1] && line[i] == 'R' && ft_iswhitespace(line[i + 1]))
 		return (1);
-	if (line[i + 1] && line[i] == 'F' && ft_iswhitespace(line[i + 1])) 
+	if (line[i + 1] && line[i] == 'F' && ft_iswhitespace(line[i + 1]))
 		return (2);
-	if (line[i + 1] && line[i] == 'C' && ft_iswhitespace(line[i + 1])) 
+	if (line[i + 1] && line[i] == 'C' && ft_iswhitespace(line[i + 1]))
 		return (3);
-	if (line[i + 1] && line[i] == 'S' && ft_iswhitespace(line[i + 1])) 
+	if (line[i + 1] && line[i] == 'S' && ft_iswhitespace(line[i + 1]))
 		return (4);
 	return (0);
 }
 
-void		check_id_lines(t_cub3d *cub, t_list *id_lines)
+void	check_id_lines(t_cub3d *cub, t_list *id_lines)
 {
 	int		id;
 	int		ret;

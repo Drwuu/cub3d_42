@@ -6,70 +6,64 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 19:01:43 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/08 12:52:27 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/16 20:27:31 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static	int		find_newline(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-static	int		copy_line(const char *buf, char **str)
-{
-	char	*tmp;
-
-	if (!*str)
-	{
-		if (!(*str = ft_strdup(buf)))
-			return (-1);
-	}
-	else
-	{
-		if (!(tmp = ft_strjoin(*str, buf)))
-			return (-1);
-		free(*str);
-		*str = tmp;
-	}
-	return (1);
-}
-
-static	int		read_line(char **str, int fd)
+static int	read_line_process(char **str, int fd, char **buf)
 {
 	int		head;
-	char	*buf;
 
-	if (!(buf = malloc(sizeof(*buf) * (BUFFER_SIZE + 1))))
-		return (free_str_error(*str, buf));
-	while ((head = read(fd, buf, BUFFER_SIZE)) > 0)
+	head = 1;
+	while (head > 0)
 	{
-		buf[head] = '\0';
-		if (copy_line(buf, str) < 0)
-			return (free_str_error(*str, buf));
+		head = read(fd, *buf, BUFFER_SIZE);
+		(*buf)[head] = '\0';
+		if (copy_line(*buf, str) < 0)
+			return (-1);
 		if (find_newline(*str) >= 0)
 			break ;
 	}
 	if (head < 0)
+		return (-1);
+	return (1);
+}
+
+static int	read_line(char **str, int fd)
+{
+	char	*buf;
+
+	buf = malloc(sizeof(*buf) * (BUFFER_SIZE + 1));
+	if (!buf)
+		return (free_str_error(*str, buf));
+	if (read_line_process(str, fd, &buf) < 0)
 		return (free_str_error(*str, buf));
 	if (!*str)
-		if (!(*str = ft_strdup("")))
+	{
+		*str = ft_strdup("");
+		if (!*str)
 			return (free_str_error(*str, buf));
+	}
 	free(buf);
 	return (1);
 }
 
-static	int		build_line(char **str, char **line)
+static int	build_line_process(char **str, char **line, char **tmp, int i)
+{
+	*line = ft_substr(*str, 0, i);
+	if (!*line)
+		return (-1);
+	*tmp = ft_strdup(&(*str)[i + 1]);
+	if (!*tmp)
+		return (-1);
+	free(*str);
+	*str = *tmp;
+	return (1);
+}
+
+static int	build_line(char **str, char **line)
 {
 	int		i;
 	char	*tmp;
@@ -78,17 +72,14 @@ static	int		build_line(char **str, char **line)
 	i = find_newline(*str);
 	if (i >= 0)
 	{
-		if (!(*line = ft_substr(*str, 0, i)))
+		if (build_line_process(str, line, &tmp, i) < 0)
 			return (free_str_error(*str, tmp));
-		if (!(tmp = ft_strdup(&(*str)[i + 1])))
-			return (free_str_error(*str, tmp));
-		free(*str);
-		*str = tmp;
 		return (1);
 	}
 	else
 	{
-		if (!(*line = ft_substr(*str, 0, ft_strlen(*str))))
+		*line = ft_substr(*str, 0, ft_strlen(*str));
+		if (!*line)
 			return (free_str_error(*str, tmp));
 		free(*str);
 		*str = NULL;
@@ -96,7 +87,7 @@ static	int		build_line(char **str, char **line)
 	}
 }
 
-int				get_next_line(const int fd, char **line)
+int	get_next_line(const int fd, char **line)
 {
 	static char	*str[256];
 

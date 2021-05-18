@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 14:00:44 by drwuu             #+#    #+#             */
-/*   Updated: 2021/03/18 16:47:26 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/18 16:37:53 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void static	tex_path_errors(char **s_line, t_cub3d *cub)
 		error_manager(30, cub, NULL, (void **)s_line);
 }
 
-char		*get_tex_path(t_cub3d *cub, char *line)
+char	*get_tex_path(t_cub3d *cub, char *line)
 {
 	char	*texture_path;
 	char	**s_line;

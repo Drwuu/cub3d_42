@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 19:13:06 by drwuu             #+#    #+#             */
-/*   Updated: 2021/04/29 15:47:55 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:39:38 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void static	color_errors(char **s_lines, char **red_lines, t_cub3d *cub)
 
 int static	get_red_color(char **s_lines, t_cub3d *cub)
 {
-	char **red_lines;
-	int red;
-	int i;
+	char	**red_lines;
+	int		red;
+	int		i;
 
 	red_lines = ft_split(s_lines[0], " \t");
 	if (!red_lines)

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:29:23 by lwourms           #+#    #+#             */
-/*   Updated: 2021/04/08 16:16:12 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:41:37 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static int	get_size(t_cub3d *cub, char **s_line, int index, int screen_size)
 	return (size);
 }
 
-void		get_resolution(t_cub3d *cub, char *line)
+void	get_resolution(t_cub3d *cub, char *line)
 {
-	char		**s_line;
+	char	**s_line;
 
 	s_line = ft_split(line, " \t");
 	if (!s_line)

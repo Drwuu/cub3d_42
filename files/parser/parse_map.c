@@ -6,13 +6,13 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:51:40 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/06 15:28:42 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:42:10 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void		get_map_lines(t_cub3d *cub, char **line, int fd)
+static void	get_map_lines(t_cub3d *cub, char **line, int fd)
 {
 	t_list		*new;
 	int			ret;
@@ -41,7 +41,7 @@ static void		get_map_lines(t_cub3d *cub, char **line, int fd)
 	}
 }
 
-static void		get_lines_to_parse(t_cub3d *cub, char **line, int fd)
+static void	get_lines_to_parse(t_cub3d *cub, char **line, int fd)
 {
 	t_list		*new;
 	int			ret;
@@ -74,7 +74,7 @@ void	parse_map(const char *file, t_cub3d *cub)
 {
 	char	*line;
 	int		fd;
-	
+
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		error_manager(-3, cub, NULL, NULL);

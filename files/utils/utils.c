@@ -6,15 +6,15 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:16:22 by lwourms           #+#    #+#             */
-/*   Updated: 2021/03/26 14:51:25 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:55:23 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int				is_valid_mapline(char *line)
+int	is_valid_mapline(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_ischar(line, " 102NSWE"))
@@ -22,7 +22,7 @@ int				is_valid_mapline(char *line)
 	return (1);
 }
 
-int				is_valid_next(char *line, int i)
+int	is_valid_next(char *line, int i)
 {
 	if (!line[i - 1] || !line[i + 1])
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:52:48 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 18:13:51 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:08:35 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	init_tetxures(t_cub3d *cub)
 
 static t_player	init_player(int life, int amos, float speed)
 {
-	t_player player;
+	t_player	player;
 
 	player.pos.x = 0;
 	player.pos.y = 0;

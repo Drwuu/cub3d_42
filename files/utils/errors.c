@@ -6,21 +6,21 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 18:36:42 by drwuu             #+#    #+#             */
-/*   Updated: 2021/04/29 15:40:16 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/18 16:54:03 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void		window_errors(int type)
+static void	window_errors(int type)
 {	
 	if (type == 20)
 		printf("you should use a correct window size, ");
 	else if (type == 21)
-		printf("your window size is too big, ");
+		printf("your window size is too big or too short, ");
 }
 
-static void		texture_errors(int type)
+static void	texture_errors(int type)
 {	
 	if (type == 30)
 		printf("you should use a correct texture path, ");
@@ -33,7 +33,7 @@ static void		texture_errors(int type)
 		printf("you should use a correct color, ");
 }
 
-static void		ids_errors(int type)
+static void	ids_errors(int type)
 {	
 	if (type == 1)
 		printf("you should use a correct ID, ");
@@ -43,7 +43,7 @@ static void		ids_errors(int type)
 		printf("wrong IDs format, ");
 }
 
-static void		map_errors(int type)
+static void	map_errors(int type)
 {	
 	if (type == 50)
 		printf("your map is not well formated, ");
@@ -55,8 +55,7 @@ static void		map_errors(int type)
 		printf("you must have a player in the scene, ");
 }
 
-void			error_manager(int type, t_cub3d *cub, void *data, \
-				void **data2)
+void	error_manager(int type, t_cub3d *cub, void *data, void **data2)
 {
 	if (data2)
 		ft_free_dbl_array(data2, 0);

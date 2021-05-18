@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 16:14:46 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 18:41:31 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/16 16:48:47 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	start(t_cub3d *cub)
 	init_rays(&cub);
 	init_user_mlx_image(cub);
 	update_sprite(cub);
-	mlx_hook(cub->win, KEY_PRESS, KEY_PRESS_MASK, key_pressed, cub);
-	mlx_hook(cub->win, KEY_RELEASE, KEY_RELEASE_MASK, key_released, cub);
-	mlx_hook(cub->win, DESTROY_NOTIFY, KEY_PRESS_MASK, leave_window, cub);
+	mlx_hook(cub->win, KEY_PRESS, 1L << 0, key_pressed, cub);
+	mlx_hook(cub->win, KEY_RELEASE, 1L << 1, key_released, cub);
+	mlx_hook(cub->win, DESTROY_NOTIFY, 1L << 0, leave_window, cub);
 	mlx_do_key_autorepeatoff(cub->mlx);
 	mlx_loop_hook(cub->mlx, update, cub);
 	mlx_loop(cub->mlx);
