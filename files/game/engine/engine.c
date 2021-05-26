@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 16:14:46 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/16 16:48:47 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/26 17:06:03 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,21 @@ static void	multi_threading(t_cub3d *cub)
 	}
 }
 
-static void	init_user_mlx_image(t_cub3d *cub)
+static t_image	init_user_mlx_image(t_cub3d *cub, int width, int height)
 {
-	cub->engine.game_image.image = mlx_new_image(cub->mlx, \
-	cub->settings.window.width, cub->settings.window.height);
-	if (!cub->engine.game_image.image)
+	t_image	image;
+
+	image.image = mlx_new_image(cub->mlx, width, height);
+	if (!image.image)
 		error_manager(-1, cub, NULL, NULL);
-	cub->engine.game_image.height = cub->settings.window.height;
-	cub->engine.game_image.width = cub->settings.window.width;
-	cub->engine.game_image.addr = \
-		mlx_get_data_addr(cub->engine.game_image.image, \
-		&cub->engine.game_image.bits_per_pixel, \
-		&cub->engine.game_image.line_size, &cub->engine.game_image.endian);
-	if (!cub->engine.game_image.addr)
+	image.width = width;
+	image.height = height;
+	image.addr = \
+		mlx_get_data_addr(image.image, &image.bits_per_pixel, \
+		&image.line_size, &image.endian);
+	if (!image.addr)
 		error_manager(-1, cub, NULL, NULL);
+	return (image);
 }
 
 static int	update(t_cub3d *cub)
@@ -85,7 +86,8 @@ void	start(t_cub3d *cub)
 	if (!cub->win)
 		error_manager(-1, cub, NULL, NULL);
 	init_rays(&cub);
-	init_user_mlx_image(cub);
+	cub->engine.game_image = init_user_mlx_image(cub, \
+		cub->settings.window.width, cub->settings.window.height);
 	update_sprite(cub);
 	mlx_hook(cub->win, KEY_PRESS, 1L << 0, key_pressed, cub);
 	mlx_hook(cub->win, KEY_RELEASE, 1L << 1, key_released, cub);

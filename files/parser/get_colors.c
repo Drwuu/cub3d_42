@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 19:13:06 by drwuu             #+#    #+#             */
-/*   Updated: 2021/05/12 20:39:38 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/26 16:35:06 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void static	color_errors(char **s_lines, char **red_lines, t_cub3d *cub)
 		error_manager(30, cub, NULL, (void **)s_lines);
 	if (red_lines)
 	{
-		if (!red_lines[0] || !red_lines[1] || red_lines[2] || \
-		ft_iswhitespace(s_lines[0][ft_strlen(s_lines[0]) - 1]))
+		if (!red_lines[0] || !red_lines[1])
 		{
 			ft_free_dbl_array((void **)red_lines, 0);
 			error_manager(40, cub, NULL, (void **)s_lines);
@@ -61,8 +60,12 @@ static int	get_size(t_cub3d *cub, char **s_lines, int index)
 
 	i = 0;
 	size = 0;
+	while (ft_iswhitespace(s_lines[index][i]))
+		i++;
 	while (ft_isdigit(s_lines[index][i]))
 		size = (size * 10) + (s_lines[index][i++] - '0');
+	while (ft_iswhitespace(s_lines[index][i]))
+		i++;
 	if (s_lines[index][i] || size > 255)
 		error_manager(40, cub, NULL, (void **)s_lines);
 	return (size);

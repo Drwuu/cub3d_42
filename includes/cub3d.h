@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/16 18:21:10 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/26 16:57:54 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ typedef struct s_time
 typedef struct s_engine
 {
 	t_image		game_image;
+	t_image		hud;
+	t_image		lifebar;
 	t_image		texture[TEXTURE_NB];
 	t_rays		rays;
 	t_plane		**planes;

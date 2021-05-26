@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 20:31:31 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/16 20:34:35 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/26 16:42:55 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ t_vec3			ft_vec3_create(float x, float y, float z);
 t_vec3			ft_vec3_sub(t_vec3 vec_1, t_vec3 vec_2);
 t_vec3			ft_vec3_normalize(t_vec3 vector);
 
-t_color			ft_create_color(unsigned char a, unsigned char r, unsigned char g, \
-				unsigned char b);
+t_color			ft_create_color(unsigned char a, unsigned char r, \
+					unsigned char g, unsigned char b);
 long long		ft_get_time(void);
 
 #endif

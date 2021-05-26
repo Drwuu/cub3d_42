@@ -1,0 +1,14 @@
+1. Regarder en haut et en bas //
+2. Screenshot //
+3. Screenshot quand on veut //
+4. Collision murs //
+5. Collisions sprites //
+6. Multi-thread //
+7. Restart position du joueur //
+8. Texture sol //
+9. Texture plafond //
+10. Sauter //
+11. S’accroupir //
+12. Voler //
+13. Activer/Désactiver les collisions //
+14. Afficher les FPS //

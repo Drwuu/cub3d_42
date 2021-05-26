@@ -1,11 +1,14 @@
-  R	1600   	   900
-NO ./textures/cub_texture_north.xpm
-WE ./textures/cub_texture_west.xpm
-EA ./textures/cub_texture_east.xpm
-SO  ./textures/cub_texture_south.xpm
-   S ./sprites/sprite1.xpm
-F     ./textures/jade.xpm
-C      ./textures/crystal.xpm
+  R	1600   	   900    
+SO  ./textures/cub_texture_south.xpm    
+NO			./textures/cub_texture_north.xpm   
+WE ./textures/cub_texture_west.xpm    
+EA ./textures/cub_texture_east.xpm    
+   S ./sprites/sprite1.xpm    
+
+
+
+F		./textures/jade.xpm			
+C						255  ,   200			,  35    
 
 11111111111111111111111111111 1111111
 10000000001100000000000000001 1110001
@@ -25,4 +28,3 @@ C      ./textures/crystal.xpm
 10002000000000001100000010001
 10000000000000001101010010001
 11111111111111111111111111111
-
