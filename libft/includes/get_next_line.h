@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/05/16 20:14:51 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/26 17:41:38 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
+# include "libft.h"
 
 int		get_next_line(int fd, char **line);
 size_t	ft_strlen(const char *s);

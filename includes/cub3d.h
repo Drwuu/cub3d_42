@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 10:45:10 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/26 16:57:54 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/26 17:33:30 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "event.h"
 # include "enums.h"
 # include "../libft/includes/libft.h"
-# include "../libft/gnl/get_next_line.h"
+# include "../libft/includes/get_next_line.h"
 # include "../minilibx/mlx.h"
 
 typedef struct s_image

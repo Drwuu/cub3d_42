@@ -13,15 +13,16 @@ ft_strtrim.c ft_chr_index.c ft_char_to_str.c ft_lstnew.c ft_lstadd_front.c \
 ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstclear.c ft_lstdelone.c \
 ft_lstiter.c ft_lstmap.c ft_lstnew_addback.c \
 ft_math.c ft_vec3_sub.c ft_vec3_create.c ft_vec3_normalize.c \
-ft_color.c ft_get_time.c \
+ft_color.c ft_get_time.c get_next_line_utils.c get_next_line.c
 
-VPATH			= srcs includes $(MATH) $(GRAPHIC) $(TIME)
+VPATH			= $(GNL) $(MATH) $(GRAPHIC) $(TIME) srcs includes
 
-MATH			= ./srcs/math
-GRAPHIC			= ./srcs/graphic
-TIME			= ./srcs/time
-INCLUDES		= ./includes
-OBJS_DIR		= ./objects
+GNL				= srcs/gnl
+MATH			= srcs/math
+GRAPHIC			= srcs/graphic
+TIME			= srcs/time
+INCLUDES		= includes
+OBJS_DIR		= objects
 
 FLAGS			= -Wall -Wextra -Werror
 OPT				= -O3 -flto -Ofast -ffast-math -march=native 
@@ -51,7 +52,7 @@ $(NAME):			$(OBJS)
 						@ar rc $@ $^
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUEE): $(GREEN)Compiled [√]$(RESET)\n"
 
-$(OBJS_DIR)/%.o:	%.c libft.h split_utils.h
+$(OBJS_DIR)/%.o:	%.c libft.h split_utils.h get_next_line.h
 						@gcc $(FLAGS) $(OPT) -I$(INCLUDES) -c $< -o $@
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(PURPLE)$<$(RESET)"
 

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 12:40:08 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 20:50:30 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/27 11:33:25 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ t_plane	**init_planes(t_cub3d *cub)
 		error_manager(-1, cub, NULL, NULL);
 	}
 	set_planes_with_zeros(&planes, cub->map.size.x, \
-	cub->map.size.y);
+		cub->map.size.y);
 	return (planes);
 }

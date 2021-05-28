@@ -1,37 +1,33 @@
-NAME		= Cub3D
+NAME		= cub3D
 
-SRCS		= \
-input.c input_2.c input_3.c \
-cub3d.c calculations.c draw.c engine.c \
+SRCS		= cub3d.c \
+$(addprefix $(INPUTS)/, input.c input_2.c input_3.c) \
+$(addprefix $(ENGINE)/, calculations.c draw.c engine.c \
 texture.c check_intersections.c draw_textures.c draw_textures_2.c \
-rays.c multi_thread.c sprites.c sprites_2.c \
-fps.c screenshot.c \
-get_colors.c get_ids.c get_map_infos.c \
-get_resolution.c get_tex_path.c parse_map.c planes.c planes_2.c \
-errors_2.c errors.c free.c utils.c \
-get_next_line.c get_next_line_utils.c get_next_line_utils_2.c
-
-VPATH		= minilibx $(GNL_PATH) $(INCLUDES) $(LIBFT_PATH) $(FILES) $(GAME) $(ENGINE) \
-			$(GAME_UTILS) $(INPUTS) $(PARSER) $(UTILS) $(OBJS_DIR)
+rays.c multi_thread.c sprites.c sprites_2.c) \
+$(addprefix $(GAME_UTILS)/, fps.c screenshot.c) \
+$(addprefix $(PARSER)/, get_colors.c get_ids.c get_map_infos.c \
+get_resolution.c get_tex_path.c parse_map.c planes.c planes_2.c) \
+$(addprefix $(UTILS)/, errors_2.c errors.c free.c utils.c)
 
 FLAGS			= -g -Wall -Wextra -Werror
-MLX				= -L ./minilibx/ -lmlx
-OPT				= -O3 -flto -Ofast -ffast-math -march=native 
-INCLUDES		= ./includes
-LIBFT			= -L ./libft -lft
-FILES			= ./files
-GAME			= ./files/game
-ENGINE			= ./files/game/engine
-INPUTS			= ./files/game/inputs
-GAME_UTILS		= ./files/game/utils
-PARSER			= ./files/parser
-UTILS			= ./files/utils
-GNL				= ./libft/gnl
-LIBFT_PATH		= ./libft
-MLX_PATH		= ./minilibx
-GNL_PATH		= ./libft/gnl
-OBJS_DIR		= ./objects
+OPT				= -O3 -flto -Ofast -ffast-math -march=native
+LIBFT			= -L libft -lft
+MLX				= -L minilibx -lmlx
 OBJS			= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+
+OBJS_DIR		= objects
+INCLUDES		= includes
+LIBFT_PATH		= libft
+MLX_PATH		= minilibx
+
+FILES			= files
+INPUTS			= game/inputs
+ENGINE			= game/engine
+GAME_UTILS		= game/utils
+PARSER			= parser
+UTILS			= utils
+FOLDERS			= objects game game/engine game/inputs game/utils parser utils
 
 BLACK			=	\033[0;30m
 RED				=	\033[0;31m
@@ -53,16 +49,17 @@ NO_COLOR		=	\033[0m
 
 all:				libs $(NAME)
 
-libs:		
+libs:
 						@make -C ./libft
 
 $(NAME):			$(OBJS)
 						@gcc $(FLAGS) $(MLX) $(LIBFT) $^ -o $@
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(GREEN)Compiled [√]$(RESET)\n"
 
-$(OBJS_DIR)/%.o:	%.c mlx.h cub3d.h event.h inputs.h get_next_line.h libft.a
-						@gcc $(FLAGS) $(OPT) -I$(INCLUDES) -I$(LIBFT_PATH)/includes \
-						-I$(GNL_PATH) -I$(MLX_PATH) -c $< -o $@
+$(OBJS_DIR)/%.o:	$(FILES)/%.c $(addprefix $(INCLUDES)/, cub3d.h enums.h event.h inputs.h tools.h) $(MLX_PATH)/mlx.h $(LIBFT_PATH)/libft.a
+						@mkdir -p $(addprefix $(OBJS_DIR)/, $(FOLDERS))
+						@gcc $(FLAGS) $(OPT) -I$(INCLUDES) -I$(LIBFT_PATH)/$(INCLUDES) \
+						-I$(MLX_PATH) -c $< -o $@
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(PURPLE)$<$(RESET)"
 
 lldb:				$(OBJS)
@@ -75,6 +72,7 @@ fsanitize:			$(OBJS)
 
 clean:
 						@rm -f $(OBJS)
+						@rm -rf $(addprefix ./, $(FOLDERS))
 						@make -C $(LIBFT_PATH) clean
 
 fclean:				clean

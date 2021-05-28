@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 12:40:08 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/12 20:44:43 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/05/27 11:50:45 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	get_planes(t_cub3d *cub, t_plane ***planes, int **map, int i)
 	while (++j < cub->map.size.x)
 	{
 		get_extra_planes(cub, planes, j, i);
-		if (map[i][j] == 0)
+		if (map[i][j] == 0 || map[i][j] == 2)
 		{
 			if (i > 0 && map[i - 1][j] == 1)
 				if ((*planes)[0][i].B < 0)
