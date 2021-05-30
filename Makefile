@@ -62,12 +62,12 @@ $(OBJS_DIR)/%.o:	$(FILES)/%.c $(addprefix $(INCLUDES)/, cub3d.h enums.h event.h 
 						-I$(MLX_PATH) -c $< -o $@
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(PURPLE)$<$(RESET)"
 
-lldb:				$(OBJS)
-						@gcc -g $(FLAGS) $(MLX) $(LIBFT) $^ -o $(NAME)
+lldb:				libs $(OBJS)
+						@gcc -g $(FLAGS) $(MLX) $(LIBFT) $(OBJS) -o $(NAME)
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(GREEN)Compiled [√]$(RESET)\n"
 
-fsanitize:			$(OBJS)
-						@gcc -fsanitize=address $(FLAGS) $(MLX) $(LIBFT) $^ -o $(NAME)
+fsanitize:			libs $(OBJS)
+						@gcc -fsanitize=address $(FLAGS) $(MLX) $(LIBFT) $(OBJS) -o $(NAME)
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(GREEN)Compiled [√]$(RESET)\n"
 
 clean:
