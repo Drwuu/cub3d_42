@@ -94,7 +94,7 @@ static void	check_maplines(char *lines[3], t_cub3d *cub)
 	i = -1;
 	while (lines[1][++i])
 	{
-		if (!ft_char_ischars(lines[1][i], " 1"))
+		if (!ft_ischar(" 1", lines[1][i]))
 		{
 			if (is_valid_next(lines[1], i))
 			{
@@ -118,6 +118,7 @@ void	get_map_info(t_cub3d *cub)
 	char	*lines[3];
 	int		i;
 
+	ft_bzero(lines, sizeof(lines));
 	maplines = cub->map.maplines;
 	cub->map.size.y = 0;
 	while (maplines)

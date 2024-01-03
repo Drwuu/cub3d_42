@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../../includes/cub3d.h"
+#ifndef M_PI_2
+#define M_PI_2 1.57079632679489661923
+#endif
 
 t_vec3	get_intersect(t_cub3d *cub, t_vec3 origin, float distance)
 {

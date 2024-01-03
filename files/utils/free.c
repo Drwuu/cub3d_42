@@ -46,8 +46,8 @@ static void	free_textures_path(t_cub3d *cub)
 
 void	free_cub(t_cub3d *cub)
 {
-	ft_lstclear(&cub->map.idlines, free);
-	ft_lstclear(&cub->map.maplines, free);
+	ft_lstclear(&cub->map.idlines);
+	ft_lstclear(&cub->map.maplines);
 	free_textures_path(cub);
 	free_rays(cub);
 	if (cub->map.map)

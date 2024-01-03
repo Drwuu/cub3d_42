@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2020/11/25 15:47:09 by lwourms           #+#    #+#             */
+/*   Updated: 2021/05/16 19:08:04 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "../includes/libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		if ((unsigned char)c == ((unsigned char *)src)[i])
+			return (dst + i + 1);
+			// return (&dst[i + 1]);
+		i++;
+	}
+	return (0);
+}

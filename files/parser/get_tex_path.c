@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-void static	tex_path_errors(char **s_line, t_cub3d *cub)
+static void	tex_path_errors(char **s_line, t_cub3d *cub)
 {
 	if (!s_line[1] || s_line[2])
 		error_manager(30, cub, NULL, (void **)s_line);

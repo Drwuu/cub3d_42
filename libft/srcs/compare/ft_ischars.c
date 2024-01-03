@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_ischars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2020/11/23 14:33:27 by lwourms           #+#    #+#             */
+/*   Updated: 2021/10/27 10:16:31 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
+/*
+ * Check if str contains one of the char in chars
+ */
+int	ft_ischars(const char *str, const char *chars)
+{
+	const char	*save;
 
-#endif
+	save = chars;
+	if (!str || !chars)
+		return (-1);
+	while (*str)
+	{
+		while (*chars)
+			if (*chars++ == *str)
+				return (TRUE);
+		chars = save;
+		str++;
+	}
+	return (FALSE);
+}

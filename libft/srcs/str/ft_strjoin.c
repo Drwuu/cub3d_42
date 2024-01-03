@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2020/11/29 18:39:24 by lwourms           #+#    #+#             */
+/*   Updated: 2021/10/22 16:11:15 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "../includes/libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	int		i;
+	int		j;
 
-#endif
+	if (!s1 || !s2)
+		return (0);
+	str = wrmalloc((sizeof(*str) * ((ft_strlen(s1) + \
+		ft_strlen(s2)) + 1)));
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+		str[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		str[j++] = s2[i++];
+	str[j] = '\0';
+	return (str);
+}

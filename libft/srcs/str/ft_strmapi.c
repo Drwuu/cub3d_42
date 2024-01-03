@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2020/11/29 18:40:28 by lwourms           #+#    #+#             */
+/*   Updated: 2021/10/22 16:11:17 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "../includes/libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char			*str;
+	unsigned int	i;
 
-#endif
+	if (!s)
+		return (NULL);
+	str = wrmalloc(sizeof(*str) * (ft_strlen(s) + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
+	while (s[++i])
+		str[i] = f(i, s[i]);
+	str[i] = 0;
+	return (str);
+}

@@ -14,12 +14,14 @@ FLAGS			= -g -Wall -Wextra -Werror
 OPT				= -O3 -flto -Ofast -ffast-math -march=native
 LIBFT			= -L libft -lft
 MLX				= -L minilibx -lmlx
+MLX_LINUX		= -L minilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz
 OBJS			= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 OBJS_DIR		= objects
 INCLUDES		= includes
 LIBFT_PATH		= libft
 MLX_PATH		= minilibx
+MLX_PATH_LINUX	= minilibx-linux
 
 FILES			= files
 INPUTS			= game/inputs
@@ -53,21 +55,21 @@ libs:
 						@make -C ./libft
 
 $(NAME):			$(OBJS)
-						@gcc $(FLAGS) $(MLX) $(LIBFT) $^ -o $@
+						@gcc $(FLAGS) $(MLX_LINUX) $(LIBFT) $^ -o $@
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(GREEN)Compiled [√]$(RESET)\n"
 
-$(OBJS_DIR)/%.o:	$(FILES)/%.c $(addprefix $(INCLUDES)/, cub3d.h enums.h event.h inputs.h tools.h) $(MLX_PATH)/mlx.h $(LIBFT_PATH)/libft.a
+$(OBJS_DIR)/%.o:	$(FILES)/%.c $(addprefix $(INCLUDES)/, cub3d.h enums.h event.h inputs.h tools.h) $(MLX_PATH_LINUX)/mlx.h $(LIBFT_PATH)/libft.a
 						@mkdir -p $(addprefix $(OBJS_DIR)/, $(FOLDERS))
 						@gcc $(FLAGS) $(OPT) -I$(INCLUDES) -I$(LIBFT_PATH)/$(INCLUDES) \
-						-I$(MLX_PATH) -c $< -o $@
+						-I$(MLX_PATH_LINUX) -c $< -o $@
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(PURPLE)$<$(RESET)"
 
 lldb:				libs $(OBJS)
-						@gcc -g $(FLAGS) $(MLX) $(LIBFT) $(OBJS) -o $(NAME)
+						@gcc -g $(FLAGS) $(MLX_LINUX) $(LIBFT) $(OBJS) -o $(NAME)
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(GREEN)Compiled [√]$(RESET)\n"
 
 fsanitize:			libs $(OBJS)
-						@gcc -fsanitize=address $(FLAGS) $(MLX) $(LIBFT) $(OBJS) -o $(NAME)
+						@gcc -fsanitize=address $(FLAGS) $(MLX_LINUX) $(LIBFT) $(OBJS) -o $(NAME)
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(GREEN)Compiled [√]$(RESET)\n"
 
 clean:

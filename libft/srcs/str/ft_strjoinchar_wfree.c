@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoinchar_wfree.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2020/11/29 18:39:24 by lwourms           #+#    #+#             */
+/*   Updated: 2021/10/27 20:41:05 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
+char	*ft_strjoinchar_wfree(char *s1, char c)
+{
+	char	*str;
+	int		i;
 
-#endif
+	str = NULL;
+	if (!s1)
+		ft_perror("ft_strjoinchar_wfree error");
+	str = wrmalloc(sizeof(*str) * (ft_strlen(s1) + 1 + 1));
+	if (!str)
+		ft_perror("ft_strjoinchar_wfree error");
+	i = -1;
+	while (s1[++i])
+		str[i] = s1[i];
+	str[i] = c;
+	str[++i] = '\0';
+	wrfree(s1);
+	return (str);
+}

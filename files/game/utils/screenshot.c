@@ -30,7 +30,8 @@ static void	write_color_bmp(t_image *image, int fd)
 			buffer[1] = (unsigned char)(color.g);
 			buffer[2] = (unsigned char)(color.r);
 			buffer[3] = (unsigned char)(color.a);
-			write(fd, buffer, 4);
+			int ret = write(fd, buffer, 4);
+			ret = ret;
 			x++;
 		}
 		y--;
@@ -58,7 +59,9 @@ static void	write_headerinfo_bmp(t_image *image, int fd)
 	header[11] = (unsigned char)(n / 256 / 256 / 256);
 	header[12] = (unsigned char)(1);
 	header[14] = (unsigned char)(32);
-	write(fd, header, 40);
+
+	int ret = write(fd, header, 40); // used ret to bypass unused variable warning in windows
+	ret = ret;
 }
 
 static void	write_headerfile_bmp(t_image *image, int fd)
@@ -77,7 +80,9 @@ static void	write_headerfile_bmp(t_image *image, int fd)
 	header[4] = (unsigned char)(n / 256 / 256 % 256);
 	header[5] = (unsigned char)(n / 256 / 256 / 256);
 	header[10] = (unsigned char)(54);
-	write(fd, header, 14);
+	
+	int ret = write(fd, header, 14);
+	ret = ret;
 }
 
 void	take_screenshot(t_cub3d *cub, char *file_name)

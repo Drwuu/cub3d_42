@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_find_str_in_str.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2021/10/21 13:39:27 by lwourms           #+#    #+#             */
+/*   Updated: 2021/10/21 14:00:47 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
+/* Get the rest of str from first occurence of to_find */
+char	*ft_find_str_in_str(char *str, char *to_find)
+{
+	int		i;
+	int		j;
+	int		save;
 
-#endif
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (to_find[j] && str[i] == to_find[j])
+		{
+			save = i;
+			while (to_find[j] == str[i])
+			{
+				i++;
+				j++;
+				if (to_find[j] == '\0')
+					return (&str[save]);
+			}
+			j = 0;
+		}
+	}
+	return (NULL);
+}

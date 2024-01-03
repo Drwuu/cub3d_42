@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_free_dbl_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2021/03/06 14:22:19 by lwourms           #+#    #+#             */
+/*   Updated: 2021/10/22 16:10:50 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "../includes/libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
+void	**ft_free_dbl_array(void **datas, int size_nullable)
+{
+	int	i;
 
-#endif
+	i = 0;
+	if (size_nullable)
+	{
+		while (i < size_nullable)
+		{
+			if (datas[i])
+				wrfree(datas[i]);
+			i++;
+		}
+	}
+	else
+		while (datas[i])
+			wrfree(datas[i++]);
+	wrfree(datas);
+	return (NULL);
+}

@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 16:05:04 by ludwuu            #+#    #+#             */
-/*   Updated: 2021/10/22 16:03:33 by lwourms          ###   ########.fr       */
+/*   Created: 2021/05/25 02:04:23 by drwuu             #+#    #+#             */
+/*   Updated: 2021/10/23 16:05:01 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-int		find_newline(char *str);
-int		copy_line(const char *buf, char **str);
-int		free_str_error(char *str, char *buf);
-
-#endif
+void	ft_error(void *to_free, void **to_free_2, t_list **lst_nullable, \
+const char *msg_error)
+{
+	if (to_free)
+		wrfree(to_free);
+	if (to_free_2)
+		ft_free_dbl_array(to_free_2, 0);
+	if (lst_nullable)
+		ft_lstclear(lst_nullable);
+	perror(msg_error);
+	wrdestroy();
+	exit(EXIT_FAILURE);
+}

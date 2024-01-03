@@ -17,7 +17,7 @@ static void	get_map_lines(t_cub3d *cub, char **line, int fd)
 	t_list		*new;
 	int			ret;
 
-	new = ft_lstnew(*line, STRING);
+	new = ft_lstnew(*line, T_STRING);
 	if (!new)
 		error_manager(-1, cub, *line, NULL);
 	ft_lstadd_back(&cub->map.maplines, new);
@@ -34,7 +34,7 @@ static void	get_map_lines(t_cub3d *cub, char **line, int fd)
 			free(*line);
 			break ;
 		}
-		new = ft_lstnew(*line, STRING);
+		new = ft_lstnew(*line, T_STRING);
 		if (!new)
 			error_manager(-1, cub, *line, NULL);
 		ft_lstadd_back(&cub->map.maplines, new);
@@ -50,7 +50,7 @@ static void	get_lines_to_parse(t_cub3d *cub, char **line, int fd)
 	while (ret)
 	{
 		ret = get_next_line(fd, line);
-		new = ft_lstnew(*line, STRING);
+		new = ft_lstnew(*line, T_STRING);
 		if (!new || ret == -1)
 			error_manager(-1, cub, *line, NULL);
 		ft_lstadd_back(&cub->map.idlines, new);

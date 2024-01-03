@@ -14,10 +14,7 @@
 
 int	is_valid_mapline(char *line)
 {
-	int	i;
-
-	i = 0;
-	if (!ft_ischar(line, " 102NSWE"))
+	if (!ft_ischars(line, " 102NSWE"))
 		return (0);
 	return (1);
 }
@@ -26,8 +23,8 @@ int	is_valid_next(char *line, int i)
 {
 	if (!line[i - 1] || !line[i + 1])
 		return (0);
-	if (ft_char_ischars(line[i - 1], " ") || \
-	ft_char_ischars(line[i + 1], " "))
+	if (ft_ischar(" ", line[i - 1]) || \
+	ft_ischar(" ", line[i + 1]))
 		return (0);
 	else
 		return (1);

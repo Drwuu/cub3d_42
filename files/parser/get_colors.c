@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-void static	color_errors(char **s_lines, char **red_lines, t_cub3d *cub)
+static void	color_errors(char **s_lines, char **red_lines, t_cub3d *cub)
 {
 	if (!s_lines[1] || s_lines[3])
 		error_manager(30, cub, NULL, (void **)s_lines);
@@ -26,7 +26,7 @@ void static	color_errors(char **s_lines, char **red_lines, t_cub3d *cub)
 	}
 }
 
-int static	get_red_color(char **s_lines, t_cub3d *cub)
+static int	get_red_color(char **s_lines, t_cub3d *cub)
 {
 	char	**red_lines;
 	int		red;

@@ -6,7 +6,7 @@
 /*   By: lwourms <lwourms@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 19:01:43 by lwourms           #+#    #+#             */
-/*   Updated: 2021/05/16 20:27:31 by lwourms          ###   ########.fr       */
+/*   Updated: 2021/06/30 08:32:19 by lwourms          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	read_line(char **str, int fd)
 {
 	char	*buf;
 
-	buf = malloc(sizeof(*buf) * (BUFFER_SIZE + 1));
+	buf = wrmalloc(sizeof(*buf) * (BUFFER_SIZE + 1));
 	if (!buf)
 		return (free_str_error(*str, buf));
 	if (read_line_process(str, fd, &buf) < 0)
@@ -46,7 +46,7 @@ static int	read_line(char **str, int fd)
 		if (!*str)
 			return (free_str_error(*str, buf));
 	}
-	free(buf);
+	wrfree(buf);
 	return (1);
 }
 
@@ -58,7 +58,7 @@ static int	build_line_process(char **str, char **line, char **tmp, int i)
 	*tmp = ft_strdup(&(*str)[i + 1]);
 	if (!*tmp)
 		return (-1);
-	free(*str);
+	wrfree(*str);
 	*str = *tmp;
 	return (1);
 }
@@ -81,7 +81,7 @@ static int	build_line(char **str, char **line)
 		*line = ft_substr(*str, 0, ft_strlen(*str));
 		if (!*line)
 			return (free_str_error(*str, tmp));
-		free(*str);
+		wrfree(*str);
 		*str = NULL;
 		return (0);
 	}
