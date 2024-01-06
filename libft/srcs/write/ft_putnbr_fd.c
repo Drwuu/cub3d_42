@@ -16,16 +16,19 @@ void	ft_putnbr_fd(int n, int fd)
 {
 	long	nbr;
 	char	c;
+	int		ret;
 
 	nbr = n;
 	if (n < 0)
 	{
-		write(fd, "-", 1);
+		ret = write(fd, "-", 1);
 		nbr = (long)n * -1;
 	}
 	if (nbr > 9)
 		ft_putnbr_fd(nbr / 10, fd);
 	nbr %= 10;
 	c = nbr + '0';
-	write(fd, &c, 1);
+	ret = write(fd, &c, 1);
+
+	ret = ret;
 }

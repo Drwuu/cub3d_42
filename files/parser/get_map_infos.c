@@ -118,7 +118,11 @@ void	get_map_info(t_cub3d *cub)
 	char	*lines[3];
 	int		i;
 
-	ft_bzero(lines, sizeof(lines));
+	// ft_bzero(&lines, sizeof(lines));
+	// for (int i = 0; i < 3; i++)
+	// 	ft_bzero(lines[i], sizeof(lines[i]));
+	for (int i = 0; i < 3; i++)
+		lines[i] = NULL;
 	maplines = cub->map.maplines;
 	cub->map.size.y = 0;
 	while (maplines)

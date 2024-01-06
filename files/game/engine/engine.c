@@ -68,7 +68,7 @@ static int	update(t_cub3d *cub)
 	multi_threading(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, \
 	cub->engine.game_image.image, 0, 0);
-	show_fps(cub);
+	// show_fps(cub);
 	mlx_do_sync(cub->mlx);
 	if (cub->settings.screen_shot)
 	{

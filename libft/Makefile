@@ -104,7 +104,7 @@ WRITE			= ./srcs/write
 WR_MALLOC		= ./srcs/wr_malloc
 DEBUG			= ./srcs/debug
 
-FLAGS			= -Wall -Wextra -Werror
+FLAGS			= -g -Wall -Wextra -Werror
 OPT				= -O3 -flto -Ofast -ffast-math -march=native
 OBJS			= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
@@ -116,7 +116,7 @@ $(NAME):			$(OBJS)
 
 $(OBJS_DIR)/%.o:	%.c libft.h split_utils.h get_next_line.h wr_malloc.h
 						@mkdir -p $(OBJS_DIR)
-						@gcc $(FLAGS) -I$(INCLUDES) -c $< -o $@
+						@gcc $(FLAGS) $(OPT) -I$(INCLUDES) -c $< -o $@
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(PURPLE)$<$(RESET)"
 
 clean:

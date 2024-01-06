@@ -68,6 +68,8 @@ static int	key_pressed_2(int key, t_cub3d *cub)
 
 int	key_pressed(int key, t_cub3d *cub)
 {
+	dprintf(1, "key pressed: %d\n", key);
+
 	if (key == KEY_W)
 		cub->settings.key[KP_UP] = 1;
 	if (key == KEY_S)

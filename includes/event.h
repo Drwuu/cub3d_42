@@ -30,6 +30,8 @@ typedef enum e_key_pressed
 	KP_PLUS,
 }	t_key_pressed;
 
+// used for MACOS
+#if defined(__APPLE__) && defined(__MACH__)
 typedef enum e_key
 {
 	KEY_A = 0,
@@ -82,6 +84,49 @@ typedef enum e_key
 	KEY_CTRL = 256,
 	KEY_SPACE = 49,
 }	t_key;
+
+#elif defined(__linux__)
+typedef enum e_key_linux
+{
+	KEY_A = 97,
+	KEY_B,
+	KEY_C,
+	KEY_D,
+	KEY_E,
+	KEY_F,
+	KEY_G,
+	KEY_H,
+	KEY_I,
+	KEY_J,
+	KEY_K,
+	KEY_L,
+	KEY_M,
+	KEY_N,
+	KEY_O,
+	KEY_P,
+	KEY_Q,
+	KEY_R,
+	KEY_S,
+	KEY_T,
+	KEY_U,
+	KEY_V,
+	KEY_W,
+	KEY_X,
+	KEY_Y,
+	KEY_Z,
+	KEY_ZERO = 65438,
+	KEY_PLUS = 65451,
+	KEY_MINUS = 65453,
+	KEY_TAB = 65289,
+	KEY_LEFT = 65361,
+	KEY_UP,
+	KEY_RIGHT,
+	KEY_DOWN,
+	KEY_ESCAPE = 65307,
+	KEY_CTRL = 65507,
+	KEY_SPACE = 32
+}	t_key_linux;
+#endif
 
 typedef enum e_x11event
 {

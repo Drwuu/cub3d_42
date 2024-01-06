@@ -21,7 +21,7 @@
 # include "enums.h"
 # include "../libft/includes/libft.h"
 # include "../libft/includes/get_next_line.h"
-# include "../minilibx/mlx.h"
+# include "../minilibx-linux/mlx.h"
 
 typedef struct s_image
 {

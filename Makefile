@@ -12,15 +12,14 @@ $(addprefix $(UTILS)/, errors_2.c errors.c free.c utils.c)
 
 FLAGS			= -g -Wall -Wextra -Werror
 OPT				= -O3 -flto -Ofast -ffast-math -march=native
-LIBFT			= -L libft -lft
-MLX				= -L minilibx -lmlx
-MLX_LINUX		= -L minilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz
+LIBFT			= -Llibft -lft
+MLX_LINUX		= -Lminilibx-linux -lmlx
+LIBS			= -L/usr/lib -lXext -lX11 -lm -lz
 OBJS			= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 OBJS_DIR		= objects
 INCLUDES		= includes
 LIBFT_PATH		= libft
-MLX_PATH		= minilibx
 MLX_PATH_LINUX	= minilibx-linux
 
 FILES			= files
@@ -55,7 +54,7 @@ libs:
 						@make -C ./libft
 
 $(NAME):			$(OBJS)
-						@gcc $(FLAGS) $(MLX_LINUX) $(LIBFT) $^ -o $@
+						@gcc $^ -o $@ $(FLAGS) $(OPT) $(LIBS) $(LIBFT) $(MLX_LINUX)
 						@printf "\033[2K\r$(BLUE)$(NAME)$(RESET)$(BLUE): $(GREEN)Compiled [√]$(RESET)\n"
 
 $(OBJS_DIR)/%.o:	$(FILES)/%.c $(addprefix $(INCLUDES)/, cub3d.h enums.h event.h inputs.h tools.h) $(MLX_PATH_LINUX)/mlx.h $(LIBFT_PATH)/libft.a

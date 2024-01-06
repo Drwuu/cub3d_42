@@ -14,11 +14,14 @@
 
 void	ft_putstr_at_fd(const char *s, int start, int end, int fd)
 {
+	int ret;
+
 	if (!s)
 		return ;
 	while (s[start] && start <= end)
 	{
-		write(fd, &s[start], 1);
+		ret = write(fd, &s[start], 1);
 		start++;
 	}
+	ret = ret;
 }

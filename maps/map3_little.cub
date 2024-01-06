@@ -5,8 +5,8 @@ WE ./textures/cub_texture_west.xpm
 EA ./textures/cub_texture_east.xpm
 SO  ./textures/cub_texture_south.xpm
    S ./sprites/sprite1.xpm
-F     ./textures/jade.xpm
-C      ./textures/crystal.xpm
+F     ./textures/Jade.xpm
+C      ./textures/Crystal.xpm
 
 11111111111
 10110000011
