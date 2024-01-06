@@ -96,10 +96,3 @@ t_vec3	move_player_y(t_cub3d *cub, t_player player, int direction)
 			return (player.pos);
 	return (new_player_pos);
 }
-
-// int main() {
-// 	// move_player_y(NULL, (t_player){0}, 0);
-// 	float res = sinf(1);
-// 	printf("%f\n", res);
-// 	return 0;
-// }
