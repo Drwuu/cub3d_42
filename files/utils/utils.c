@@ -14,9 +14,6 @@
 
 int	is_valid_mapline(char *line)
 {
-	int	i;
-
-	i = 0;
 	if (!ft_ischar(line, " 102NSWE"))
 		return (0);
 	return (1);

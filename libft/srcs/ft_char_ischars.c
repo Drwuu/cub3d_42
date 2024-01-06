@@ -14,9 +14,6 @@
 
 int	ft_char_ischars(char c, const char *chars)
 {
-	int	i;
-
-	i = 0;
 	while (*chars)
 		if (c == *chars++)
 			return (1);
